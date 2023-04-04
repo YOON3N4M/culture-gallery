@@ -39,9 +39,7 @@ function App() {
   return (
     <>
       <GlobalStyle />
-      {isModal && (
-        <Modal isModal={isModal} modalType={modalType} modalOff={modalOff} />
-      )}
+      <Modal isModal={isModal} modalType={modalType} modalOff={modalOff} />
       <Navigation isModal={isModal} />
       <TopTab />
       <AppContainer>

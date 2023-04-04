@@ -37,34 +37,42 @@ export const ModalWindow = styled.div`
   height: 550px;
   text-align: center;
   text-decoration: none;
-  padding-top: 20px;
   background-color: white;
   border-radius: 30px;
-  color: #4000c7;
+  overflow: hidden;
+`;
+export const ModalHeader = styled.div`
+  width: 500px;
+  height: 80px;
+  border-top-right-radius: 29px;
+  border-top-left-radius: 29px;
+  background-color: rgb(24, 24, 35);
+  border: 0px;
 `;
 
 function Modal({ isModal, modalType, modalOff }: Props) {
   return (
     <>
-      {isModal && modalType !== undefined ? (
-        <ModalContainer
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-        >
-          <ModalBack onClick={modalOff}>
-            {
+      <AnimatePresence>
+        {isModal && modalType !== undefined ? (
+          <ModalContainer
+            key="modalContainer"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <ModalBack onClick={modalOff}>
               {
-                Auth: <AuthModal />,
-                Posting: <span>posting</span>,
-                FAQ: <span>FAQ</span>,
-              }[modalType]
-            }
-          </ModalBack>
-        </ModalContainer>
-      ) : (
-        <></>
-      )}
+                {
+                  Auth: <AuthModal />,
+                  Posting: <span>posting</span>,
+                  FAQ: <span>FAQ</span>,
+                }[modalType]
+              }
+            </ModalBack>
+          </ModalContainer>
+        ) : null}
+      </AnimatePresence>
     </>
   );
 }

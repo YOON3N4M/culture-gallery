@@ -47,16 +47,18 @@ const NickName = styled.div`
 const Collection = styled.div``;
 
 const NavHover = styled.div`
-  height: 100vh;
-  width: 10px;
+  margin-top: 50px;
+  height: 700px;
+  width: 5px;
   display: inline-block;
   position: fixed;
   z-index: 300;
-  opacity: 10%;
+  opacity: 5%;
   display: flex;
   align-items: center;
   justify-content: right;
   padding-right: 30px;
+  background-color: white;
 `;
 
 const NavBtn = styled.button`

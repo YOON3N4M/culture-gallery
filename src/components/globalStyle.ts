@@ -8,9 +8,12 @@ export const GlobalStyle = createGlobalStyle`
      font-weight: normal;
      font-style: normal;
 }
+
+@import url(//fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
   body {  
 
-    font-family:'S-CoreDream-3Light', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    font-family: 'Nanum Gothic','S-CoreDream-3Light', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
     Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     background-color: #29293d;
     color:black;
