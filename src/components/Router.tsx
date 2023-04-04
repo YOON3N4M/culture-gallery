@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App";
 import Auth from "../routes/Auth";
-import Home from "../routes/Home";
+import Main from "../routes/Main";
 
 function useRouter() {
   const newRouter = createBrowserRouter(
@@ -13,11 +13,7 @@ function useRouter() {
         children: [
           {
             path: "/",
-            element: <Home />,
-          },
-          {
-            path: "/auth",
-            element: <Auth />,
+            element: <Main />,
           },
         ],
       },

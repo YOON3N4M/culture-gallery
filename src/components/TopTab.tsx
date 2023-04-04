@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import logoImg from "../img/1.png";
 
 const Tab = styled.div`
   width: 100vw;
@@ -9,6 +10,8 @@ const Tab = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0px 20px 0px 20px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
 `;
 const FAQ = styled.button`
   width: 25px;
@@ -25,12 +28,19 @@ const Logo = styled.span`
   opacity: 50%;
   cursor: pointer;
 `;
+const LogoImg = styled.img`
+  width: 25px;
+  height: 25px;
+  opacity: 50%;
+  margin-right: -10px;
+`;
 
 function TopTab() {
   return (
     <>
       <Tab>
         <Logo>PhotoGallery</Logo>
+        <span>movie</span>
         <FAQ>?</FAQ>
       </Tab>
     </>
