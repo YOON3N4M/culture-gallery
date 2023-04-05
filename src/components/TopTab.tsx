@@ -39,7 +39,7 @@ function TopTab() {
   return (
     <>
       <Tab>
-        <Logo>PhotoGallery</Logo>
+        <Logo>CultureGallery</Logo>
         <span>movie</span>
         <FAQ>?</FAQ>
       </Tab>

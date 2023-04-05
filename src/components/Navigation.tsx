@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { fadeIn } from "./globalStyle";
 import { motion, AnimatePresence } from "framer-motion";
-import { useSelector } from "react-redux";
-import { setModalOn, StateT } from "../module/store";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setModalOn } from "../module/store";
+
 import { Props } from "./App";
 
 const Nav = styled(motion.div)`
@@ -72,9 +72,12 @@ const NavBtn = styled.button`
 `;
 
 function Navigation({ isModal }: Props) {
+  const { userInfo } = useSelector((state: any) => ({
+    userInfo: state.store.userInfo,
+  }));
   const dispatch = useDispatch();
   const [on, setOn] = useState(false);
-
+  const [name, setName] = useState("비회원");
   function navOnOff() {
     if (isModal === false) {
       setOn((prev) => !prev);
@@ -83,6 +86,14 @@ function Navigation({ isModal }: Props) {
   function callAuthModal() {
     dispatch(setModalOn("Auth"));
   }
+
+  useEffect(() => {
+    if (userInfo.displayName !== undefined) {
+      setName(userInfo.displayName);
+    } else {
+      setName("비회원");
+    }
+  }, [userInfo]);
   return (
     <>
       {" "}
@@ -99,7 +110,7 @@ function Navigation({ isModal }: Props) {
             <Profile>
               <ProfileIcon onClick={callAuthModal} />
             </Profile>
-            <NickName>윤세남</NickName>
+            <NickName>{name}</NickName>
           </Nav>
         ) : (
           <NavHover onMouseOver={navOnOff}>

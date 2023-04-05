@@ -1,6 +1,12 @@
 import { createGlobalStyle, keyframes } from "styled-components";
 
+const colorSample = {
+  mint: "#68D3A8",
+};
+
 export const GlobalStyle = createGlobalStyle`
+
+
 
 @font-face {
      font-family: 'S-CoreDream-3Light';
@@ -42,6 +48,22 @@ export const GlobalStyle = createGlobalStyle`
     border-radius: 0;
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
+    outline: none;
+    border: 0px;
+    text-align: center;
+}
+ul{
+  list-style: none;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  padding: 0;
+}
+li{
+  margin: 0;
+}
+h1{
+  display: inline;
 }
 `;
 

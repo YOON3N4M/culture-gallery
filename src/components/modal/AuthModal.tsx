@@ -9,7 +9,8 @@ import {
   GoogleAuthProvider,
   updateProfile,
 } from "firebase/auth";
-import { auth } from "../../fBase";
+import { auth, dbService } from "../../fBase";
+import { doc, setDoc } from "firebase/firestore";
 
 const Contianer = styled(motion.div)`
   padding-top: 50px;
@@ -77,10 +78,15 @@ function AuthModal() {
   }
   async function onNicknameSubmit(e: any) {
     e.preventDefault();
-
-    await updateProfile(user, { displayName: nickname }).then(() =>
-      setPageIndex((prev) => prev + 1)
-    );
+    //계정 등록 직후 닉네임 설정
+    await updateProfile(user, { displayName: nickname });
+    // 이 부분 테스트 끝나면 book, kMovie, TV프로그램 등 만들어야함
+    // 계정 생성시 기본 값들을 설정하는 곳
+    await setDoc(doc(dbService, "user", user.uid), {
+      isCustom: false,
+      customOption: {},
+      internationalMovie: [],
+    }).then(() => setPageIndex((prev) => prev + 1));
   }
 
   return (

@@ -1,4 +1,6 @@
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { setModalOn } from "../module/store";
 
 const ContentsHeader = styled.div`
   width: 1000px;
@@ -16,6 +18,7 @@ const Add = styled.button`
   border-radius: 50%;
   background-color: white;
   margin-right: 20px;
+  cursor: pointer;
 `;
 
 const ContentsBody = styled.div`
@@ -31,34 +34,24 @@ const Buttonn = styled.button`
   cursor: pointer;
 `;
 
-interface MovieInfoT {
-  Genre: string;
-  Poster: string;
-  Title: string;
-  Year: string;
-}
-
 function Main() {
+  const dispatch = useDispatch();
   // 이 부분 해외 영화 검색 (영어로만 가능)
-  const movieName = "harry potter ";
-  const MOVIE_API_KEY = "dc95ea84";
 
-  async function getMovieFromAPI() {
-    const movieRes: any = await fetch(
-      `http://www.omdbapi.com/?apikey=${MOVIE_API_KEY}&t=${movieName}`
-    ).catch((error) => console.log(error));
-    const movieInfo: MovieInfoT = await movieRes.json();
-    console.log(movieInfo);
+  function callModal(e: string) {
+    dispatch(setModalOn(e));
   }
 
   return (
     <>
       <ContentsHeader>
-        <Add></Add>
+        <Add
+          onClick={() => {
+            callModal("Posting");
+          }}
+        ></Add>
       </ContentsHeader>
-      <ContentsBody>
-        <Buttonn onClick={getMovieFromAPI}>api</Buttonn>
-      </ContentsBody>
+      <ContentsBody></ContentsBody>
     </>
   );
 }

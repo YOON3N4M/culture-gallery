@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import Navigation from "./Navigation";
 import { GlobalStyle } from "./globalStyle";
@@ -7,7 +7,15 @@ import TopTab from "./TopTab";
 import { useSelector } from "react-redux";
 import Modal from "./modal/Modal";
 import { useDispatch } from "react-redux";
-import { setModalOff, setModalOn } from "../module/store";
+import {
+  setModalOff,
+  setModalOn,
+  setSignIn,
+  setSignOut,
+  setUserInfo,
+} from "../module/store";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../fBase";
 
 const AppContainer = styled.div`
   background-color: #505074; // #29293d
@@ -36,6 +44,18 @@ function App() {
     }
   }
 
+  //앱 실행시 최초 로그인 체크
+  useEffect(() => {
+    onAuthStateChanged(auth, (user: any) => {
+      if (user) {
+        dispatch(setSignIn());
+        dispatch(setUserInfo(user));
+      } else {
+        dispatch(setSignOut());
+        dispatch(setUserInfo({}));
+      }
+    });
+  }, []);
   return (
     <>
       <GlobalStyle />

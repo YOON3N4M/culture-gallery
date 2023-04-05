@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { Props } from "../App";
 import AuthModal from "./AuthModal";
+import PostingModal from "./PostingModal";
 
 const ModalContainer = styled(motion.div)`
   position: absolute;
@@ -33,8 +34,8 @@ const ModalBack = styled.div`
 `;
 
 export const ModalWindow = styled.div`
-  width: 500px;
-  height: 550px;
+  min-width: 500px;
+  min-height: 550px;
   text-align: center;
   text-decoration: none;
   background-color: white;
@@ -42,8 +43,8 @@ export const ModalWindow = styled.div`
   overflow: hidden;
 `;
 export const ModalHeader = styled.div`
-  width: 500px;
-  height: 80px;
+  min-width: 500px;
+  min-height: 80px;
   border-top-right-radius: 29px;
   border-top-left-radius: 29px;
   background-color: rgb(24, 24, 35);
@@ -65,7 +66,7 @@ function Modal({ isModal, modalType, modalOff }: Props) {
               {
                 {
                   Auth: <AuthModal />,
-                  Posting: <span>posting</span>,
+                  Posting: <PostingModal />,
                   FAQ: <span>FAQ</span>,
                 }[modalType]
               }
