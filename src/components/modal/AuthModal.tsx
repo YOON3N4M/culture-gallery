@@ -31,6 +31,7 @@ const AuthInput = styled.input`
   font-size: 20px;
   text-align: center;
   margin-bottom: 30px;
+  background-color: rgb(0, 0, 0, 0);
 `;
 
 const OR = styled.div`
@@ -42,7 +43,7 @@ function AuthModal() {
   const [pageIndex, setPageIndex] = useState(0);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isNew, setIsNew] = useState(true);
+  const [isNew, setIsNew] = useState(false);
   const [user, setUser] = useState<any>({});
   const [isLocal, setIsLocal] = useState(false);
   const [nickname, setNickname] = useState("");
@@ -60,22 +61,24 @@ function AuthModal() {
     }
   }
   async function onSubmit(e: any) {
+    console.log("???");
     e.preventDefault();
     setPageIndex((prev) => prev + 1);
     setIsLocal(true);
 
     try {
       let data;
-      if (isNew && pageIndex === 1) {
+      if (isNew && pageIndex === 2) {
         data = await createUserWithEmailAndPassword(auth, email, password);
         setUser(data.user);
-      } else {
-        //data = await signInWithEmailAndPassword(auth, email, password);
+      } else if (pageIndex === 0) {
+        data = await signInWithEmailAndPassword(auth, email, password);
       }
     } catch (error: any) {
       console.log(error);
     }
   }
+
   async function onNicknameSubmit(e: any) {
     e.preventDefault();
     //계정 등록 직후 닉네임 설정
@@ -95,14 +98,40 @@ function AuthModal() {
     <>
       <ModalWindow>
         <ModalHeader></ModalHeader>
-        <Logo initial={{ y: -100, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
+        <Logo initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
           CultureGallery
         </Logo>
         <AnimatePresence>
           {
             {
               0: (
-                <Contianer key="emailIndex" exit={{ x: -500, opacity: 0 }}>
+                <>
+                  <Contianer key="loginIndex" exit={{ opacity: 0 }}>
+                    <form onSubmit={onSubmit}>
+                      <AuthInput
+                        onChange={onChange}
+                        value={email}
+                        type="email"
+                        name="email"
+                        placeholder="email"
+                        required
+                      ></AuthInput>
+                    </form>
+                    <div>
+                      <AuthInput
+                        onChange={onChange}
+                        value={password}
+                        type="password"
+                        name="password"
+                        placeholder="password"
+                        required
+                      ></AuthInput>
+                    </div>
+                  </Contianer>
+                </>
+              ),
+              1: (
+                <Contianer key="emailIndex" exit={{ opacity: 0 }}>
                   <form onSubmit={onSubmit}>
                     <AuthInput
                       onChange={onChange}
@@ -116,13 +145,13 @@ function AuthModal() {
                   <OR>OR</OR>
                 </Contianer>
               ),
-              1: (
+              2: (
                 <Contianer
                   key="passwordIndex"
-                  initial={{ opacity: 0, x: 400 }}
-                  animate={{ opacity: 1, x: 0 }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
                   transition={{ ease: easeIn }}
-                  exit={{ x: -500, opacity: 0 }}
+                  exit={{ opacity: 0 }}
                 >
                   <form onSubmit={onSubmit}>
                     <AuthInput
@@ -136,13 +165,13 @@ function AuthModal() {
                   </form>
                 </Contianer>
               ),
-              2: (
+              3: (
                 <Contianer
                   key="nicknameIndex"
-                  initial={{ opacity: 0, x: 400 }}
-                  animate={{ opacity: 1, x: 0 }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
                   transition={{ ease: easeIn }}
-                  exit={{ x: -500, opacity: 0 }}
+                  exit={{ opacity: 0 }}
                 >
                   <form onSubmit={onNicknameSubmit}>
                     <AuthInput
@@ -156,7 +185,7 @@ function AuthModal() {
                   </form>
                 </Contianer>
               ),
-              3: (
+              4: (
                 <Contianer
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}

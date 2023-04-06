@@ -2,7 +2,12 @@ import { createGlobalStyle, keyframes } from "styled-components";
 
 const colorSample = {
   mint: "#68D3A8",
+  opgg: "#EBEEF1",
 };
+export const tabColor = "#1A1A1A";
+export const bodyColor = "#353535";
+export const backColor = "#1A1A1A";
+export const borderColor = "#2a2a2a";
 
 export const GlobalStyle = createGlobalStyle`
 
@@ -21,8 +26,8 @@ export const GlobalStyle = createGlobalStyle`
 
     font-family: 'Nanum Gothic','S-CoreDream-3Light', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
     Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    background-color: #29293d;
-    color:black;
+    background-color: ${backColor};
+    color:white;
     margin: 0;
 
    

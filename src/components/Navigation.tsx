@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { fadeIn } from "./globalStyle";
+import { backColor, bodyColor, fadeIn } from "./globalStyle";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSelector, useDispatch } from "react-redux";
 import { setModalOn } from "../module/store";
-
+import arrowIcon from "../img/arrowIcon.png";
 import { Props } from "./App";
 
 const Nav = styled(motion.div)`
   margin-top: 100px;
   height: 600px;
-  background-color: white;
+  background-color: ${bodyColor};
   width: 300px;
   display: flex;
   position: fixed;
@@ -34,11 +34,14 @@ const ProfileIcon = styled.div`
   border-radius: 50%;
   background-color: black;
   cursor: pointer;
+  text-align: center;
+  line-height: 80px;
+  font-size: 40px;
 `;
 const NickName = styled.div`
   width: 100%;
   height: 50px;
-  background-color: white;
+  background-color: black;
   text-align: center;
   line-height: 50px;
   font-size: 20px;
@@ -49,16 +52,14 @@ const Collection = styled.div``;
 const NavHover = styled.div`
   margin-top: 50px;
   height: 700px;
-  width: 5px;
+  width: 50px;
   display: inline-block;
   position: fixed;
   z-index: 300;
-  opacity: 5%;
+  opacity: 1;
   display: flex;
   align-items: center;
   justify-content: right;
-  padding-right: 30px;
-  background-color: white;
 `;
 
 const NavBtn = styled.button`
@@ -72,8 +73,9 @@ const NavBtn = styled.button`
 `;
 
 function Navigation({ isModal }: Props) {
-  const { userInfo } = useSelector((state: any) => ({
+  const { userInfo, isLogin } = useSelector((state: any) => ({
     userInfo: state.store.userInfo,
+    isLogin: state.store.isLogin,
   }));
   const dispatch = useDispatch();
   const [on, setOn] = useState(false);
@@ -108,13 +110,15 @@ function Navigation({ isModal }: Props) {
             onMouseLeave={navOnOff}
           >
             <Profile>
-              <ProfileIcon onClick={callAuthModal} />
+              <ProfileIcon onClick={callAuthModal}>
+                {isLogin ? null : "?"}
+              </ProfileIcon>
             </Profile>
             <NickName>{name}</NickName>
           </Nav>
         ) : (
           <NavHover onMouseOver={navOnOff}>
-            <NavBtn></NavBtn>
+            <img style={{ opacity: "30%" }} src={arrowIcon} />
           </NavHover>
         )}
       </AnimatePresence>

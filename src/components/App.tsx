@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import Navigation from "./Navigation";
 import { GlobalStyle } from "./globalStyle";
@@ -19,13 +19,15 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth, dbService } from "../fBase";
 import { doc, getDoc } from "firebase/firestore";
 import Main from "./Main";
+import { bodyColor } from "./globalStyle";
 
 const AppContainer = styled.div`
-  background-color: #505074; // #29293d
+  background-color: ${bodyColor}; //#505074; // #29293d
   width: 1000px;
   height: 1500px;
   margin: 0 auto;
   padding-top: 60px;
+  // border: #6698be 3px solid;
 `;
 
 export interface Props {
@@ -35,11 +37,14 @@ export interface Props {
 }
 
 function App() {
-  const { isModal, modalType } = useSelector((state: any) => ({
+  const { isModal, modalType, userData } = useSelector((state: any) => ({
     isModal: state.store.isModal,
     modalType: state.store.modalType,
+    userData: state.store.userData,
   }));
+
   const dispatch = useDispatch();
+  const [tabContents, setTabContents] = useState("movie");
 
   function modalOff(e: any) {
     if (e.target === e.currentTarget) {
@@ -69,9 +74,13 @@ function App() {
       <GlobalStyle />
       <Modal isModal={isModal} modalType={modalType} modalOff={modalOff} />
       <Navigation isModal={isModal} />
-      <TopTab />
+      <TopTab
+        tabContents={tabContents}
+        userData={userData}
+        setTabContents={setTabContents}
+      />
       <AppContainer>
-        <Main />
+        <Main tabContents={tabContents} />
       </AppContainer>
     </>
   );

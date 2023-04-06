@@ -11,17 +11,21 @@ import {
 } from "firebase/firestore";
 import { dbService } from "../../fBase";
 import { useSelector } from "react-redux";
+import movieIcon from "../../img/movieIcon.png";
+import tvIcon from "../../img/tvIcon.png";
+import bookIcon from "../../img/bookIcon.png";
 
 const ModalBody = styled.div`
   display: flex;
   justify-content: space-between;
   align-content: center;
+  align-items: center;
   padding: 20px 10px 10px 20px;
 `;
 const CultureBox = styled.div`
   width: 125px;
   height: 125px;
-  background-color: gray;
+  margin-top: 100px;
   border-radius: 30px;
   cursor: pointer;
 `;
@@ -278,10 +282,15 @@ function PostingModal() {
           {
             none: (
               <ModalBody>
-                <CultureBox onClick={() => onClick("movie")}>영화</CultureBox>
-                <CultureBox onClick={() => onClick("book")}>책</CultureBox>
+                <CultureBox onClick={() => onClick("movie")}>
+                  <img src={movieIcon} />
+                </CultureBox>
+
                 <CultureBox onClick={() => onClick("tv")}>
-                  TV 프로그램
+                  <img src={tvIcon} />
+                </CultureBox>
+                <CultureBox onClick={() => onClick("book")}>
+                  <img src={bookIcon} />
                 </CultureBox>
               </ModalBody>
             ),
@@ -442,9 +451,7 @@ function PostingModal() {
                     <InfoContainer>
                       <InfoBox>
                         <h1>{chosenCulture.title}</h1>{" "}
-                        <small>
-                          ({chosenCulture.datetime.substring(0, 4)})
-                        </small>
+                        <small>({chosenCulture.datetime})</small>
                       </InfoBox>
                       <InfoBox></InfoBox>
                       <form onSubmit={enterPosting}>

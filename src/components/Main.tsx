@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { dbService } from "../fBase";
 import { setModalOn } from "../module/store";
+import postingIcon from "../img/postingIcon.png";
 
 const ContentsHeader = styled.div`
   width: 1000px;
@@ -13,16 +14,21 @@ const ContentsHeader = styled.div`
   display: flex;
   justify-content: right;
   align-items: center;
-  position: fixed;
+
   z-index: 100;
 `;
 const Add = styled.button`
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  background-color: white;
+  font-size: 30px;
   margin-right: 20px;
   cursor: pointer;
+  position: fixed;
+  background-color: #ffffff17;
+  align-items: center;
+  color: #ffffff85;
+  line-height: 30px;
 `;
 
 const ContentsBody = styled.div`
@@ -30,7 +36,7 @@ const ContentsBody = styled.div`
   width: 900px;
   margin: 0 auto;
   z-index: 300;
-  padding-top: 50px;
+
   display: flex;
 `;
 const ContentsUl = styled.ul`
@@ -43,19 +49,40 @@ const Buttonn = styled.button`
   cursor: pointer;
 `;
 
-const CollectionImg = styled.img`
-  width: 150px;
-  height: 250px;
+const Item = styled.div`
   margin: 15px 15px 15px 15px;
-  box-shadow: 2px 2px 2px 2px rgb(0 0 0 / 19%);
+  display: flex;
+  flex-direction: column;
 `;
-function Main() {
+const CollectionImg = styled.img<{ isBook: boolean }>`
+  width: ${(props: any) => (props.isBook ? "120px" : "150px")};
+  height: ${(props: any) => (props.isBook ? "174px" : "250px")};
+
+  box-shadow: 2px 2px 2px 2px rgb(0 0 0 / 19%);
+  margin-bottom: 5px;
+`;
+const Title = styled.span`
+  width: 150px;
+  white-space: nowrap;
+  font-size: 15px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #a5a5a5;
+  font-weight: 400;
+`;
+interface Props {
+  tabContents: string;
+}
+
+function Main({ tabContents }: Props) {
   const dispatch = useDispatch();
   const [internationalMovie, setInternationMovie] = useState<any>([]);
   const [tv, setTv] = useState<any>([]);
   const [book, setBook] = useState<any>([]);
-  const { userData } = useSelector((state: any) => ({
+  const { isLogin, userData } = useSelector((state: any) => ({
     userData: state.store.userData,
+    isLogin: state.store.isLogin,
   }));
 
   function callModal(e: string) {
@@ -112,20 +139,73 @@ function Main() {
   return (
     <>
       <ContentsHeader>
-        <Add
-          onClick={() => {
-            callModal("Posting");
-          }}
-        ></Add>
+        {isLogin && (
+          <Add
+            onClick={() => {
+              callModal("Posting");
+            }}
+          >
+            +
+          </Add>
+        )}
       </ContentsHeader>
       <ContentsBody>
-        <ContentsUl>
-          {internationalMovie.length !== 0
-            ? internationalMovie.map((item: any) => (
-                <CollectionImg src={item.Poster}></CollectionImg>
-              ))
-            : null}
-        </ContentsUl>
+        {
+          {
+            all: <></>,
+            movie: (
+              <ContentsUl>
+                {internationalMovie.length !== 0
+                  ? internationalMovie.map((item: any) => (
+                      <>
+                        <Item>
+                          <CollectionImg
+                            isBook={false}
+                            src={item.Poster}
+                          ></CollectionImg>
+                          <Title>{item.Title}</Title>
+                        </Item>
+                      </>
+                    ))
+                  : null}
+              </ContentsUl>
+            ),
+            book: (
+              <>
+                <ContentsUl>
+                  {book.length !== 0
+                    ? book.map((item: any) => (
+                        <Item>
+                          <CollectionImg
+                            isBook={true}
+                            src={item.Poster}
+                          ></CollectionImg>
+                          <Title>{item.Title}</Title>
+                        </Item>
+                      ))
+                    : null}
+                </ContentsUl>
+              </>
+            ),
+            tv: (
+              <>
+                <ContentsUl>
+                  {tv.length !== 0
+                    ? tv.map((item: any) => (
+                        <Item>
+                          <CollectionImg
+                            isBook={false}
+                            src={item.Poster}
+                          ></CollectionImg>
+                          <Title>{item.Title}</Title>
+                        </Item>
+                      ))
+                    : null}
+                </ContentsUl>
+              </>
+            ),
+          }[tabContents]
+        }
       </ContentsBody>
     </>
   );

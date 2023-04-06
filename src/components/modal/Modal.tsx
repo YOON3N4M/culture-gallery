@@ -2,6 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { Props } from "../App";
+import { bodyColor, borderColor, tabColor } from "../globalStyle";
 import AuthModal from "./AuthModal";
 import PostingModal from "./PostingModal";
 
@@ -38,17 +39,18 @@ export const ModalWindow = styled.div`
   min-height: 550px;
   text-align: center;
   text-decoration: none;
-  background-color: white;
-  border-radius: 30px;
+  background-color: ${bodyColor};
+  //border-radius: 30px;
   overflow: hidden;
 `;
 export const ModalHeader = styled.div`
   min-width: 500px;
   min-height: 80px;
-  border-top-right-radius: 29px;
-  border-top-left-radius: 29px;
-  background-color: rgb(24, 24, 35);
+  //border-top-right-radius: 29px;
+  // border-top-left-radius: 29px;
+  //background-color: ${tabColor};
   border: 0px;
+  //border-bottom: 1px solid rgb(42, 42, 42);
 `;
 
 function Modal({ isModal, modalType, modalOff }: Props) {
