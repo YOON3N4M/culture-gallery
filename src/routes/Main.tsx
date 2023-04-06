@@ -62,7 +62,9 @@ function Main() {
   }
 
   async function getCultureFromDB(item: any) {
-    const interMovieRef = doc(dbService, "internationalMovie", item);
+    //영화 가져오기
+    const movieID = String(item);
+    const interMovieRef = doc(dbService, "internationalMovie", movieID);
     const docSnap = await getDoc(interMovieRef);
     if (docSnap.exists()) {
       const docSnapData = docSnap.data();

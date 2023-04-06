@@ -57,9 +57,11 @@ const SearchResult = styled.li`
 const ThumnailSmall = styled.img`
   width: 149px;
   height: 220px;
+  box-shadow: 2px 2px 2px 2px rgb(0 0 0 / 19%);
 `;
 const ThumnailMedium = styled.img`
   width: 200px;
+  box-shadow: 2px 2px 2px 2px rgb(0 0 0 / 19%);
 `;
 
 const Title = styled.span`
@@ -127,8 +129,8 @@ function PostingModal() {
   const [searchResultArr, setSearchResult] = useState<any>([]);
   const [chosenCulture, setChosenCulture] = useState<any>();
   const [comment, setComment] = useState("");
-  const MOVIE_API_KEY = process.env.REACT_APP_MOVIE_API_KEY;
-
+  const MOVIE_API_KEY = process.env.REACT_APP_TMDB_API_KEY;
+  const posterBaseURL = `https://image.tmdb.org/t/p/w300`;
   const { userInfo } = useSelector((state: any) => ({
     userInfo: state.store.userInfo,
   }));
@@ -154,43 +156,81 @@ function PostingModal() {
     //영화
     if (culture === "movie") {
       const movieRes: any = await fetch(
-        `https://www.omdbapi.com/?apikey=${MOVIE_API_KEY}&s=${keyword}&p=2`
+        `https://api.themoviedb.org/3/search/movie?api_key=${MOVIE_API_KEY}&language=ko&page=1&include_adult=true&query=${keyword}`
       ).catch((error) => console.log(error));
       const movieResObj: any = await movieRes.json();
       console.log(movieResObj);
-      if (movieResObj.Response === "True") {
-        setSearchResult(movieResObj.Search);
+      if (movieResObj.results.length !== 0) {
+        setSearchResult(movieResObj.results);
+      }
+    } else if (culture === "tv") {
+      const tvRes = await fetch(
+        `https://api.themoviedb.org/3/search/tv?api_key=${MOVIE_API_KEY}&language=ko&page=1&include_adult=true&query=${keyword}`
+      );
+      const tvResObj: any = await tvRes.json();
+      console.log(tvResObj);
+      if (tvResObj.results.length !== 0) {
+        setSearchResult(tvResObj.results);
       }
     }
   }
   async function enterPosting(e: any) {
     e.preventDefault();
     const userRef = doc(dbService, "user", userInfo.uid);
-    await updateDoc(userRef, {
-      internationalMovie: arrayUnion(chosenCulture.imdbID),
-    });
-    console.log(userInfo);
+    //영화
+    if (culture === "moviePosting") {
+      await updateDoc(userRef, {
+        internationalMovie: arrayUnion(chosenCulture.id),
+      });
+      setCulture("movie");
+    }
+    //tv
+    if (culture === "tvPosting") {
+      await updateDoc(userRef, {
+        tv: arrayUnion(chosenCulture.id),
+      });
+      setCulture("tv");
+    }
+    setComment("");
   }
 
   async function thumnailClick(e: any) {
     setChosenCulture(e);
-    //해외영화 등록할때
+    console.log(typeof e.id);
+    //영화 등록할때
     if (culture === "movie") {
-      const docRef = doc(dbService, "internationalMovie", e.imdbID);
+      const docRef = doc(dbService, "internationalMovie", String(e.id));
       const docSnap = await getDoc(docRef);
-
       if (docSnap.exists()) {
         console.log("이미 등록된 영화 입니다!", docSnap.data());
+        setCulture("moviePosting");
       } else {
-        await setDoc(doc(dbService, "internationalMovie", e.imdbID), {
-          Title: e.Title,
-          Poster: e.Poster,
-          Year: e.Year,
-          imdbID: e.imdbID,
+        await setDoc(doc(dbService, "internationalMovie", String(e.id)), {
+          Title: e.title,
+          Poster: posterBaseURL + e.poster_path,
+          Year: e.release_date,
+          ID: e.id,
         });
+        setCulture("moviePosting");
       }
     }
-    setCulture("posting");
+    //tv 등록할때
+    if (culture === "tv") {
+      const docRef = doc(dbService, "tv", String(e.id));
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        console.log("이미 등록된 tv프로그램 입니다!", docSnap.data());
+        setCulture("tvPosting");
+      } else {
+        await setDoc(doc(dbService, "tv", String(e.id)), {
+          Title: e.name,
+          Poster: posterBaseURL + e.poster_path,
+          Year: e.first_air_date,
+          ID: e.id,
+        });
+        setCulture("tvPosting");
+      }
+    }
   }
   return (
     <>
@@ -225,9 +265,9 @@ function PostingModal() {
                           <SearchResult>
                             <ThumnailSmall
                               onClick={() => thumnailClick(movie)}
-                              src={movie.Poster}
+                              src={posterBaseURL + movie.poster_path}
                             />
-                            <Title>{movie.Title}</Title>
+                            <Title>{movie.name}</Title>
                           </SearchResult>
                         </ul>
                       ))
@@ -235,21 +275,79 @@ function PostingModal() {
                 </SearchResultContainer>
               </SearchContainer>
             ),
-            posting: (
+            moviePosting: (
               <>
                 {chosenCulture !== undefined ? (
                   <PostingContainer>
                     <ThumnailContainer>
-                      <ThumnailMedium src={chosenCulture.Poster} />
+                      <ThumnailMedium
+                        src={posterBaseURL + chosenCulture.poster_path}
+                      />
                     </ThumnailContainer>
                     <InfoContainer>
                       <InfoBox>
-                        <h1>{chosenCulture.Title}</h1>{" "}
-                        <small>({chosenCulture.Year})</small>
+                        <h1>{chosenCulture.title}</h1>{" "}
+                        <small>({chosenCulture.release_date})</small>
                       </InfoBox>
+                      <InfoBox></InfoBox>
+                      <form onSubmit={enterPosting}>
+                        <CommentsInput
+                          maxLength={100}
+                          placeholder="이 작품은 한마디로..."
+                          value={comment}
+                          name="comment"
+                          onChange={onChange}
+                          required
+                        />
+                      </form>
+                    </InfoContainer>
+                  </PostingContainer>
+                ) : null}
+              </>
+            ),
+            tv: (
+              <SearchContainer>
+                <form onSubmit={enterSearch}>
+                  <SearchInput
+                    value={keyword}
+                    placeholder=""
+                    onChange={onChange}
+                    name="search"
+                    required
+                  />
+                </form>
+                <SearchResultContainer>
+                  {searchResultArr.length !== 0
+                    ? searchResultArr.map((tv: any, index: number) => (
+                        <ul>
+                          <SearchResult>
+                            <ThumnailSmall
+                              onClick={() => thumnailClick(tv)}
+                              src={posterBaseURL + tv.poster_path}
+                            />
+                            <Title>{tv.name}</Title>
+                          </SearchResult>
+                        </ul>
+                      ))
+                    : null}
+                </SearchResultContainer>
+              </SearchContainer>
+            ),
+            tvPosting: (
+              <>
+                {chosenCulture !== undefined ? (
+                  <PostingContainer>
+                    <ThumnailContainer>
+                      <ThumnailMedium
+                        src={posterBaseURL + chosenCulture.poster_path}
+                      />
+                    </ThumnailContainer>
+                    <InfoContainer>
                       <InfoBox>
-                        <Genre>{chosenCulture.Genre}</Genre>
+                        <h1>{chosenCulture.name}</h1>{" "}
+                        <small>({chosenCulture.first_air_date})</small>
                       </InfoBox>
+                      <InfoBox></InfoBox>
                       <form onSubmit={enterPosting}>
                         <CommentsInput
                           maxLength={100}

@@ -86,6 +86,8 @@ function AuthModal() {
       isCustom: false,
       customOption: {},
       internationalMovie: [],
+      tv: [],
+      book: [],
     }).then(() => setPageIndex((prev) => prev + 1));
   }
 
