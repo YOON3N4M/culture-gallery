@@ -12,10 +12,12 @@ import {
   setModalOn,
   setSignIn,
   setSignOut,
+  setUserData,
   setUserInfo,
 } from "../module/store";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../fBase";
+import { auth, dbService } from "../fBase";
+import { doc, getDoc } from "firebase/firestore";
 
 const AppContainer = styled.div`
   background-color: #505074; // #29293d
@@ -43,13 +45,18 @@ function App() {
       dispatch(setModalOff());
     }
   }
-
+  async function getUserDataFromDB(user: any) {
+    const docRef = doc(dbService, "user", user.uid);
+    const docSnap = await getDoc(docRef);
+    dispatch(setUserData(docSnap.data()));
+  }
   //앱 실행시 최초 로그인 체크
   useEffect(() => {
     onAuthStateChanged(auth, (user: any) => {
       if (user) {
         dispatch(setSignIn());
         dispatch(setUserInfo(user));
+        getUserDataFromDB(user);
       } else {
         dispatch(setSignOut());
         dispatch(setUserInfo({}));

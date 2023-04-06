@@ -3,8 +3,7 @@ export interface StateT {
   modalType: string;
   isLogin: boolean;
   userInfo: userInfoT;
-  isCustom: boolean;
-  customOption: CustomOptionT;
+  userData: any;
 }
 
 export interface userInfoT {
@@ -25,6 +24,7 @@ const SET_MODAL_OFF = "SET_MODAL_OFF";
 const SET_SIGN_IN = "SET_SIGN_IN";
 const SET_SIGN_OUT = "SET_SIGN_OUT ";
 const SET_USER_INFO = "SET_USER_INFO";
+const SET_USER_DATA = "SET_USER_DATA";
 //userInfo 테스트 이후 커스텀을 관리하는 동작 필요
 
 export const setModalOn = (data: string) => ({ type: SET_MODAL_ON, data });
@@ -33,6 +33,7 @@ export const setModalOff = () => ({ type: SET_MODAL_OFF });
 export const setSignIn = () => ({ type: SET_SIGN_IN });
 export const setSignOut = () => ({ type: SET_SIGN_OUT });
 export const setUserInfo = (data: userInfoT) => ({ type: SET_USER_INFO, data });
+export const setUserData = (data: any) => ({ type: SET_USER_DATA, data });
 
 const inititalState: StateT = {
   isModal: false,
@@ -45,8 +46,9 @@ const inititalState: StateT = {
     photoURL: undefined,
     uid: undefined,
   },
-  isCustom: false,
-  customOption: { isPrivate: true, tabColor: "", backgroundColor: "" },
+
+  // customOption: { isPrivate: true, tabColor: "", backgroundColor: "" },
+  userData: undefined,
 };
 
 export default function store(state = inititalState, action: any) {
@@ -77,6 +79,11 @@ export default function store(state = inititalState, action: any) {
       return {
         ...state,
         userInfo: action.data,
+      };
+    case SET_USER_DATA:
+      return {
+        ...state,
+        userData: action.data,
       };
     default:
       return state;

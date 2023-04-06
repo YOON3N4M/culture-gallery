@@ -42,7 +42,7 @@ const SearchResultContainer = styled.div`
   height: 250px;
 
   display: flex;
-  background-color: #727272;
+  //background-color: #727272;
   justify-items: center;
   overflow: scroll;
   justify-content: center;
@@ -63,9 +63,15 @@ const ThumnailMedium = styled.img`
 `;
 
 const Title = styled.span`
-  font-size: 20px;
+  width: 200px;
+  white-space: nowrap;
+  font-size: 15px;
   display: block;
   text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: gray;
+  font-weight: 700;
 `;
 
 const PostingContainer = styled.div`
@@ -148,12 +154,12 @@ function PostingModal() {
     //영화
     if (culture === "movie") {
       const movieRes: any = await fetch(
-        `http://www.omdbapi.com/?apikey=${MOVIE_API_KEY}&t=${keyword}`
+        `https://www.omdbapi.com/?apikey=${MOVIE_API_KEY}&s=${keyword}&p=2`
       ).catch((error) => console.log(error));
-      const movieInfo: MovieInfoT = await movieRes.json();
-      if (movieInfo.Poster) {
-        setSearchResult((prev: any) => [...prev, movieInfo]);
-        console.log(movieInfo);
+      const movieResObj: any = await movieRes.json();
+      console.log(movieResObj);
+      if (movieResObj.Response === "True") {
+        setSearchResult(movieResObj.Search);
       }
     }
   }
@@ -179,7 +185,6 @@ function PostingModal() {
         await setDoc(doc(dbService, "internationalMovie", e.imdbID), {
           Title: e.Title,
           Poster: e.Poster,
-          Genre: e.Genre,
           Year: e.Year,
           imdbID: e.imdbID,
         });
@@ -207,7 +212,7 @@ function PostingModal() {
                 <form onSubmit={enterSearch}>
                   <SearchInput
                     value={keyword}
-                    placeholder="Harry potter..."
+                    placeholder=""
                     onChange={onChange}
                     name="search"
                     required
@@ -215,13 +220,14 @@ function PostingModal() {
                 </form>
                 <SearchResultContainer>
                   {searchResultArr.length !== 0
-                    ? searchResultArr.map((movie: any) => (
+                    ? searchResultArr.map((movie: any, index: number) => (
                         <ul>
                           <SearchResult>
                             <ThumnailSmall
                               onClick={() => thumnailClick(movie)}
                               src={movie.Poster}
                             />
+                            <Title>{movie.Title}</Title>
                           </SearchResult>
                         </ul>
                       ))

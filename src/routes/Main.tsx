@@ -1,5 +1,9 @@
+import { doc, getDoc } from "firebase/firestore";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { dbService } from "../fBase";
 import { setModalOn } from "../module/store";
 
 const ContentsHeader = styled.div`
@@ -22,25 +26,56 @@ const Add = styled.button`
 `;
 
 const ContentsBody = styled.div`
-  background-color: blue;
-  height: 50px;
+  //background-color: red;
   width: 900px;
   margin: 0 auto;
   z-index: 300;
   padding-top: 50px;
+  display: flex;
+`;
+const ContentsUl = styled.ul`
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
 `;
 
 const Buttonn = styled.button`
   cursor: pointer;
 `;
 
+const CollectionImg = styled.img`
+  width: 150px;
+  height: 250px;
+  margin: 15px 15px 15px 15px;
+  box-shadow: 2px 2px 2px 2px rgb(0 0 0 / 19%);
+`;
 function Main() {
   const dispatch = useDispatch();
-  // 이 부분 해외 영화 검색 (영어로만 가능)
+  const [internationalMovie, setInternationMovie] = useState<any>([]);
+  const [book, setBook] = useState([]);
+  const { userData } = useSelector((state: any) => ({
+    userData: state.store.userData,
+  }));
 
   function callModal(e: string) {
     dispatch(setModalOn(e));
   }
+
+  async function getCultureFromDB(item: any) {
+    const interMovieRef = doc(dbService, "internationalMovie", item);
+    const docSnap = await getDoc(interMovieRef);
+    if (docSnap.exists()) {
+      const docSnapData = docSnap.data();
+      setInternationMovie((prev: any) => [...prev, docSnapData]);
+    }
+  }
+
+  useEffect(() => {
+    setInternationMovie([]);
+    if (userData) {
+      userData.internationalMovie.map((item: any) => getCultureFromDB(item));
+    }
+  }, [userData]);
 
   return (
     <>
@@ -51,7 +86,15 @@ function Main() {
           }}
         ></Add>
       </ContentsHeader>
-      <ContentsBody></ContentsBody>
+      <ContentsBody>
+        <ContentsUl>
+          {internationalMovie.length !== 0
+            ? internationalMovie.map((item: any) => (
+                <CollectionImg src={item.Poster}></CollectionImg>
+              ))
+            : null}
+        </ContentsUl>
+      </ContentsBody>
     </>
   );
 }
