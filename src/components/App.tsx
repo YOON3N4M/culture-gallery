@@ -18,6 +18,7 @@ import {
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, dbService } from "../fBase";
 import { doc, getDoc } from "firebase/firestore";
+import Main from "./Main";
 
 const AppContainer = styled.div`
   background-color: #505074; // #29293d
@@ -70,7 +71,7 @@ function App() {
       <Navigation isModal={isModal} />
       <TopTab />
       <AppContainer>
-        <Outlet />
+        <Main />
       </AppContainer>
     </>
   );

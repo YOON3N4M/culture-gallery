@@ -41,7 +41,6 @@ const SearchResultContainer = styled.div`
   margin-top: 50px;
   height: 250px;
 
-  display: flex;
   //background-color: #727272;
   justify-items: center;
   overflow: scroll;
@@ -163,6 +162,7 @@ function PostingModal() {
       if (movieResObj.results.length !== 0) {
         setSearchResult(movieResObj.results);
       }
+      //tv
     } else if (culture === "tv") {
       const tvRes = await fetch(
         `https://api.themoviedb.org/3/search/tv?api_key=${MOVIE_API_KEY}&language=ko&page=1&include_adult=true&query=${keyword}`
@@ -172,6 +172,20 @@ function PostingModal() {
       if (tvResObj.results.length !== 0) {
         setSearchResult(tvResObj.results);
       }
+    } else if (culture === "book") {
+      const bookRes = await fetch(
+        `https://dapi.kakao.com/v3/search/book?sort=accuracy&page=1&size=10&query=${keyword}`,
+        {
+          headers: {
+            Authorization: "KakaoAK adf54a10d5089b5e92de6d43b3174a13",
+          },
+        }
+      );
+      const bookResObj = await bookRes.json();
+      if (bookResObj.documents.length !== 0) {
+        setSearchResult(bookResObj.documents);
+      }
+      console.log(bookResObj);
     }
   }
   async function enterPosting(e: any) {
@@ -191,6 +205,13 @@ function PostingModal() {
       });
       setCulture("tv");
     }
+    //book
+    if (culture === "bookPosting") {
+      await updateDoc(userRef, {
+        book: arrayUnion(chosenCulture.isbn),
+      });
+      setCulture("book");
+    }
     setComment("");
   }
 
@@ -208,7 +229,7 @@ function PostingModal() {
         await setDoc(doc(dbService, "internationalMovie", String(e.id)), {
           Title: e.title,
           Poster: posterBaseURL + e.poster_path,
-          Year: e.release_date,
+          Year: e.release_date.substring(0, 4),
           ID: e.id,
         });
         setCulture("moviePosting");
@@ -225,10 +246,27 @@ function PostingModal() {
         await setDoc(doc(dbService, "tv", String(e.id)), {
           Title: e.name,
           Poster: posterBaseURL + e.poster_path,
-          Year: e.first_air_date,
+          Year: e.first_air_date.substring(0, 4),
           ID: e.id,
         });
         setCulture("tvPosting");
+      }
+    }
+    //책 등록할때
+    if (culture === "book") {
+      const docRef = doc(dbService, "book", e.isbn);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        console.log("이미 등록된 책 입니다!", docSnap.data());
+        setCulture("bookPosting");
+      } else {
+        await setDoc(doc(dbService, "book", e.isbn), {
+          Title: e.title,
+          Poster: e.thumbnail,
+          Year: e.datetime.substring(0, 4),
+          ID: e.isbn,
+        });
+        setCulture("bookPosting");
       }
     }
   }
@@ -259,9 +297,9 @@ function PostingModal() {
                   />
                 </form>
                 <SearchResultContainer>
-                  {searchResultArr.length !== 0
-                    ? searchResultArr.map((movie: any, index: number) => (
-                        <ul>
+                  <ul>
+                    {searchResultArr.length !== 0
+                      ? searchResultArr.map((movie: any, index: number) => (
                           <SearchResult>
                             <ThumnailSmall
                               onClick={() => thumnailClick(movie)}
@@ -269,9 +307,9 @@ function PostingModal() {
                             />
                             <Title>{movie.name}</Title>
                           </SearchResult>
-                        </ul>
-                      ))
-                    : null}
+                        ))
+                      : null}
+                  </ul>
                 </SearchResultContainer>
               </SearchContainer>
             ),
@@ -317,9 +355,9 @@ function PostingModal() {
                   />
                 </form>
                 <SearchResultContainer>
-                  {searchResultArr.length !== 0
-                    ? searchResultArr.map((tv: any, index: number) => (
-                        <ul>
+                  <ul>
+                    {searchResultArr.length !== 0
+                      ? searchResultArr.map((tv: any, index: number) => (
                           <SearchResult>
                             <ThumnailSmall
                               onClick={() => thumnailClick(tv)}
@@ -327,9 +365,9 @@ function PostingModal() {
                             />
                             <Title>{tv.name}</Title>
                           </SearchResult>
-                        </ul>
-                      ))
-                    : null}
+                        ))
+                      : null}
+                  </ul>
                 </SearchResultContainer>
               </SearchContainer>
             ),
@@ -346,6 +384,67 @@ function PostingModal() {
                       <InfoBox>
                         <h1>{chosenCulture.name}</h1>{" "}
                         <small>({chosenCulture.first_air_date})</small>
+                      </InfoBox>
+                      <InfoBox></InfoBox>
+                      <form onSubmit={enterPosting}>
+                        <CommentsInput
+                          maxLength={100}
+                          placeholder="이 작품은 한마디로..."
+                          value={comment}
+                          name="comment"
+                          onChange={onChange}
+                          required
+                        />
+                      </form>
+                    </InfoContainer>
+                  </PostingContainer>
+                ) : null}
+              </>
+            ),
+            book: (
+              <>
+                {" "}
+                <SearchContainer>
+                  <form onSubmit={enterSearch}>
+                    <SearchInput
+                      value={keyword}
+                      placeholder=""
+                      onChange={onChange}
+                      name="search"
+                      required
+                    />
+                  </form>
+                  <SearchResultContainer>
+                    <ul>
+                      {searchResultArr.length !== 0
+                        ? searchResultArr.map((book: any, index: number) => (
+                            <SearchResult>
+                              <ThumnailSmall
+                                onClick={() => thumnailClick(book)}
+                                src={book.thumbnail}
+                              />
+                              <Title>{book.title}</Title>
+                            </SearchResult>
+                          ))
+                        : null}
+                    </ul>
+                  </SearchResultContainer>
+                </SearchContainer>
+              </>
+            ),
+            bookPosting: (
+              <>
+                {chosenCulture !== undefined ? (
+                  <PostingContainer>
+                    <ThumnailContainer>
+                      <ThumnailMedium src={chosenCulture.thumbnail} />
+                    </ThumnailContainer>
+                    <InfoContainer>
+                      <InfoBox>
+                        <h1>{chosenCulture.title}</h1>{" "}
+                        <small>
+                          ({chosenCulture.datetime.substring(0, 4)})
+                        </small>
                       </InfoBox>
                       <InfoBox></InfoBox>
                       <form onSubmit={enterPosting}>

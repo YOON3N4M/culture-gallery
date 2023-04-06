@@ -52,7 +52,8 @@ const CollectionImg = styled.img`
 function Main() {
   const dispatch = useDispatch();
   const [internationalMovie, setInternationMovie] = useState<any>([]);
-  const [book, setBook] = useState([]);
+  const [tv, setTv] = useState<any>([]);
+  const [book, setBook] = useState<any>([]);
   const { userData } = useSelector((state: any) => ({
     userData: state.store.userData,
   }));
@@ -61,21 +62,50 @@ function Main() {
     dispatch(setModalOn(e));
   }
 
-  async function getCultureFromDB(item: any) {
+  async function getCultureFromDB(item: any, culture: string) {
     //영화 가져오기
-    const movieID = String(item);
-    const interMovieRef = doc(dbService, "internationalMovie", movieID);
-    const docSnap = await getDoc(interMovieRef);
-    if (docSnap.exists()) {
-      const docSnapData = docSnap.data();
-      setInternationMovie((prev: any) => [...prev, docSnapData]);
+    if (culture === "movie") {
+      const movieID = String(item);
+      const interMovieRef = doc(dbService, "internationalMovie", movieID);
+      const docSnap = await getDoc(interMovieRef);
+      if (docSnap.exists()) {
+        const docSnapData = docSnap.data();
+        setInternationMovie((prev: any) => [...prev, docSnapData]);
+      }
+      //책
+    }
+    if (culture === "book") {
+      const bookID = item;
+      const bookRef = doc(dbService, "book", bookID);
+      const docSnap = await getDoc(bookRef);
+      if (docSnap.exists()) {
+        const docSnapData = docSnap.data();
+        setBook((prev: any) => [...prev, docSnapData]);
+      }
+    }
+    if (culture === "tv") {
+      const tvID = String(item);
+      const tvRef = doc(dbService, "tv", tvID);
+      const docSnap = await getDoc(tvRef);
+      if (docSnap.exists()) {
+        const docSnapData = docSnap.data();
+        setTv((prev: any) => [...prev, docSnapData]);
+      }
     }
   }
 
+  console.log(tv, book, internationalMovie);
+
   useEffect(() => {
     setInternationMovie([]);
+    setBook([]);
+    setTv([]);
     if (userData) {
-      userData.internationalMovie.map((item: any) => getCultureFromDB(item));
+      userData.internationalMovie.map((item: any) =>
+        getCultureFromDB(item, "movie")
+      );
+      userData.book.map((item: any) => getCultureFromDB(item, "book"));
+      userData.tv.map((item: any) => getCultureFromDB(item, "tv"));
     }
   }, [userData]);
 
