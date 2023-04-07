@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { dbService } from "../fBase";
 import { setModalOn } from "../module/store";
 import postingIcon from "../img/postingIcon.png";
+import { motion } from "framer-motion";
 
 const ContentsHeader = styled.div`
   width: 1000px;
@@ -31,7 +32,7 @@ const Add = styled.button`
   line-height: 30px;
 `;
 
-const ContentsBody = styled.div`
+const ContentsBody = styled(motion.div)`
   //background-color: red;
   width: 900px;
   margin: 0 auto;
@@ -39,7 +40,7 @@ const ContentsBody = styled.div`
 
   display: flex;
 `;
-const ContentsUl = styled.ul`
+const ContentsUl = styled(motion.ul)`
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
@@ -49,7 +50,7 @@ const Buttonn = styled.button`
   cursor: pointer;
 `;
 
-const Item = styled.div`
+const Item = styled(motion.div)`
   margin: 15px 15px 15px 15px;
   display: flex;
   flex-direction: column;
@@ -61,11 +62,11 @@ const CollectionImg = styled.img<{ isBook: boolean }>`
   box-shadow: 2px 2px 2px 2px rgb(0 0 0 / 19%);
   margin-bottom: 5px;
 `;
-const Title = styled.span`
-  width: 150px;
+const Title = styled.span<{ isBook: boolean }>`
+  width: ${(props: any) => (props.isBook ? "120px" : "150px")};
   white-space: nowrap;
   font-size: 15px;
-
+  text-align: center;
   overflow: hidden;
   text-overflow: ellipsis;
   color: #a5a5a5;
@@ -158,12 +159,16 @@ function Main({ tabContents }: Props) {
                 {internationalMovie.length !== 0
                   ? internationalMovie.map((item: any) => (
                       <>
-                        <Item>
+                        <Item
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ duration: 1.3 }}
+                        >
                           <CollectionImg
                             isBook={false}
                             src={item.Poster}
                           ></CollectionImg>
-                          <Title>{item.Title}</Title>
+                          <Title isBook={false}>{item.Title}</Title>
                         </Item>
                       </>
                     ))
@@ -175,12 +180,16 @@ function Main({ tabContents }: Props) {
                 <ContentsUl>
                   {book.length !== 0
                     ? book.map((item: any) => (
-                        <Item>
+                        <Item
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ duration: 1.3 }}
+                        >
                           <CollectionImg
                             isBook={true}
                             src={item.Poster}
                           ></CollectionImg>
-                          <Title>{item.Title}</Title>
+                          <Title isBook={true}>{item.Title}</Title>
                         </Item>
                       ))
                     : null}
@@ -192,12 +201,16 @@ function Main({ tabContents }: Props) {
                 <ContentsUl>
                   {tv.length !== 0
                     ? tv.map((item: any) => (
-                        <Item>
+                        <Item
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ duration: 1.3 }}
+                        >
                           <CollectionImg
                             isBook={false}
                             src={item.Poster}
                           ></CollectionImg>
-                          <Title>{item.Title}</Title>
+                          <Title isBook={false}>{item.Title}</Title>
                         </Item>
                       ))
                     : null}

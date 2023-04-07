@@ -35,25 +35,32 @@ const ModalBack = styled.div`
 `;
 
 export const ModalWindow = styled.div`
-  min-width: 500px;
-  min-height: 550px;
+  min-width: 300px;
+  min-height: 350px;
   text-align: center;
   text-decoration: none;
   background-color: ${bodyColor};
   //border-radius: 30px;
   overflow: hidden;
+  align-items: center;
 `;
 export const ModalHeader = styled.div`
   min-width: 500px;
-  min-height: 80px;
+  min-height: 40px;
   //border-top-right-radius: 29px;
   // border-top-left-radius: 29px;
-  //background-color: ${tabColor};
+  background-color: #0d0d0d;
   border: 0px;
   //border-bottom: 1px solid rgb(42, 42, 42);
+  line-height: 40px;
 `;
 
 function Modal({ isModal, modalType, modalOff }: Props) {
+  if (isModal) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "auto";
+  }
   return (
     <>
       <AnimatePresence>
@@ -67,7 +74,7 @@ function Modal({ isModal, modalType, modalOff }: Props) {
             <ModalBack onClick={modalOff}>
               {
                 {
-                  Auth: <AuthModal />,
+                  Auth: <AuthModal modalOff={modalOff} />,
                   Posting: <PostingModal />,
                   FAQ: <span>FAQ</span>,
                 }[modalType]

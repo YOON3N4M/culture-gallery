@@ -41,7 +41,7 @@ const ProfileIcon = styled.div`
 const NickName = styled.div`
   width: 100%;
   height: 50px;
-  background-color: black;
+  // background-color: black;
   text-align: center;
   line-height: 50px;
   font-size: 20px;
@@ -56,10 +56,11 @@ const NavHover = styled.div`
   display: inline-block;
   position: fixed;
   z-index: 300;
-  opacity: 1;
+
   display: flex;
   align-items: center;
   justify-content: right;
+  animation: ${fadeIn} linear 0.8s;
 `;
 
 const NavBtn = styled.button`
@@ -86,7 +87,9 @@ function Navigation({ isModal }: Props) {
     }
   }
   function callAuthModal() {
-    dispatch(setModalOn("Auth"));
+    if (isLogin === false) {
+      dispatch(setModalOn("Auth"));
+    }
   }
 
   useEffect(() => {

@@ -32,11 +32,18 @@ export const GlobalStyle = createGlobalStyle`
 
    
   }
+
+  
   *{
     box-sizing: border-box;
+   /*
     &::-webkit-scrollbar {
-    display: none;
-  }
+    display: none
+    ;
+    */
+
+  
+
   }
   a{
     text-decoration: none;

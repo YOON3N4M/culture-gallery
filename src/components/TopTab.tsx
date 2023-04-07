@@ -1,10 +1,12 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import logoImg from "../img/1.png";
+import { setModalOn } from "../module/store";
 import { tabColor } from "./globalStyle";
 
-const Tab = styled.div`
+const Tab = styled(motion.div)`
   width: 100vw;
   height: 50px;
   background-color: ${tabColor};
@@ -37,7 +39,10 @@ const LogoImg = styled.img`
   opacity: 50%;
   margin-right: -10px;
 `;
-const MenuLabel = styled.span`
+
+const MenuContainer = styled.div``;
+
+const MenuLabel = styled(motion.span)`
   color: white;
   font-size: 14px;
 `;
@@ -72,6 +77,13 @@ function TopTab({ tabContents, setTabContents, userData }: Props) {
   const [tv, setTv] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
   const [qty, setQty] = useState(0);
+  const [nickname, setNickname] = useState("");
+
+  const dispatch = useDispatch();
+
+  function callAuthModal() {
+    dispatch(setModalOn("FAQ"));
+  }
 
   useEffect(() => {
     if (userData !== undefined) {
@@ -79,6 +91,7 @@ function TopTab({ tabContents, setTabContents, userData }: Props) {
       setBook(userData.book.length);
       setTv(userData.tv.length);
       setQty(userData.internationalMovie.length);
+      setNickname(userData.nickname);
     }
   }, [userData]);
 
@@ -105,34 +118,64 @@ function TopTab({ tabContents, setTabContents, userData }: Props) {
 
   return (
     <>
-      <Tab>
+      <Tab initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
         <Logo>CultureGallery</Logo>
-        <div>
-          <MenuLabel>세남님의 </MenuLabel>
-          <MenuBtn onClick={menuOpen}>
-            {tabContents.toUpperCase()} ({qty})
-          </MenuBtn>
+        <MenuContainer>
+          {nickname !== "" ? (
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+              <MenuLabel>{nickname}님의 </MenuLabel>
+              <MenuBtn onClick={menuOpen}>
+                {tabContents.toUpperCase()} ({qty})
+              </MenuBtn>
+            </motion.div>
+          ) : null}
+
           <AnimatePresence>
             {isOpen ? (
               <MenuBox
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
+                transition={{ duration: 0.4 }}
                 key="menuBox"
               >
-                <MenuBtn onClick={() => onClick("all")}>
+                <MenuBtn
+                  onClick={() => {
+                    onClick("all");
+                    menuOpen();
+                  }}
+                >
                   ALL ({movie + tv + book})
                 </MenuBtn>
-                <MenuBtn onClick={() => onClick("movie")}>
+                <MenuBtn
+                  onClick={() => {
+                    onClick("movie");
+                    menuOpen();
+                  }}
+                >
                   MOVIE ({movie})
                 </MenuBtn>
-                <MenuBtn onClick={() => onClick("tv")}>TV ({tv})</MenuBtn>
-                <MenuBtn onClick={() => onClick("book")}>BOOK ({book})</MenuBtn>
+                <MenuBtn
+                  onClick={() => {
+                    onClick("tv");
+                    menuOpen();
+                  }}
+                >
+                  TV ({tv})
+                </MenuBtn>
+                <MenuBtn
+                  onClick={() => {
+                    onClick("book");
+                    menuOpen();
+                  }}
+                >
+                  BOOK ({book})
+                </MenuBtn>
               </MenuBox>
             ) : null}
           </AnimatePresence>
-        </div>
-        <FAQ>?</FAQ>
+        </MenuContainer>
+        <FAQ onClick={callAuthModal}>?</FAQ>
       </Tab>
     </>
   );

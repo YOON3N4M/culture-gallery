@@ -14,23 +14,24 @@ import { useSelector } from "react-redux";
 import movieIcon from "../../img/movieIcon.png";
 import tvIcon from "../../img/tvIcon.png";
 import bookIcon from "../../img/bookIcon.png";
+import { AnimatePresence, motion } from "framer-motion";
 
-const ModalBody = styled.div`
+const ModalBody = styled(motion.div)`
   display: flex;
   justify-content: space-between;
   align-content: center;
   align-items: center;
-  padding: 20px 10px 10px 20px;
+  padding: 0px 20px 0px 20px;
 `;
 const CultureBox = styled.div`
-  width: 125px;
+  width: 115px;
   height: 125px;
-  margin-top: 100px;
+  margin-top: 80px;
   border-radius: 30px;
   cursor: pointer;
 `;
 
-const SearchContainer = styled.div`
+const SearchContainer = styled(motion.div)`
   width: 800px;
   height: 500px;
   padding: 100px 0px 100px 0px;
@@ -40,15 +41,30 @@ const SearchContainer = styled.div`
 const SearchInput = styled.input`
   font-size: 30px;
   border-bottom: 2px solid gray;
+  background-color: rgb(26, 26, 26);
+  color: white;
 `;
 const SearchResultContainer = styled.div`
   margin-top: 50px;
-  height: 250px;
-
-  //background-color: #727272;
+  height: 300px;
+  display: flex;
+  background-color: #727272;
   justify-items: center;
-  overflow: scroll;
-  justify-content: center;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  align-items: center;
+  ::-webkit-scrollbar {
+    width: 1px;
+  }
+  ::-webkit-scrollbar-thumb {
+    width: 1px;
+    height: 10px;
+    background: #474747;
+    border-radius: 30px;
+  }
+  ::-webkit-scrollbar-track {
+    background: none;
+  }
 `;
 
 const SearchResult = styled.li`
@@ -57,10 +73,11 @@ const SearchResult = styled.li`
   justify-content: center;
   text-align: center;
 `;
-const ThumnailSmall = styled.img`
+const ThumnailSmall = styled(motion.img)`
   width: 149px;
   height: 220px;
   box-shadow: 2px 2px 2px 2px rgb(0 0 0 / 19%);
+  margin-top: 15px;
 `;
 const ThumnailMedium = styled.img`
   width: 200px;
@@ -70,16 +87,17 @@ const ThumnailMedium = styled.img`
 const Title = styled.span`
   width: 200px;
   white-space: nowrap;
-  font-size: 15px;
+  font-size: 12px;
   display: block;
   text-align: center;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: gray;
+  color: white;
   font-weight: 700;
+  opacity: 50%;
 `;
 
-const PostingContainer = styled.div`
+const PostingContainer = styled(motion.div)`
   align-items: center;
   width: 800px;
   display: flex;
@@ -111,10 +129,12 @@ const CommentsInput = styled.input`
   width: 400px;
   height: 30px;
   font-size: 20px;
-  margin-top: 40px;
+  margin-top: 160px;
   // background-color: gray;
 
   border-bottom: 2px solid gray;
+  background-color: #727272;
+  color: white;
 `;
 
 interface MovieInfoT {
@@ -277,143 +297,32 @@ function PostingModal() {
   return (
     <>
       <ModalWindow>
-        <ModalHeader></ModalHeader>
-        {
+        <ModalHeader>새 기록 남기기</ModalHeader>
+        <AnimatePresence>
           {
-            none: (
-              <ModalBody>
-                <CultureBox onClick={() => onClick("movie")}>
-                  <img src={movieIcon} />
-                </CultureBox>
+            {
+              none: (
+                <ModalBody>
+                  <CultureBox onClick={() => onClick("movie")}>
+                    <img src={movieIcon} />
+                    <span>MOVIE</span>
+                  </CultureBox>
 
-                <CultureBox onClick={() => onClick("tv")}>
-                  <img src={tvIcon} />
-                </CultureBox>
-                <CultureBox onClick={() => onClick("book")}>
-                  <img src={bookIcon} />
-                </CultureBox>
-              </ModalBody>
-            ),
-            movie: (
-              <SearchContainer>
-                <form onSubmit={enterSearch}>
-                  <SearchInput
-                    value={keyword}
-                    placeholder=""
-                    onChange={onChange}
-                    name="search"
-                    required
-                  />
-                </form>
-                <SearchResultContainer>
-                  <ul>
-                    {searchResultArr.length !== 0
-                      ? searchResultArr.map((movie: any, index: number) => (
-                          <SearchResult>
-                            <ThumnailSmall
-                              onClick={() => thumnailClick(movie)}
-                              src={posterBaseURL + movie.poster_path}
-                            />
-                            <Title>{movie.name}</Title>
-                          </SearchResult>
-                        ))
-                      : null}
-                  </ul>
-                </SearchResultContainer>
-              </SearchContainer>
-            ),
-            moviePosting: (
-              <>
-                {chosenCulture !== undefined ? (
-                  <PostingContainer>
-                    <ThumnailContainer>
-                      <ThumnailMedium
-                        src={posterBaseURL + chosenCulture.poster_path}
-                      />
-                    </ThumnailContainer>
-                    <InfoContainer>
-                      <InfoBox>
-                        <h1>{chosenCulture.title}</h1>{" "}
-                        <small>({chosenCulture.release_date})</small>
-                      </InfoBox>
-                      <InfoBox></InfoBox>
-                      <form onSubmit={enterPosting}>
-                        <CommentsInput
-                          maxLength={100}
-                          placeholder="이 작품은 한마디로..."
-                          value={comment}
-                          name="comment"
-                          onChange={onChange}
-                          required
-                        />
-                      </form>
-                    </InfoContainer>
-                  </PostingContainer>
-                ) : null}
-              </>
-            ),
-            tv: (
-              <SearchContainer>
-                <form onSubmit={enterSearch}>
-                  <SearchInput
-                    value={keyword}
-                    placeholder=""
-                    onChange={onChange}
-                    name="search"
-                    required
-                  />
-                </form>
-                <SearchResultContainer>
-                  <ul>
-                    {searchResultArr.length !== 0
-                      ? searchResultArr.map((tv: any, index: number) => (
-                          <SearchResult>
-                            <ThumnailSmall
-                              onClick={() => thumnailClick(tv)}
-                              src={posterBaseURL + tv.poster_path}
-                            />
-                            <Title>{tv.name}</Title>
-                          </SearchResult>
-                        ))
-                      : null}
-                  </ul>
-                </SearchResultContainer>
-              </SearchContainer>
-            ),
-            tvPosting: (
-              <>
-                {chosenCulture !== undefined ? (
-                  <PostingContainer>
-                    <ThumnailContainer>
-                      <ThumnailMedium
-                        src={posterBaseURL + chosenCulture.poster_path}
-                      />
-                    </ThumnailContainer>
-                    <InfoContainer>
-                      <InfoBox>
-                        <h1>{chosenCulture.name}</h1>{" "}
-                        <small>({chosenCulture.first_air_date})</small>
-                      </InfoBox>
-                      <InfoBox></InfoBox>
-                      <form onSubmit={enterPosting}>
-                        <CommentsInput
-                          maxLength={100}
-                          placeholder="이 작품은 한마디로..."
-                          value={comment}
-                          name="comment"
-                          onChange={onChange}
-                          required
-                        />
-                      </form>
-                    </InfoContainer>
-                  </PostingContainer>
-                ) : null}
-              </>
-            ),
-            book: (
-              <>
-                {" "}
-                <SearchContainer>
+                  <CultureBox onClick={() => onClick("tv")}>
+                    <img src={tvIcon} />
+                    <span style={{ minWidth: "51px" }}>TV </span>
+                  </CultureBox>
+                  <CultureBox onClick={() => onClick("book")}>
+                    <img src={bookIcon} />
+                    <span>BOOK</span>
+                  </CultureBox>
+                </ModalBody>
+              ),
+              movie: (
+                <SearchContainer
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                >
                   <form onSubmit={enterSearch}>
                     <SearchInput
                       value={keyword}
@@ -426,51 +335,192 @@ function PostingModal() {
                   <SearchResultContainer>
                     <ul>
                       {searchResultArr.length !== 0
-                        ? searchResultArr.map((book: any, index: number) => (
+                        ? searchResultArr.map((movie: any, index: number) => (
                             <SearchResult>
                               <ThumnailSmall
-                                onClick={() => thumnailClick(book)}
-                                src={book.thumbnail}
+                                onClick={() => thumnailClick(movie)}
+                                src={posterBaseURL + movie.poster_path}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
                               />
-                              <Title>{book.title}</Title>
+                              <Title>{movie.title}</Title>
                             </SearchResult>
                           ))
                         : null}
                     </ul>
                   </SearchResultContainer>
                 </SearchContainer>
-              </>
-            ),
-            bookPosting: (
-              <>
-                {chosenCulture !== undefined ? (
-                  <PostingContainer>
-                    <ThumnailContainer>
-                      <ThumnailMedium src={chosenCulture.thumbnail} />
-                    </ThumnailContainer>
-                    <InfoContainer>
-                      <InfoBox>
-                        <h1>{chosenCulture.title}</h1>{" "}
-                        <small>({chosenCulture.datetime})</small>
-                      </InfoBox>
-                      <InfoBox></InfoBox>
-                      <form onSubmit={enterPosting}>
-                        <CommentsInput
-                          maxLength={100}
-                          placeholder="이 작품은 한마디로..."
-                          value={comment}
-                          name="comment"
-                          onChange={onChange}
-                          required
+              ),
+              moviePosting: (
+                <>
+                  {chosenCulture !== undefined ? (
+                    <PostingContainer
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                    >
+                      <ThumnailContainer>
+                        <ThumnailMedium
+                          src={posterBaseURL + chosenCulture.poster_path}
                         />
-                      </form>
-                    </InfoContainer>
-                  </PostingContainer>
-                ) : null}
-              </>
-            ),
-          }[culture]
-        }
+                      </ThumnailContainer>
+                      <InfoContainer>
+                        <InfoBox>
+                          <h1>{chosenCulture.title}</h1>{" "}
+                          <small>({chosenCulture.release_date})</small>
+                        </InfoBox>
+                        <InfoBox></InfoBox>
+                        <form onSubmit={enterPosting}>
+                          <CommentsInput
+                            minLength={3}
+                            maxLength={100}
+                            placeholder="이 작품은 한마디로..."
+                            value={comment}
+                            name="comment"
+                            onChange={onChange}
+                            required
+                          />
+                        </form>
+                      </InfoContainer>
+                    </PostingContainer>
+                  ) : null}
+                </>
+              ),
+              tv: (
+                <SearchContainer
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                >
+                  <form onSubmit={enterSearch}>
+                    <SearchInput
+                      value={keyword}
+                      placeholder=""
+                      onChange={onChange}
+                      name="search"
+                      required
+                    />
+                  </form>
+                  <SearchResultContainer>
+                    <ul>
+                      {searchResultArr.length !== 0
+                        ? searchResultArr.map((tv: any, index: number) => (
+                            <SearchResult>
+                              <ThumnailSmall
+                                onClick={() => thumnailClick(tv)}
+                                src={posterBaseURL + tv.poster_path}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                              />
+                              <Title>{tv.name}</Title>
+                            </SearchResult>
+                          ))
+                        : null}
+                    </ul>
+                  </SearchResultContainer>
+                </SearchContainer>
+              ),
+              tvPosting: (
+                <>
+                  {chosenCulture !== undefined ? (
+                    <PostingContainer
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                    >
+                      <ThumnailContainer>
+                        <ThumnailMedium
+                          src={posterBaseURL + chosenCulture.poster_path}
+                        />
+                      </ThumnailContainer>
+                      <InfoContainer>
+                        <InfoBox>
+                          <h1>{chosenCulture.name}</h1>{" "}
+                          <small>({chosenCulture.first_air_date})</small>
+                        </InfoBox>
+                        <InfoBox></InfoBox>
+                        <form onSubmit={enterPosting}>
+                          <CommentsInput
+                            maxLength={100}
+                            placeholder="이 작품은 한마디로..."
+                            value={comment}
+                            name="comment"
+                            onChange={onChange}
+                            required
+                          />
+                        </form>
+                      </InfoContainer>
+                    </PostingContainer>
+                  ) : null}
+                </>
+              ),
+              book: (
+                <>
+                  {" "}
+                  <SearchContainer
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                  >
+                    <form onSubmit={enterSearch}>
+                      <SearchInput
+                        value={keyword}
+                        placeholder=""
+                        onChange={onChange}
+                        name="search"
+                        required
+                      />
+                    </form>
+                    <SearchResultContainer>
+                      <ul>
+                        {searchResultArr.length !== 0
+                          ? searchResultArr.map((book: any, index: number) => (
+                              <SearchResult>
+                                <ThumnailSmall
+                                  onClick={() => thumnailClick(book)}
+                                  src={book.thumbnail}
+                                  initial={{ opacity: 0 }}
+                                  animate={{ opacity: 1 }}
+                                />
+                                <Title>{book.title}</Title>
+                              </SearchResult>
+                            ))
+                          : null}
+                      </ul>
+                    </SearchResultContainer>
+                  </SearchContainer>
+                </>
+              ),
+              bookPosting: (
+                <>
+                  {chosenCulture !== undefined ? (
+                    <PostingContainer
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                    >
+                      <ThumnailContainer>
+                        <ThumnailMedium src={chosenCulture.thumbnail} />
+                      </ThumnailContainer>
+                      <InfoContainer>
+                        <InfoBox>
+                          <h1>{chosenCulture.title}</h1>{" "}
+                          <small>({chosenCulture.authors})</small>
+                        </InfoBox>
+                        <InfoBox></InfoBox>
+                        <form onSubmit={enterPosting}>
+                          <CommentsInput
+                            maxLength={100}
+                            placeholder="이 작품은 한마디로..."
+                            value={comment}
+                            name="comment"
+                            onChange={onChange}
+                            required
+                          />
+                        </form>
+                      </InfoContainer>
+                    </PostingContainer>
+                  ) : null}
+                </>
+              ),
+            }[culture]
+          }
+        </AnimatePresence>
       </ModalWindow>
     </>
   );
