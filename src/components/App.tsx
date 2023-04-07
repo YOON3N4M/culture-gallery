@@ -84,7 +84,11 @@ function App() {
         setTabContents={setTabContents}
       />
       <AppContainer>
-        {isLogin ? <Main tabContents={tabContents} /> : <Welcome />}
+        {isLogin ? (
+          <Main tabContents={tabContents} />
+        ) : (
+          <Welcome isModal={isModal} />
+        )}
       </AppContainer>
     </>
   );
