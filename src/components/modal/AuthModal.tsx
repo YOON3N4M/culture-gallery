@@ -28,12 +28,12 @@ const Logo = styled(motion.span)`
 const InputContainer = styled(motion.div)`
   //background-color: red;
   width: 400px;
-  height: 400px;
+  //height: 400px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 40px;
+  // padding-top: 40px;
 `;
 const AuthInput = styled.input`
   border: 0px;
@@ -42,7 +42,7 @@ const AuthInput = styled.input`
   height: 30px;
   font-size: 20px;
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
   background-color: rgb(26, 26, 26);
   color: white;
 `;
@@ -69,7 +69,7 @@ const LoginSpan = styled.span`
   opacity: 60%;
   margin-bottom: 40px;
 `;
-const LoginBtn = styled.button`
+const ChangeBtn = styled.button`
   color: white;
   text-decoration: underline;
   font-size: 15px;
@@ -77,9 +77,11 @@ const LoginBtn = styled.button`
   cursor: pointer;
 `;
 const SubmitBtn = styled.button`
-  position: absolute;
-  width: 0px;
-  height: 0px;
+  width: 250px;
+  height: 30px;
+  background-color: rgb(13, 13, 13);
+  color: white;
+  margin-top: 15px;
 `;
 const NickBox = styled(motion.div)`
   width: 280px;
@@ -91,6 +93,15 @@ const NickBox = styled(motion.div)`
   margin-top: 35px;
 `;
 
+const Error = styled.span`
+  font-size: 15px;
+  color: #9b3333;
+`;
+const ErrorBox = styled.div`
+  margin-top: 15px;
+  height: 18px;
+  width: 100%;
+`;
 interface Props {
   modalOff: any;
 }
@@ -103,7 +114,7 @@ function AuthModal({ modalOff }: Props) {
   const [user, setUser] = useState<any>({});
   const [isLocal, setIsLocal] = useState(false);
   const [nickname, setNickname] = useState("");
-
+  const [errorMsg, setErrorMsg] = useState("");
   const dispatch = useDispatch();
   function onChange(e: any) {
     const {
@@ -120,6 +131,7 @@ function AuthModal({ modalOff }: Props) {
   function onClick(i: number) {
     setPageIndex(i);
     setIsNew((prev) => !prev);
+    setErrorMsg("");
   }
 
   async function onSubmit(e: any) {
@@ -137,7 +149,22 @@ function AuthModal({ modalOff }: Props) {
         dispatch(setModalOff());
       }
     } catch (error: any) {
-      console.log(error);
+      switch (error.message) {
+        case "Firebase: Error (auth/user-not-found).":
+          setErrorMsg("존재하지 않는 계정 입니다.");
+          break;
+        case "Firebase: Error (auth/wrong-password).":
+          setErrorMsg("잘못된 비밀번호 입니다.");
+          break;
+        case "Firebase: Error (auth/email-already-in-use).":
+          setErrorMsg("이미 사용중인 이메일 입니다.");
+          break;
+        case "Firebase: Password should be at least 6 characters (auth/weak-password).":
+          setErrorMsg("비밀번호는 최소 6자리 이상이여야 합니다.");
+          break;
+        default:
+          break;
+      }
     }
   }
 
@@ -180,7 +207,6 @@ function AuthModal({ modalOff }: Props) {
                     exit={{ opacity: 0 }}
                   >
                     <InputContainer>
-                      <LoginSpan>로그인</LoginSpan>
                       <form onSubmit={onSubmit}>
                         <AuthInput
                           onChange={onChange}
@@ -199,11 +225,14 @@ function AuthModal({ modalOff }: Props) {
                           required
                           placeholder="비밀번호"
                         ></AuthInput>
-                        <SubmitBtn type="submit"></SubmitBtn>
+                        <SubmitBtn type="submit">로그인</SubmitBtn>
                       </form>
-                      <LoginBtn onClick={() => onClick(1)}>
-                        계정이 없다면 회원가입 하기
-                      </LoginBtn>
+                      <ErrorBox>
+                        <Error>{errorMsg}</Error>
+                      </ErrorBox>
+                      <ChangeBtn onClick={() => onClick(1)}>
+                        회원가입 하러가기
+                      </ChangeBtn>
                     </InputContainer>
                   </Contianer>
                 </>
@@ -217,7 +246,6 @@ function AuthModal({ modalOff }: Props) {
                     exit={{ opacity: 0 }}
                   >
                     <InputContainer>
-                      <LoginSpan>회원가입</LoginSpan>
                       <form onSubmit={onSubmit}>
                         <AuthInput
                           onChange={onChange}
@@ -235,11 +263,14 @@ function AuthModal({ modalOff }: Props) {
                           required
                           placeholder="비밀번호"
                         />
-                        <SubmitBtn type="submit"></SubmitBtn>
+                        <SubmitBtn type="submit">회원가입</SubmitBtn>
+                        <ErrorBox>
+                          <Error>{errorMsg}</Error>
+                        </ErrorBox>
                       </form>
-                      <LoginBtn onClick={() => onClick(0)}>
-                        이미 계정이 있다면 로그인 하기
-                      </LoginBtn>
+                      <ChangeBtn onClick={() => onClick(0)}>
+                        로그인 하러가기
+                      </ChangeBtn>
                     </InputContainer>
                   </Contianer>
                 </>

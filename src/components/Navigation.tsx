@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setModalOn } from "../module/store";
 import arrowIcon from "../img/arrowIcon.png";
 import { Props } from "./App";
+import { auth } from "../fBase";
 
 const Nav = styled(motion.div)`
   margin-top: 100px;
@@ -32,7 +33,7 @@ const ProfileIcon = styled.div`
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background-color: black;
+  background-color: gray;
   cursor: pointer;
   text-align: center;
   line-height: 80px;
@@ -46,6 +47,39 @@ const NickName = styled.div`
   line-height: 50px;
   font-size: 20px;
   border-bottom: 0.5px solid #848484;
+  cursor: pointer;
+  :hover {
+    background-color: rgb(26, 26, 26);
+  }
+`;
+const NavItem = styled.div`
+  width: 100%;
+  height: 50px;
+  // background-color: black;
+  text-align: center;
+  line-height: 50px;
+  font-size: 20px;
+  border-bottom: 0.5px solid #848484;
+
+  cursor: pointer;
+  :hover {
+    background-color: rgb(26, 26, 26);
+  }
+`;
+const LogOut = styled.div`
+  width: 100%;
+  height: 50px;
+  // background-color: black;
+  text-align: center;
+  line-height: 50px;
+  font-size: 20px;
+  border-bottom: 0.5px solid #848484;
+  cursor: pointer;
+  margin-top: 150px;
+  border-top: 0.5px solid #848484;
+  :hover {
+    background-color: rgb(26, 26, 26);
+  }
 `;
 const Collection = styled.div``;
 
@@ -91,14 +125,18 @@ function Navigation({ isModal }: Props) {
       dispatch(setModalOn("Auth"));
     }
   }
+  function logOut() {
+    auth.signOut();
+  }
 
   useEffect(() => {
     if (userInfo.displayName !== undefined) {
       setName(userInfo.displayName);
     } else {
-      setName("비회원");
+      setName("로그인 / 회원가입");
     }
   }, [userInfo]);
+
   return (
     <>
       {" "}
@@ -117,7 +155,12 @@ function Navigation({ isModal }: Props) {
                 {isLogin ? null : "?"}
               </ProfileIcon>
             </Profile>
-            <NickName>{name}</NickName>
+            <NickName onClick={callAuthModal}>{name}</NickName>
+            <NavItem>내 컬렉션</NavItem>
+            <NavItem>컬렉션 탐색</NavItem>
+            <NavItem>즐겨찾기</NavItem>
+            <NavItem>설정</NavItem>
+            {isLogin ? <LogOut onClick={logOut}>로그아웃</LogOut> : null}
           </Nav>
         ) : (
           <NavHover onMouseOver={navOnOff}>

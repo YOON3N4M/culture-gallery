@@ -32,14 +32,14 @@ const Add = styled.button`
   line-height: 30px;
 `;
 
-const ContentsBody = styled(motion.div)`
+export const ContentsBody = styled(motion.div)`
   //background-color: red;
   width: 900px;
   margin: 0 auto;
   z-index: 300;
   display: flex;
 `;
-const ContentsUl = styled(motion.ul)`
+export const ContentsUl = styled(motion.ul)`
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
@@ -49,19 +49,19 @@ const Buttonn = styled.button`
   cursor: pointer;
 `;
 
-const Item = styled(motion.div)`
+export const Item = styled(motion.div)`
   margin: 15px 15px 15px 15px;
   display: flex;
   flex-direction: column;
 `;
-const CollectionImg = styled.img<{ isBook: boolean }>`
+export const CollectionImg = styled.img<{ isBook: boolean }>`
   width: ${(props: any) => (props.isBook ? "120px" : "150px")};
   height: ${(props: any) => (props.isBook ? "174px" : "250px")};
 
   box-shadow: 2px 2px 2px 2px rgb(0 0 0 / 19%);
   margin-bottom: 5px;
 `;
-const Title = styled.span<{ isBook: boolean }>`
+export const Title = styled.span<{ isBook: boolean }>`
   width: ${(props: any) => (props.isBook ? "120px" : "150px")};
   white-space: nowrap;
   font-size: 15px;
