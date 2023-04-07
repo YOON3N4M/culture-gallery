@@ -36,7 +36,6 @@ function FAQModal() {
                   기본적으로 로그인 후 기록을 할 수 있으며 현재는 다른 사람의
                   기록을 구경하는 기능이 미지원 상태입니다.
                 </p>
-                <p>FAQ 화면 디자인 예정</p>
               </DescContainer>
             </ModalWindow>
           ),

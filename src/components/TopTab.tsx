@@ -71,7 +71,6 @@ interface Props {
 }
 
 function TopTab({ tabContents, setTabContents, userData }: Props) {
-  console.log(userData);
   const [book, setBook] = useState(0);
   const [movie, setMovie] = useState(0);
   const [tv, setTv] = useState(0);

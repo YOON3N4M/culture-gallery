@@ -209,7 +209,6 @@ function PostingModal() {
       if (bookResObj.documents.length !== 0) {
         setSearchResult(bookResObj.documents);
       }
-      console.log(bookResObj);
     }
   }
   async function enterPosting(e: any) {
@@ -218,21 +217,36 @@ function PostingModal() {
     //영화
     if (culture === "moviePosting") {
       await updateDoc(userRef, {
-        internationalMovie: arrayUnion(chosenCulture.id),
+        internationalMovie: arrayUnion({
+          id: chosenCulture.id,
+          title: chosenCulture.title,
+          poster: posterBaseURL + chosenCulture.poster_path,
+          year: chosenCulture.release_date.substring(0, 4),
+        }),
       });
       setCulture("movie");
     }
     //tv
     if (culture === "tvPosting") {
       await updateDoc(userRef, {
-        tv: arrayUnion(chosenCulture.id),
+        tv: arrayUnion({
+          id: chosenCulture.id,
+          title: chosenCulture.name,
+          poster: posterBaseURL + chosenCulture.poster_path,
+          year: chosenCulture.first_air_date.substring(0.4),
+        }),
       });
       setCulture("tv");
     }
     //book
     if (culture === "bookPosting") {
       await updateDoc(userRef, {
-        book: arrayUnion(chosenCulture.isbn),
+        book: arrayUnion({
+          id: chosenCulture.isbn,
+          title: chosenCulture.title,
+          poster: chosenCulture.thumbnail,
+          year: chosenCulture.datetime.substring(0, 4),
+        }),
       });
       setCulture("book");
     }
@@ -241,7 +255,7 @@ function PostingModal() {
 
   async function thumnailClick(e: any) {
     setChosenCulture(e);
-    console.log(typeof e.id);
+    console.log(e);
     //영화 등록할때
     if (culture === "movie") {
       const docRef = doc(dbService, "internationalMovie", String(e.id));

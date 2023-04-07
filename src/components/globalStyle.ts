@@ -30,17 +30,17 @@ export const GlobalStyle = createGlobalStyle`
     color:white;
     margin: 0;
 
-   
+     &::-webkit-scrollbar {
+    display: none
+    ;
+    }
   }
 
   
   *{
     box-sizing: border-box;
-   /*
-    &::-webkit-scrollbar {
-    display: none
-    ;
-    */
+   
+  
 
   
 

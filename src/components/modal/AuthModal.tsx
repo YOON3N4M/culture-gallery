@@ -149,6 +149,7 @@ function AuthModal({ modalOff }: Props) {
     // 계정 생성시 기본 값들을 설정하는 곳
     await setDoc(doc(dbService, "user", user.uid), {
       nickname: nickname,
+      isPrivate: true,
       isCustom: false,
       customOption: {},
       internationalMovie: [],
@@ -201,7 +202,7 @@ function AuthModal({ modalOff }: Props) {
                         <SubmitBtn type="submit"></SubmitBtn>
                       </form>
                       <LoginBtn onClick={() => onClick(1)}>
-                        회원가입 하기
+                        계정이 없다면 회원가입 하기
                       </LoginBtn>
                     </InputContainer>
                   </Contianer>
@@ -237,7 +238,7 @@ function AuthModal({ modalOff }: Props) {
                         <SubmitBtn type="submit"></SubmitBtn>
                       </form>
                       <LoginBtn onClick={() => onClick(0)}>
-                        로그인 하기
+                        이미 계정이 있다면 로그인 하기
                       </LoginBtn>
                     </InputContainer>
                   </Contianer>
@@ -317,7 +318,10 @@ function AuthModal({ modalOff }: Props) {
                 >
                   <NickBox>
                     {" "}
-                    <span>회원가입이 완료 되었습니다!</span>
+                    <span>
+                      회원가입이 완료 되었습니다! 새로고침 해주세요(추후 수정
+                      예정)
+                    </span>
                   </NickBox>
                 </Contianer>
               ),

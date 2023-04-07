@@ -20,11 +20,12 @@ import { auth, dbService } from "../fBase";
 import { doc, getDoc } from "firebase/firestore";
 import Main from "./Main";
 import { bodyColor } from "./globalStyle";
+import Welcome from "./Welcome";
 
 const AppContainer = styled.div`
   background-color: ${bodyColor}; //#505074; // #29293d
   width: 1000px;
-  height: 1500px;
+  min-height: 800px;
   margin: 0 auto;
   padding-top: 60px;
   // border: #6698be 3px solid;
@@ -37,11 +38,14 @@ export interface Props {
 }
 
 function App() {
-  const { isModal, modalType, userData } = useSelector((state: any) => ({
-    isModal: state.store.isModal,
-    modalType: state.store.modalType,
-    userData: state.store.userData,
-  }));
+  const { isLogin, isModal, modalType, userData } = useSelector(
+    (state: any) => ({
+      isModal: state.store.isModal,
+      modalType: state.store.modalType,
+      userData: state.store.userData,
+      isLogin: state.store.isLogin,
+    })
+  );
 
   const dispatch = useDispatch();
   const [tabContents, setTabContents] = useState("movie");
@@ -80,7 +84,7 @@ function App() {
         setTabContents={setTabContents}
       />
       <AppContainer>
-        <Main tabContents={tabContents} />
+        {isLogin ? <Main tabContents={tabContents} /> : <Welcome />}
       </AppContainer>
     </>
   );

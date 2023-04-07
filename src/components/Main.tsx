@@ -37,7 +37,6 @@ const ContentsBody = styled(motion.div)`
   width: 900px;
   margin: 0 auto;
   z-index: 300;
-
   display: flex;
 `;
 const ContentsUl = styled(motion.ul)`
@@ -90,50 +89,14 @@ function Main({ tabContents }: Props) {
     dispatch(setModalOn(e));
   }
 
-  async function getCultureFromDB(item: any, culture: string) {
-    //영화 가져오기
-    if (culture === "movie") {
-      const movieID = String(item);
-      const interMovieRef = doc(dbService, "internationalMovie", movieID);
-      const docSnap = await getDoc(interMovieRef);
-      if (docSnap.exists()) {
-        const docSnapData = docSnap.data();
-        setInternationMovie((prev: any) => [...prev, docSnapData]);
-      }
-      //책
-    }
-    if (culture === "book") {
-      const bookID = item;
-      const bookRef = doc(dbService, "book", bookID);
-      const docSnap = await getDoc(bookRef);
-      if (docSnap.exists()) {
-        const docSnapData = docSnap.data();
-        setBook((prev: any) => [...prev, docSnapData]);
-      }
-    }
-    if (culture === "tv") {
-      const tvID = String(item);
-      const tvRef = doc(dbService, "tv", tvID);
-      const docSnap = await getDoc(tvRef);
-      if (docSnap.exists()) {
-        const docSnapData = docSnap.data();
-        setTv((prev: any) => [...prev, docSnapData]);
-      }
-    }
-  }
-
-  console.log(tv, book, internationalMovie);
-
   useEffect(() => {
     setInternationMovie([]);
     setBook([]);
     setTv([]);
     if (userData) {
-      userData.internationalMovie.map((item: any) =>
-        getCultureFromDB(item, "movie")
-      );
-      userData.book.map((item: any) => getCultureFromDB(item, "book"));
-      userData.tv.map((item: any) => getCultureFromDB(item, "tv"));
+      setInternationMovie(userData.internationalMovie);
+      setBook(userData.book);
+      setTv(userData.tv);
     }
   }, [userData]);
 
@@ -166,9 +129,9 @@ function Main({ tabContents }: Props) {
                         >
                           <CollectionImg
                             isBook={false}
-                            src={item.Poster}
+                            src={item.poster}
                           ></CollectionImg>
-                          <Title isBook={false}>{item.Title}</Title>
+                          <Title isBook={false}>{item.title}</Title>
                         </Item>
                       </>
                     ))
@@ -187,9 +150,9 @@ function Main({ tabContents }: Props) {
                         >
                           <CollectionImg
                             isBook={true}
-                            src={item.Poster}
+                            src={item.poster}
                           ></CollectionImg>
-                          <Title isBook={true}>{item.Title}</Title>
+                          <Title isBook={true}>{item.title}</Title>
                         </Item>
                       ))
                     : null}
@@ -208,9 +171,9 @@ function Main({ tabContents }: Props) {
                         >
                           <CollectionImg
                             isBook={false}
-                            src={item.Poster}
+                            src={item.poster}
                           ></CollectionImg>
-                          <Title isBook={false}>{item.Title}</Title>
+                          <Title isBook={false}>{item.title}</Title>
                         </Item>
                       ))
                     : null}
