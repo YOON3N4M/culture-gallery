@@ -297,7 +297,7 @@ function PostingModal() {
   return (
     <>
       <ModalWindow>
-        <ModalHeader>새 기록 남기기</ModalHeader>
+        <ModalHeader>새 기록</ModalHeader>
         <AnimatePresence>
           {
             {
