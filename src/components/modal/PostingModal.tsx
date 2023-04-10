@@ -15,6 +15,8 @@ import movieIcon from "../../img/movieIcon.png";
 import tvIcon from "../../img/tvIcon.png";
 import bookIcon from "../../img/bookIcon.png";
 import { AnimatePresence, motion } from "framer-motion";
+import { useDispatch } from "react-redux";
+import { setUserData } from "../../module/store";
 
 const ModalBody = styled(motion.div)`
   display: flex;
@@ -40,7 +42,7 @@ const SearchContainer = styled(motion.div)`
 
 const SearchInput = styled.input`
   font-size: 30px;
-  border-bottom: 2px solid gray;
+
   background-color: rgb(26, 26, 26);
   color: white;
 `;
@@ -154,9 +156,11 @@ function PostingModal() {
   const [comment, setComment] = useState("");
   const MOVIE_API_KEY = process.env.REACT_APP_TMDB_API_KEY;
   const posterBaseURL = `https://image.tmdb.org/t/p/w300`;
-  const { userInfo } = useSelector((state: any) => ({
+  const { userInfo, userData } = useSelector((state: any) => ({
     userInfo: state.store.userInfo,
+    userData: state.store.userData,
   }));
+  const dispatch = useDispatch();
 
   function onClick(e: string) {
     setCulture(e);
@@ -214,41 +218,61 @@ function PostingModal() {
   async function enterPosting(e: any) {
     e.preventDefault();
     const userRef = doc(dbService, "user", userInfo.uid);
+    console.log(userData);
+
+    let userDataTemp = {
+      book: userData.book,
+      customOption: userData.customOption,
+      internationalMovie: userData.internationalMovie,
+      isCustom: userData.isCustom,
+      nickname: userData.nickname,
+      tv: userData.tv,
+    };
     //영화
     if (culture === "moviePosting") {
+      const movieRef = {
+        id: chosenCulture.id,
+        title: chosenCulture.title,
+        poster: posterBaseURL + chosenCulture.poster_path,
+        year: chosenCulture.release_date.substring(0, 4),
+      };
       await updateDoc(userRef, {
-        internationalMovie: arrayUnion({
-          id: chosenCulture.id,
-          title: chosenCulture.title,
-          poster: posterBaseURL + chosenCulture.poster_path,
-          year: chosenCulture.release_date.substring(0, 4),
-        }),
+        internationalMovie: arrayUnion(movieRef),
       });
+
       setCulture("movie");
+      userDataTemp.internationalMovie.push(movieRef);
+      dispatch(setUserData(userDataTemp));
     }
     //tv
     if (culture === "tvPosting") {
+      const tvRef = {
+        id: chosenCulture.id,
+        title: chosenCulture.name,
+        poster: posterBaseURL + chosenCulture.poster_path,
+        year: chosenCulture.first_air_date.substring(0.4),
+      };
       await updateDoc(userRef, {
-        tv: arrayUnion({
-          id: chosenCulture.id,
-          title: chosenCulture.name,
-          poster: posterBaseURL + chosenCulture.poster_path,
-          year: chosenCulture.first_air_date.substring(0.4),
-        }),
+        tv: arrayUnion(tvRef),
       });
       setCulture("tv");
+      userDataTemp.tv.push(tvRef);
+      dispatch(setUserData(userDataTemp));
     }
     //book
     if (culture === "bookPosting") {
+      const bookRef = {
+        id: chosenCulture.isbn,
+        title: chosenCulture.title,
+        poster: chosenCulture.thumbnail,
+        year: chosenCulture.datetime.substring(0, 4),
+      };
       await updateDoc(userRef, {
-        book: arrayUnion({
-          id: chosenCulture.isbn,
-          title: chosenCulture.title,
-          poster: chosenCulture.thumbnail,
-          year: chosenCulture.datetime.substring(0, 4),
-        }),
+        book: arrayUnion(bookRef),
       });
       setCulture("book");
+      userDataTemp.book.push(bookRef);
+      dispatch(setUserData(userDataTemp));
     }
     setComment("");
   }
@@ -308,6 +332,7 @@ function PostingModal() {
       }
     }
   }
+
   return (
     <>
       <ModalWindow>

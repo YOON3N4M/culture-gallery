@@ -64,25 +64,18 @@ function Welcome({ isModal }: Props) {
     }
   }, [dummy]);
 
-  useEffect(() => {
-    setTimeout(() => setBlink((prev) => !prev), 2000);
-  }, [blink]);
-
   return (
     <>
       <ContentsBody>
         <WelcomeModal>
           <AnimatePresence>
-            {blink && isModal === false ? (
-              <WelcomeTextContainer
-                key="welcomeText"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-              >
-                좌측 메뉴에서 로그인 후 이용 가능합니다.
-              </WelcomeTextContainer>
-            ) : null}
+            <WelcomeTextContainer
+              key="welcomeText"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+            >
+              좌측 메뉴에서 로그인 후 이용 가능합니다.
+            </WelcomeTextContainer>
           </AnimatePresence>
         </WelcomeModal>
         <ContentsUl>

@@ -12,7 +12,7 @@ import {
 import { auth, dbService } from "../../fBase";
 import { doc, setDoc } from "firebase/firestore";
 import { useDispatch } from "react-redux";
-import { setModalOff } from "../../module/store";
+import { setModalOff, setSignIn } from "../../module/store";
 
 const Contianer = styled(motion.div)`
   padding-top: 50px;
@@ -183,6 +183,8 @@ function AuthModal({ modalOff }: Props) {
       tv: [],
       book: [],
     }).then(() => setPageIndex((prev) => prev + 1));
+
+    dispatch(setSignIn());
   }
 
   return (

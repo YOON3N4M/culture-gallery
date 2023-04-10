@@ -68,9 +68,10 @@ interface Props {
   setTabContents: any;
   userData: any;
   tabContents: string;
+  isLogin: boolean;
 }
 
-function TopTab({ tabContents, setTabContents, userData }: Props) {
+function TopTab({ tabContents, setTabContents, userData, isLogin }: Props) {
   const [book, setBook] = useState(0);
   const [movie, setMovie] = useState(0);
   const [tv, setTv] = useState(0);
@@ -120,7 +121,7 @@ function TopTab({ tabContents, setTabContents, userData }: Props) {
       <Tab initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
         <Logo>CultureGallery</Logo>
         <MenuContainer>
-          {nickname !== "" ? (
+          {nickname !== "" && isLogin ? (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
               <MenuLabel>{nickname}님의 </MenuLabel>
               <MenuBtn onClick={menuOpen}>

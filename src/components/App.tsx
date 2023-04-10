@@ -21,6 +21,7 @@ import { doc, getDoc } from "firebase/firestore";
 import Main from "./Main";
 import { bodyColor } from "./globalStyle";
 import Welcome from "./Welcome";
+import { AnimatePresence, motion, MotionConfig } from "framer-motion";
 
 const AppContainer = styled.div`
   background-color: ${bodyColor}; //#505074; // #29293d
@@ -72,7 +73,7 @@ function App() {
         dispatch(setUserInfo({}));
       }
     });
-  }, []);
+  }, [isLogin]);
   return (
     <>
       <GlobalStyle />
@@ -82,13 +83,24 @@ function App() {
         tabContents={tabContents}
         userData={userData}
         setTabContents={setTabContents}
+        isLogin={isLogin}
       />
       <AppContainer>
-        {isLogin ? (
-          <Main tabContents={tabContents} />
-        ) : (
-          <Welcome isModal={isModal} />
-        )}
+        <AnimatePresence>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1 }}
+            key="motionDiv"
+          >
+            {isLogin ? (
+              <Main tabContents={tabContents} />
+            ) : (
+              <Welcome isModal={isModal} />
+            )}
+          </motion.div>
+        </AnimatePresence>
       </AppContainer>
     </>
   );

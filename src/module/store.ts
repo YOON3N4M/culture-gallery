@@ -85,6 +85,7 @@ export default function store(state = inititalState, action: any) {
         ...state,
         userData: action.data,
       };
+
     default:
       return state;
   }

@@ -80,6 +80,7 @@ function Main({ tabContents }: Props) {
   const [internationalMovie, setInternationMovie] = useState<any>([]);
   const [tv, setTv] = useState<any>([]);
   const [book, setBook] = useState<any>([]);
+  const [all, setAll] = useState<any>([]);
   const { isLogin, userData } = useSelector((state: any) => ({
     userData: state.store.userData,
     isLogin: state.store.isLogin,
@@ -94,9 +95,15 @@ function Main({ tabContents }: Props) {
     setBook([]);
     setTv([]);
     if (userData) {
+      const allArrTemp = [
+        ...userData.internationalMovie,
+        ...userData.book,
+        ...userData.tv,
+      ];
       setInternationMovie(userData.internationalMovie);
       setBook(userData.book);
       setTv(userData.tv);
+      setAll(allArrTemp);
     }
   }, [userData]);
 
@@ -116,7 +123,27 @@ function Main({ tabContents }: Props) {
       <ContentsBody>
         {
           {
-            all: <></>,
+            all: (
+              <ContentsUl>
+                {all.length !== 0
+                  ? all.map((item: any) => (
+                      <>
+                        <Item
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ duration: 1.3 }}
+                        >
+                          <CollectionImg
+                            isBook={false}
+                            src={item.poster}
+                          ></CollectionImg>
+                          <Title isBook={false}>{item.title}</Title>
+                        </Item>
+                      </>
+                    ))
+                  : null}
+              </ContentsUl>
+            ),
             movie: (
               <ContentsUl>
                 {internationalMovie.length !== 0

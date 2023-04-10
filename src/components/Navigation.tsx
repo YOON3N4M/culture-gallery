@@ -135,8 +135,8 @@ function Navigation({ isModal }: Props) {
     } else {
       setName("로그인 / 회원가입");
     }
-  }, [userInfo]);
-
+  }, [userInfo.displayName]);
+  console.log(userInfo);
   return (
     <>
       {" "}
