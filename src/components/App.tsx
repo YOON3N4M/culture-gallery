@@ -50,6 +50,7 @@ function App() {
 
   const dispatch = useDispatch();
   const [tabContents, setTabContents] = useState("movie");
+  const [isExplore, setIsExpore] = useState(false);
 
   function modalOff(e: any) {
     if (e.target === e.currentTarget) {
@@ -94,7 +95,7 @@ function App() {
             transition={{ duration: 1 }}
             key="motionDiv"
           >
-            {isLogin ? (
+            {isLogin && isExplore === false ? (
               <Main tabContents={tabContents} />
             ) : (
               <Welcome isModal={isModal} />

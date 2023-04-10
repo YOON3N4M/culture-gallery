@@ -120,9 +120,12 @@ function Navigation({ isModal }: Props) {
       setOn((prev) => !prev);
     }
   }
-  function callAuthModal() {
+  function callAuthModal(e: string) {
     if (isLogin === false) {
-      dispatch(setModalOn("Auth"));
+      dispatch(setModalOn(e));
+    }
+    if (isLogin && e === "Setting") {
+      dispatch(setModalOn(e));
     }
   }
   function logOut() {
@@ -151,15 +154,15 @@ function Navigation({ isModal }: Props) {
             onMouseLeave={navOnOff}
           >
             <Profile>
-              <ProfileIcon onClick={callAuthModal}>
+              <ProfileIcon onClick={() => callAuthModal("Auth")}>
                 {isLogin ? null : "?"}
               </ProfileIcon>
             </Profile>
-            <NickName onClick={callAuthModal}>{name}</NickName>
+            <NickName onClick={() => callAuthModal("Auth")}>{name}</NickName>
             <NavItem>내 컬렉션</NavItem>
             <NavItem>컬렉션 탐색</NavItem>
             <NavItem>즐겨찾기</NavItem>
-            <NavItem>설정</NavItem>
+            <NavItem onClick={() => callAuthModal("Setting")}>설정</NavItem>
             {isLogin ? <LogOut onClick={logOut}>로그아웃</LogOut> : null}
           </Nav>
         ) : (

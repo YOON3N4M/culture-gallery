@@ -6,6 +6,7 @@ import { bodyColor, borderColor, tabColor } from "../globalStyle";
 import AuthModal from "./AuthModal";
 import FAQModal from "./FAQModal";
 import PostingModal from "./PostingModal";
+import SettingModal from "./SettingModal";
 
 const ModalContainer = styled(motion.div)`
   position: absolute;
@@ -78,6 +79,7 @@ function Modal({ isModal, modalType, modalOff }: Props) {
                   Auth: <AuthModal modalOff={modalOff} />,
                   Posting: <PostingModal />,
                   FAQ: <FAQModal />,
+                  Setting: <SettingModal />,
                 }[modalType]
               }
             </ModalBack>
