@@ -3,7 +3,7 @@
 ### 배포
 
 임시 배포 : https://culture-gallery.firebaseapp.com/
-> 현재 여러 기능이 미구현 상태인 임시 버전 입니다. 초기 도움말, FAQ가 완전하지 않은 관계로 아래의 사용 방법을 참고해주세요.
+> 현재 일부 기능이 미구현 상태인 임시 버전 입니다. 초기 도움말, FAQ가 완전하지 않은 관계로 아래의 사용 방법을 참고해주세요.
 
 ### 스택
 <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white"> <img src="https://img.shields.io/badge/Redux-764ABC?style=for-the-badge&logo=Redux&logoColor=white"> <img src="https://img.shields.io/badge/typescript-3178C6?style=for-the-badge&logo=typescript&logoColor=white"> <img src="https://img.shields.io/badge/firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=white"> <img src="https://img.shields.io/badge/styled components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white">
@@ -21,8 +21,8 @@
 ### 사용방법
 
 * 화면 좌측으로 마우스를 옮겨 네비게이션을 활성화 합니다. (네비게이션 기능 수정 예정)
-* 물음표가 있는 원을 클릭하면 로그인 모달이 열립니다. (방식 수정 예정)
-* 최초 회원가입 후 새로고침이 필요 합니다. (수정 예정)
+* ✔️물음표가 있는 원을 클릭하면 로그인 모달이 열립니다. (수정 완료)
+* ✔️최초 회원가입 후 새로고침이 필요 합니다. (수정 완료)
 * 메인화면의 우측 상단 버튼을 통해 기록을 시작합니다. 해당 버튼은 로그인 상태에서만 보여집니다. (아래 이미지)
 > <img width="983" alt="image" src="https://user-images.githubusercontent.com/115640584/230595463-56ac66be-3f30-47ec-9d09-c38f43e496e1.png">
 * 기록할 컨텐츠를 선택 합니다.
@@ -31,7 +31,7 @@
 > <img width="906" alt="image" src="https://user-images.githubusercontent.com/115640584/230595624-e9dd3fa5-4e2e-416b-bd1a-5ea0e7ca27dc.png">
 * 입력란에 3글자 이상의 코멘트를 작성 후 엔터를 입력 합니다 (저작권 이슈로 인해 코멘트 필수적)
 > <img width="801" alt="image" src="https://user-images.githubusercontent.com/115640584/230596023-7e119399-be66-46ea-80d6-49f9e845c46a.png">
-* 메인 화면으로 돌아와 새로고침하면 기록한 컨텐츠들의 포스터(표지)가 보여집니다. (이 부분 또한 새로고침이 필요 없도록 수정 예정)
+* ✔️메인 화면으로 돌아와 새로고침하면 기록한 컨텐츠들의 포스터(표지)가 보여집니다. (이 부분 또한 새로고침이 필요 없도록 수정 완료)
 > <img width="1374" alt="image" src="https://user-images.githubusercontent.com/115640584/230596267-ea0b50bb-1c7a-46e1-af63-780fed8440c7.png">
 
 <hr>
