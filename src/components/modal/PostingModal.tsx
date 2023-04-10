@@ -186,7 +186,6 @@ function PostingModal() {
         `https://api.themoviedb.org/3/search/movie?api_key=${MOVIE_API_KEY}&language=ko&page=1&include_adult=true&query=${keyword}`
       ).catch((error) => console.log(error));
       const movieResObj: any = await movieRes.json();
-      console.log(movieResObj);
       if (movieResObj.results.length !== 0) {
         setSearchResult(movieResObj.results);
       }
@@ -196,7 +195,6 @@ function PostingModal() {
         `https://api.themoviedb.org/3/search/tv?api_key=${MOVIE_API_KEY}&language=ko&page=1&include_adult=true&query=${keyword}`
       );
       const tvResObj: any = await tvRes.json();
-      console.log(tvResObj);
       if (tvResObj.results.length !== 0) {
         setSearchResult(tvResObj.results);
       }
@@ -218,16 +216,20 @@ function PostingModal() {
   async function enterPosting(e: any) {
     e.preventDefault();
     const userRef = doc(dbService, "user", userInfo.uid);
-    console.log(userData);
+    let userDataTemp;
 
-    let userDataTemp = {
-      book: userData.book,
-      customOption: userData.customOption,
-      internationalMovie: userData.internationalMovie,
-      isCustom: userData.isCustom,
-      nickname: userData.nickname,
-      tv: userData.tv,
-    };
+    if (userData !== undefined) {
+      userDataTemp = {
+        book: userData?.book,
+        customOption: userData?.customOption,
+        internationalMovie: userData?.internationalMovie,
+        isCustom: userData?.isCustom,
+        nickname: userData?.nickname,
+        tv: userData.tv,
+        isPrivate: userData.isPrivate,
+      };
+    }
+
     //영화
     if (culture === "moviePosting") {
       const movieRef = {
@@ -241,7 +243,10 @@ function PostingModal() {
       });
 
       setCulture("movie");
-      userDataTemp.internationalMovie.push(movieRef);
+      if (userDataTemp !== undefined) {
+        userDataTemp.internationalMovie.push(movieRef);
+      }
+
       dispatch(setUserData(userDataTemp));
     }
     //tv
@@ -256,7 +261,10 @@ function PostingModal() {
         tv: arrayUnion(tvRef),
       });
       setCulture("tv");
-      userDataTemp.tv.push(tvRef);
+      if (userDataTemp !== undefined) {
+        userDataTemp.tv.push(tvRef);
+      }
+
       dispatch(setUserData(userDataTemp));
     }
     //book
@@ -271,7 +279,10 @@ function PostingModal() {
         book: arrayUnion(bookRef),
       });
       setCulture("book");
-      userDataTemp.book.push(bookRef);
+      if (userDataTemp !== undefined) {
+        userDataTemp.book.push(bookRef);
+      }
+
       dispatch(setUserData(userDataTemp));
     }
     setComment("");
@@ -279,13 +290,11 @@ function PostingModal() {
 
   async function thumnailClick(e: any) {
     setChosenCulture(e);
-    console.log(e);
     //영화 등록할때
     if (culture === "movie") {
       const docRef = doc(dbService, "internationalMovie", String(e.id));
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        console.log("이미 등록된 영화 입니다!", docSnap.data());
         setCulture("moviePosting");
       } else {
         await setDoc(doc(dbService, "internationalMovie", String(e.id)), {
@@ -302,7 +311,6 @@ function PostingModal() {
       const docRef = doc(dbService, "tv", String(e.id));
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        console.log("이미 등록된 tv프로그램 입니다!", docSnap.data());
         setCulture("tvPosting");
       } else {
         await setDoc(doc(dbService, "tv", String(e.id)), {
@@ -319,7 +327,6 @@ function PostingModal() {
       const docRef = doc(dbService, "book", e.isbn);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        console.log("이미 등록된 책 입니다!", docSnap.data());
         setCulture("bookPosting");
       } else {
         await setDoc(doc(dbService, "book", e.isbn), {
