@@ -48,7 +48,7 @@ function Welcome({ isModal }: Props) {
   const [isBook, setIsBook] = useState(false);
   const [blink, setBlink] = useState(true);
   async function getDummyData() {
-    const dummyRef = doc(dbService, "user", "2iq902jOUIXtIi7OdljMw66DX1x1");
+    const dummyRef = doc(dbService, "user", "a7RVkbswbtaCikSCdJL8gKi9kOr1");
     const docSnap = await getDoc(dummyRef);
     if (docSnap.exists() && docSnap.data() !== undefined) {
       setDummy(docSnap.data());

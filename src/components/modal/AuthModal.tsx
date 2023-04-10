@@ -12,7 +12,7 @@ import {
 import { auth, dbService } from "../../fBase";
 import { doc, setDoc } from "firebase/firestore";
 import { useDispatch } from "react-redux";
-import { setModalOff, setSignIn } from "../../module/store";
+import { setModalOff, setSignIn, setUserData } from "../../module/store";
 
 const Contianer = styled(motion.div)`
   padding-top: 50px;
@@ -174,7 +174,7 @@ function AuthModal({ modalOff }: Props) {
     await updateProfile(user, { displayName: nickname });
     // 이 부분 테스트 끝나면 book, kMovie, TV프로그램 등 만들어야함 (완료)
     // 계정 생성시 기본 값들을 설정하는 곳
-    await setDoc(doc(dbService, "user", user.uid), {
+    const userDataTemp = {
       nickname: nickname,
       isPrivate: true,
       isCustom: false,
@@ -182,9 +182,13 @@ function AuthModal({ modalOff }: Props) {
       internationalMovie: [],
       tv: [],
       book: [],
-    }).then(() => setPageIndex((prev) => prev + 1));
+    };
+    await setDoc(doc(dbService, "user", user.uid), userDataTemp).then(() =>
+      setPageIndex((prev) => prev + 1)
+    );
 
     dispatch(setSignIn());
+    dispatch(setUserData(userDataTemp));
   }
 
   return (
