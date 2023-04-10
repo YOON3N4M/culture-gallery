@@ -97,6 +97,10 @@ const Error = styled.span`
   font-size: 15px;
   color: #9b3333;
 `;
+const Notice = styled.span`
+  font-size: 15px;
+  color: #726b6b;
+`;
 const ErrorBox = styled.div`
   margin-top: 15px;
   height: 18px;
@@ -236,6 +240,7 @@ function AuthModal({ modalOff }: Props) {
                       <ErrorBox>
                         <Error>{errorMsg}</Error>
                       </ErrorBox>
+                      <ErrorBox></ErrorBox>
                       <ChangeBtn onClick={() => onClick(1)}>
                         회원가입 하러가기
                       </ChangeBtn>
@@ -272,6 +277,9 @@ function AuthModal({ modalOff }: Props) {
                         <SubmitBtn type="submit">회원가입</SubmitBtn>
                         <ErrorBox>
                           <Error>{errorMsg}</Error>
+                        </ErrorBox>
+                        <ErrorBox>
+                          <Notice>별도의 인증 절차는 없습니다!</Notice>
                         </ErrorBox>
                       </form>
                       <ChangeBtn onClick={() => onClick(0)}>

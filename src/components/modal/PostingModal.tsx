@@ -372,10 +372,10 @@ function PostingModal() {
                   <form onSubmit={enterSearch}>
                     <SearchInput
                       value={keyword}
-                      placeholder=""
                       onChange={onChange}
                       name="search"
                       required
+                      placeholder="영화 검색"
                     />
                   </form>
                   <SearchResultContainer>
@@ -439,7 +439,7 @@ function PostingModal() {
                   <form onSubmit={enterSearch}>
                     <SearchInput
                       value={keyword}
-                      placeholder=""
+                      placeholder="TV프로그램 검색"
                       onChange={onChange}
                       name="search"
                       required
@@ -507,9 +507,9 @@ function PostingModal() {
                     <form onSubmit={enterSearch}>
                       <SearchInput
                         value={keyword}
-                        placeholder=""
                         onChange={onChange}
                         name="search"
+                        placeholder="책 검색"
                         required
                       />
                     </form>
