@@ -19,7 +19,7 @@
 * 기록은 데이터베이스 연동을 위해 회원가입이 필수적이지만, 다른 사람들의 기록을 구경하는건 로그인 없이도 가능합니다!
 <img width="900" alt="image" src="https://user-images.githubusercontent.com/115640584/231301578-91ba943e-5717-48dd-b33c-50bb12ad123e.png">
 <hr>
-<hr>
+
 
 ### 상세 소개
 
