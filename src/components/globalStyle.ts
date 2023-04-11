@@ -4,9 +4,9 @@ const colorSample = {
   mint: "#68D3A8",
   opgg: "#EBEEF1",
 };
-export const tabColor = "#1A1A1A";
-export const bodyColor = "#353535";
-export const backColor = "#1A1A1A";
+export const tabColor = "white";
+export const bodyColor = "#EBEEF1";
+export const backColor = "#EBEEF1";
 export const borderColor = "#2a2a2a";
 
 export const GlobalStyle = createGlobalStyle`
@@ -27,7 +27,7 @@ export const GlobalStyle = createGlobalStyle`
     font-family: 'Nanum Gothic','S-CoreDream-3Light', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
     Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     background-color: ${backColor};
-    color:white;
+    color:black;
     margin: 0;
 
      &::-webkit-scrollbar {

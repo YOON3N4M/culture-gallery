@@ -237,6 +237,7 @@ function PostingModal() {
         title: chosenCulture.title,
         poster: posterBaseURL + chosenCulture.poster_path,
         year: chosenCulture.release_date.substring(0, 4),
+        comment: comment,
       };
       await updateDoc(userRef, {
         internationalMovie: arrayUnion(movieRef),
@@ -256,6 +257,7 @@ function PostingModal() {
         title: chosenCulture.name,
         poster: posterBaseURL + chosenCulture.poster_path,
         year: chosenCulture.first_air_date.substring(0.4),
+        comment: comment,
       };
       await updateDoc(userRef, {
         tv: arrayUnion(tvRef),
@@ -274,6 +276,7 @@ function PostingModal() {
         title: chosenCulture.title,
         poster: chosenCulture.thumbnail,
         year: chosenCulture.datetime.substring(0, 4),
+        comment: comment,
       };
       await updateDoc(userRef, {
         book: arrayUnion(bookRef),

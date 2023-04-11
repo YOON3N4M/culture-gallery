@@ -22,10 +22,11 @@ import Main from "./Main";
 import { bodyColor } from "./globalStyle";
 import Welcome from "./Welcome";
 import { AnimatePresence, motion, MotionConfig } from "framer-motion";
+import Explore from "./Explore";
 
 const AppContainer = styled.div`
   background-color: ${bodyColor}; //#505074; // #29293d
-  width: 1000px;
+  width: 1200px;
   min-height: 800px;
   margin: 0 auto;
   padding-top: 60px;
@@ -36,8 +37,10 @@ export interface Props {
   isModal?: boolean;
   modalType?: string;
   modalOff?: (e: any) => void;
-  setSelectedUser?: (e: any) => void;
+  setSelectedUser?: any;
   setIsExplore?: (e: any) => void;
+  setSelectedWindow?: any;
+  setIsMine?: any;
 }
 
 function App() {
@@ -53,7 +56,10 @@ function App() {
   const dispatch = useDispatch();
   const [tabContents, setTabContents] = useState("movie");
   const [isExplore, setIsExplore] = useState(false);
-  const [selectedUser, setSelectedUser] = useState({});
+  const [selectedUser, setSelectedUser] = useState();
+  // 0 = 탐색 , 1 = 본인 메인,
+  const [selectedWindow, setSelectedWindow] = useState(0);
+  const [isMine, setIsMine] = useState(true);
 
   function modalOff(e: any) {
     if (e.target === e.currentTarget) {
@@ -79,7 +85,7 @@ function App() {
     });
   }, [isLogin]);
 
-  console.log(selectedUser);
+  console.log(isMine);
   return (
     <>
       <GlobalStyle />
@@ -90,12 +96,19 @@ function App() {
         modalType={modalType}
         modalOff={modalOff}
       />
-      <Navigation isModal={isModal} />
+      <Navigation
+        setSelectedUser={setSelectedUser}
+        setSelectedWindow={setSelectedWindow}
+        isModal={isModal}
+        setIsMine={setIsMine}
+      />
       <TopTab
         tabContents={tabContents}
         userData={userData}
         setTabContents={setTabContents}
         isLogin={isLogin}
+        selectedUser={selectedUser}
+        selectedWindow={selectedWindow}
       />
       <AppContainer>
         <AnimatePresence>
@@ -106,11 +119,24 @@ function App() {
             transition={{ duration: 1 }}
             key="motionDiv"
           >
-            {isLogin ? (
-              <Main tabContents={tabContents} />
-            ) : (
-              <Welcome isModal={isModal} />
-            )}
+            {
+              {
+                0: (
+                  <Explore
+                    setSelectedWindow={setSelectedWindow}
+                    setIsMine={setIsMine}
+                    setSelectedUser={setSelectedUser}
+                  />
+                ),
+                1: (
+                  <Main
+                    selectedUser={selectedUser}
+                    isMine={isMine}
+                    tabContents={tabContents}
+                  />
+                ),
+              }[selectedWindow]
+            }
           </motion.div>
         </AnimatePresence>
       </AppContainer>

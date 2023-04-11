@@ -41,7 +41,7 @@ const Circle = styled.div<{ toggle: boolean }>`
   ${(props) =>
     props.toggle &&
     `
-      transform: translate(32px, 0);
+      transform: translate(34px, 0);
       transition: all 0.5s ease-in-out;
     `}
 `;

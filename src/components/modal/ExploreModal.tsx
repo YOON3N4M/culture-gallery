@@ -26,6 +26,8 @@ const UserIcon = styled.div`
   height: 60px;
   background-color: gray;
   border-radius: 50%;
+  line-height: 60px;
+  font-size: 30px;
 `;
 const UserNameBox = styled.div`
   margin-left: -130px;
@@ -88,7 +90,7 @@ function ExploreModal({ setIsExplore, setSelectedUser }: Props) {
           {userArr.length !== 0
             ? userArr.map((u: any) => (
                 <UserBox>
-                  <UserIcon></UserIcon>
+                  <UserIcon>{u.nickname.slice(0, 1)}</UserIcon>
                   <UserNameBox onClick={onClick}>
                     <UserName>{u.nickname}</UserName>
                     <UserSmall>

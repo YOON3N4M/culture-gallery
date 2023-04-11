@@ -19,6 +19,7 @@ const Nav = styled(motion.div)`
   justify-content: right;
   box-shadow: 1px 1px 1px 1px rgb(0 0 0 / 19%);
   flex-direction: column;
+  border-radius: 8px;
 `;
 const Profile = styled.div`
   width: 100%;
@@ -49,7 +50,7 @@ const NickName = styled.div`
   border-bottom: 0.5px solid #848484;
   cursor: pointer;
   :hover {
-    background-color: rgb(26, 26, 26);
+    background-color: rgb(196, 196, 196);
   }
 `;
 const NavItem = styled.div`
@@ -63,7 +64,7 @@ const NavItem = styled.div`
 
   cursor: pointer;
   :hover {
-    background-color: rgb(26, 26, 26);
+    background-color: rgb(196, 196, 196);
   }
 `;
 const LogOut = styled.div`
@@ -107,7 +108,12 @@ const NavBtn = styled.button`
   animation: ${fadeIn} linear 0.3s;
 `;
 
-function Navigation({ isModal }: Props) {
+function Navigation({
+  isModal,
+  setSelectedWindow,
+  setSelectedUser,
+  setIsMine,
+}: Props) {
   const { userInfo, isLogin } = useSelector((state: any) => ({
     userInfo: state.store.userInfo,
     isLogin: state.store.isLogin,
@@ -137,6 +143,16 @@ function Navigation({ isModal }: Props) {
     auth.signOut();
   }
 
+  function goToMy() {
+    if (isLogin) {
+      setSelectedWindow(1);
+      setSelectedUser(undefined);
+      setIsMine(true);
+    } else {
+      alert("로그인 후 이용 가능합니다.");
+    }
+  }
+
   useEffect(() => {
     if (userInfo.displayName !== undefined) {
       setName(userInfo.displayName);
@@ -160,12 +176,12 @@ function Navigation({ isModal }: Props) {
           >
             <Profile>
               <ProfileIcon onClick={() => callModal("Auth")}>
-                {isLogin ? null : "?"}
+                {isLogin ? userInfo.displayName.slice(0, 1) : "?"}
               </ProfileIcon>
             </Profile>
             <NickName onClick={() => callModal("Auth")}>{name}</NickName>
-            <NavItem>내 컬렉션</NavItem>
-            <NavItem onClick={() => callModal("Explore")}>컬렉션 탐색</NavItem>
+            <NavItem onClick={goToMy}>내 컬렉션</NavItem>
+            <NavItem onClick={() => setSelectedWindow(0)}>컬렉션 탐색</NavItem>
             <NavItem>즐겨찾기</NavItem>
             <NavItem onClick={() => callModal("Setting")}>설정</NavItem>
             {isLogin ? <LogOut onClick={logOut}>로그아웃</LogOut> : null}

@@ -4,19 +4,22 @@ import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import logoImg from "../img/1.png";
 import { setModalOn } from "../module/store";
+import { UserT } from "./Explore";
 import { tabColor } from "./globalStyle";
+import useDidMountEffect from "./useDidMountEffect";
 
 const Tab = styled(motion.div)`
   width: 100vw;
-  height: 50px;
-  background-color: ${tabColor};
+  height: 55px;
+  background-color: black;
   position: fixed;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0px 20px 0px 20px;
+  padding: 0px 180px 0px 180px;
   //border-bottom-left-radius: 15px;
   //border-bottom-right-radius: 15px;
+
   border-bottom: #2a2a2a 1px solid;
 `;
 const FAQ = styled.button`
@@ -53,7 +56,7 @@ const MenuBtn = styled.button`
 `;
 const MenuBox = styled(motion.div)`
   position: absolute;
-  background-color: rgb(26, 26, 26);
+  background-color: black;
   width: 100px;
   height: 180px;
   margin-left: 15px;
@@ -64,14 +67,38 @@ const MenuBox = styled(motion.div)`
   z-index: 2000;
 `;
 
+const Add = styled.button`
+  border-radius: 50%;
+  font-size: 30px;
+  color: white;
+  cursor: pointer;
+  margin-right: 30px;
+`;
+const RightMenu = styled.div`
+  //background-color: red;
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  padding-right: 10px;
+`;
+
 interface Props {
   setTabContents: any;
   userData: any;
   tabContents: string;
   isLogin: boolean;
+  selectedUser: any;
+  selectedWindow: number;
 }
 
-function TopTab({ tabContents, setTabContents, userData, isLogin }: Props) {
+function TopTab({
+  tabContents,
+  setTabContents,
+  userData,
+  isLogin,
+  selectedUser,
+  selectedWindow,
+}: Props) {
   const [book, setBook] = useState(0);
   const [movie, setMovie] = useState(0);
   const [tv, setTv] = useState(0);
@@ -85,8 +112,12 @@ function TopTab({ tabContents, setTabContents, userData, isLogin }: Props) {
     dispatch(setModalOn("FAQ"));
   }
 
+  function callModal(e: string) {
+    dispatch(setModalOn(e));
+  }
+
   useEffect(() => {
-    if (userData !== undefined) {
+    if (userData !== undefined && selectedUser === undefined) {
       setMovie(userData.internationalMovie.length);
       setBook(userData.book.length);
       setTv(userData.tv.length);
@@ -95,14 +126,52 @@ function TopTab({ tabContents, setTabContents, userData, isLogin }: Props) {
     }
   }, [userData]);
 
-  useEffect(() => {
-    if (userData !== undefined) {
+  useDidMountEffect(() => {
+    if (userData !== undefined && selectedUser === undefined) {
+      setMovie(userData.internationalMovie.length);
+      setBook(userData.book.length);
+      setTv(userData.tv.length);
+      setQty(userData.internationalMovie.length);
+      setNickname(userData.nickname);
+    }
+    if (selectedUser !== undefined) {
+      setMovie(selectedUser.internationalMovie.length);
+      setBook(selectedUser.book.length);
+      setTv(selectedUser.tv.length);
+      setQty(selectedUser.internationalMovie.length);
+      setNickname(selectedUser.nickname);
+    }
+    if (userData !== undefined && selectedUser === undefined) {
       if (tabContents === "movie") {
         setQty(userData.internationalMovie.length);
       } else if (tabContents === "book") {
         setQty(userData.book.length);
       } else if (tabContents === "tv") {
         setQty(userData.tv.length);
+      } else if (tabContents === "all") {
+        setQty(movie + tv + book);
+      }
+    }
+  }, [selectedUser]);
+
+  useEffect(() => {
+    if (userData !== undefined && selectedUser === undefined) {
+      if (tabContents === "movie") {
+        setQty(userData.internationalMovie.length);
+      } else if (tabContents === "book") {
+        setQty(userData.book.length);
+      } else if (tabContents === "tv") {
+        setQty(userData.tv.length);
+      } else if (tabContents === "all") {
+        setQty(movie + tv + book);
+      }
+    } else if (selectedUser !== undefined) {
+      if (tabContents === "movie") {
+        setQty(selectedUser.internationalMovie.length);
+      } else if (tabContents === "book") {
+        setQty(selectedUser.book.length);
+      } else if (tabContents === "tv") {
+        setQty(selectedUser.tv.length);
       } else if (tabContents === "all") {
         setQty(movie + tv + book);
       }
@@ -116,12 +185,13 @@ function TopTab({ tabContents, setTabContents, userData, isLogin }: Props) {
     setTabContents(culture);
   }
 
+  console.log(selectedUser);
   return (
     <>
       <Tab initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
         <Logo>CultureGallery</Logo>
         <MenuContainer>
-          {nickname !== "" && isLogin ? (
+          {nickname !== "" && isLogin && selectedWindow !== 0 ? (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
               <MenuLabel>{nickname}님의 </MenuLabel>
               <MenuBtn onClick={menuOpen}>
@@ -175,7 +245,17 @@ function TopTab({ tabContents, setTabContents, userData, isLogin }: Props) {
             ) : null}
           </AnimatePresence>
         </MenuContainer>
-        <FAQ onClick={callAuthModal}>?</FAQ>
+        <RightMenu>
+          <Add
+            onClick={() => {
+              callModal("Posting");
+            }}
+          >
+            +
+          </Add>
+
+          <FAQ onClick={callAuthModal}>?</FAQ>
+        </RightMenu>
       </Tab>
     </>
   );

@@ -70,7 +70,7 @@ const LoginSpan = styled.span`
   margin-bottom: 40px;
 `;
 const ChangeBtn = styled.button`
-  color: white;
+  color: black;
   text-decoration: underline;
   font-size: 15px;
   margin-top: 30px;
