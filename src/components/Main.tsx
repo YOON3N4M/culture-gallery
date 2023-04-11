@@ -114,6 +114,7 @@ function Main({ tabContents, isMine, selectedUser }: Props) {
     }
   }
   function delFromDB(i: string) {}
+
   useEffect(() => {
     if (isMine) {
       setInternationMovie([]);
@@ -214,8 +215,6 @@ function Main({ tabContents, isMine, selectedUser }: Props) {
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                           transition={{ duration: 1.3 }}
-                          onMouseEnter={isMyCollection}
-                          onMouseLeave={isMyCollection}
                         >
                           {hideDelBtn ? null : <DelBtn>X</DelBtn>}
 

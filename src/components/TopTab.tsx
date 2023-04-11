@@ -19,7 +19,7 @@ const Tab = styled(motion.div)`
   padding: 0px 180px 0px 180px;
   //border-bottom-left-radius: 15px;
   //border-bottom-right-radius: 15px;
-
+  z-index: 1000;
   border-bottom: #2a2a2a 1px solid;
 `;
 const FAQ = styled.button`
@@ -82,6 +82,9 @@ const RightMenu = styled.div`
   padding-right: 10px;
 `;
 
+const Explore = styled.span`
+  color: white;
+`;
 interface Props {
   setTabContents: any;
   userData: any;
@@ -191,15 +194,15 @@ function TopTab({
       <Tab initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
         <Logo>CultureGallery</Logo>
         <MenuContainer>
-          {nickname !== "" && isLogin && selectedWindow !== 0 ? (
+          {nickname !== "" && selectedWindow !== 0 ? (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
               <MenuLabel>{nickname}님의 </MenuLabel>
               <MenuBtn onClick={menuOpen}>
                 {tabContents.toUpperCase()} ({qty})
               </MenuBtn>
             </motion.div>
-          ) : null}
-
+          ) : null}{" "}
+          {selectedWindow === 0 ? <Explore>탐색</Explore> : null}
           <AnimatePresence>
             {isOpen ? (
               <MenuBox

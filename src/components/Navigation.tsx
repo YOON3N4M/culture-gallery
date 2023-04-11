@@ -34,7 +34,7 @@ const ProfileIcon = styled.div`
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background-color: gray;
+  background-color: #c0c0c0;
   cursor: pointer;
   text-align: center;
   line-height: 80px;
@@ -164,6 +164,7 @@ function Navigation({
     }
   }, [userInfo.displayName]);
 
+  console.log(userInfo);
   return (
     <>
       {" "}
@@ -179,7 +180,9 @@ function Navigation({
           >
             <Profile>
               <ProfileIcon onClick={() => callModal("Auth")}>
-                {isLogin ? userInfo.displayName.slice(0, 1) : "?"}
+                {isLogin && userInfo.displayName !== null
+                  ? userInfo.displayName.slice(0, 1)
+                  : "?"}
               </ProfileIcon>
             </Profile>
             <NickName onClick={() => callModal("Auth")}>{name}</NickName>

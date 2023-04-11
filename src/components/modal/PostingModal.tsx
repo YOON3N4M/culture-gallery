@@ -123,20 +123,30 @@ const InfoBox = styled.div`
   margin-bottom: 10px;
 `;
 
-const Genre = styled.span`
+const Desc = styled.div`
   color: gray;
+  margin-top: 90px;
+  font-size: 13px;
 `;
-
+const SubmitBtn = styled.button`
+  display: block;
+  margin: 0 auto;
+  margin-top: 15px;
+  width: 200px;
+  height: 50px;
+  background-color: #000000;
+  border-radius: 8px;
+  color: white;
+`;
 const CommentsInput = styled.input`
   width: 400px;
   height: 30px;
   font-size: 20px;
-  margin-top: 160px;
+
   // background-color: gray;
 
-  border-bottom: 2px solid gray;
-  background-color: #727272;
-  color: white;
+  background-color: #ebeef1;
+  color: black;
 `;
 
 const ContentsIcon = styled.img`
@@ -422,7 +432,10 @@ function PostingModal() {
                           <h1>{chosenCulture.title}</h1>{" "}
                           <small>({chosenCulture.release_date})</small>
                         </InfoBox>
-                        <InfoBox></InfoBox>
+                        <Desc>
+                          2글자 이상의 짧은 코멘트를 입력해주세요
+                          <p>추후 코멘트 관련 컨텐츠에 활용 됩니다.</p>
+                        </Desc>
                         <form onSubmit={enterPosting}>
                           <CommentsInput
                             minLength={3}
@@ -433,6 +446,7 @@ function PostingModal() {
                             onChange={onChange}
                             required
                           />
+                          <SubmitBtn type="submit">기록</SubmitBtn>
                         </form>
                       </InfoContainer>
                     </PostingContainer>
@@ -489,7 +503,10 @@ function PostingModal() {
                           <h1>{chosenCulture.name}</h1>{" "}
                           <small>({chosenCulture.first_air_date})</small>
                         </InfoBox>
-                        <InfoBox></InfoBox>
+                        <Desc>
+                          2글자 이상의 짧은 코멘트를 입력해주세요
+                          <p>추후 코멘트 관련 컨텐츠에 활용 됩니다.</p>
+                        </Desc>
                         <form onSubmit={enterPosting}>
                           <CommentsInput
                             maxLength={100}
@@ -499,6 +516,7 @@ function PostingModal() {
                             onChange={onChange}
                             required
                           />
+                          <SubmitBtn type="submit">기록</SubmitBtn>
                         </form>
                       </InfoContainer>
                     </PostingContainer>
@@ -556,7 +574,10 @@ function PostingModal() {
                           <h1>{chosenCulture.title}</h1>{" "}
                           <small>({chosenCulture.authors})</small>
                         </InfoBox>
-                        <InfoBox></InfoBox>
+                        <Desc>
+                          2글자 이상의 짧은 코멘트를 입력해주세요
+                          <p>추후 코멘트 관련 컨텐츠에 활용 됩니다.</p>
+                        </Desc>
                         <form onSubmit={enterPosting}>
                           <CommentsInput
                             maxLength={100}
@@ -566,6 +587,7 @@ function PostingModal() {
                             onChange={onChange}
                             required
                           />
+                          <SubmitBtn type="submit">기록</SubmitBtn>
                         </form>
                       </InfoContainer>
                     </PostingContainer>
