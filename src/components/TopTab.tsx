@@ -246,13 +246,15 @@ function TopTab({
           </AnimatePresence>
         </MenuContainer>
         <RightMenu>
-          <Add
-            onClick={() => {
-              callModal("Posting");
-            }}
-          >
-            +
-          </Add>
+          {isLogin && (
+            <Add
+              onClick={() => {
+                callModal("Posting");
+              }}
+            >
+              +
+            </Add>
+          )}
 
           <FAQ onClick={callAuthModal}>?</FAQ>
         </RightMenu>

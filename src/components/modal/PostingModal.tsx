@@ -43,14 +43,14 @@ const SearchContainer = styled(motion.div)`
 const SearchInput = styled.input`
   font-size: 30px;
 
-  background-color: rgb(26, 26, 26);
-  color: white;
+  background-color: #ebeef1;
+  color: black;
 `;
 const SearchResultContainer = styled.div`
   margin-top: 50px;
   height: 300px;
   display: flex;
-  background-color: #727272;
+  background-color: #ebeef1;
   justify-items: center;
   overflow-x: scroll;
   overflow-y: hidden;
@@ -94,7 +94,7 @@ const Title = styled.span`
   text-align: center;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: white;
+  color: black;
   font-weight: 700;
   opacity: 50%;
 `;
@@ -137,6 +137,11 @@ const CommentsInput = styled.input`
   border-bottom: 2px solid gray;
   background-color: #727272;
   color: white;
+`;
+
+const ContentsIcon = styled.img`
+  filter: invert(76%) sepia(95%) saturate(3%) hue-rotate(314deg) brightness(98%)
+    contrast(99%);
 `;
 
 interface MovieInfoT {
@@ -353,16 +358,16 @@ function PostingModal() {
               none: (
                 <ModalBody>
                   <CultureBox onClick={() => onClick("movie")}>
-                    <img src={movieIcon} />
+                    <ContentsIcon src={movieIcon} />
                     <span>MOVIE</span>
                   </CultureBox>
 
                   <CultureBox onClick={() => onClick("tv")}>
-                    <img src={tvIcon} />
+                    <ContentsIcon src={tvIcon} />
                     <span style={{ minWidth: "51px" }}>TV </span>
                   </CultureBox>
                   <CultureBox onClick={() => onClick("book")}>
-                    <img src={bookIcon} />
+                    <ContentsIcon src={bookIcon} />
                     <span>BOOK</span>
                   </CultureBox>
                 </ModalBody>

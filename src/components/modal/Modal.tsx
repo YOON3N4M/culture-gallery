@@ -42,7 +42,7 @@ export const ModalWindow = styled.div`
   min-height: 350px;
   text-align: center;
   text-decoration: none;
-  background-color: ${bodyColor};
+  background-color: white;
   //border-radius: 30px;
   overflow: hidden;
   align-items: center;

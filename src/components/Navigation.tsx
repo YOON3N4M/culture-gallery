@@ -107,7 +107,10 @@ const NavBtn = styled.button`
   color: black;
   animation: ${fadeIn} linear 0.3s;
 `;
-
+const Icon = styled.img`
+  filter: invert(76%) sepia(95%) saturate(3%) hue-rotate(314deg) brightness(98%)
+    contrast(99%);
+`;
 function Navigation({
   isModal,
   setSelectedWindow,
@@ -188,7 +191,7 @@ function Navigation({
           </Nav>
         ) : (
           <NavHover onMouseOver={navOnOff}>
-            <img style={{ opacity: "30%" }} src={arrowIcon} />
+            <Icon style={{ opacity: "50%" }} src={arrowIcon} />
           </NavHover>
         )}
       </AnimatePresence>
