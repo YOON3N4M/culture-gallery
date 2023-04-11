@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { Props } from "../App";
 import { bodyColor, borderColor, tabColor } from "../globalStyle";
 import AuthModal from "./AuthModal";
+import ExploreModal from "./ExploreModal";
 import FAQModal from "./FAQModal";
 import PostingModal from "./PostingModal";
 import SettingModal from "./SettingModal";
@@ -57,7 +58,13 @@ export const ModalHeader = styled.div`
   line-height: 40px;
 `;
 
-function Modal({ isModal, modalType, modalOff }: Props) {
+function Modal({
+  isModal,
+  modalType,
+  modalOff,
+  setIsExplore,
+  setSelectedUser,
+}: Props) {
   if (isModal) {
     document.body.style.overflow = "hidden";
   } else {
@@ -80,6 +87,12 @@ function Modal({ isModal, modalType, modalOff }: Props) {
                   Posting: <PostingModal />,
                   FAQ: <FAQModal />,
                   Setting: <SettingModal />,
+                  Explore: (
+                    <ExploreModal
+                      setSelectedUser={setSelectedUser}
+                      setIsExplore={setIsExplore}
+                    />
+                  ),
                 }[modalType]
               }
             </ModalBack>

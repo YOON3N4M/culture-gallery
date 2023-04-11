@@ -36,6 +36,8 @@ export interface Props {
   isModal?: boolean;
   modalType?: string;
   modalOff?: (e: any) => void;
+  setSelectedUser?: (e: any) => void;
+  setIsExplore?: (e: any) => void;
 }
 
 function App() {
@@ -50,7 +52,8 @@ function App() {
 
   const dispatch = useDispatch();
   const [tabContents, setTabContents] = useState("movie");
-  const [isExplore, setIsExpore] = useState(false);
+  const [isExplore, setIsExplore] = useState(false);
+  const [selectedUser, setSelectedUser] = useState({});
 
   function modalOff(e: any) {
     if (e.target === e.currentTarget) {
@@ -75,10 +78,18 @@ function App() {
       }
     });
   }, [isLogin]);
+
+  console.log(selectedUser);
   return (
     <>
       <GlobalStyle />
-      <Modal isModal={isModal} modalType={modalType} modalOff={modalOff} />
+      <Modal
+        setIsExplore={setIsExplore}
+        setSelectedUser={setSelectedUser}
+        isModal={isModal}
+        modalType={modalType}
+        modalOff={modalOff}
+      />
       <Navigation isModal={isModal} />
       <TopTab
         tabContents={tabContents}
@@ -95,7 +106,7 @@ function App() {
             transition={{ duration: 1 }}
             key="motionDiv"
           >
-            {isLogin && isExplore === false ? (
+            {isLogin ? (
               <Main tabContents={tabContents} />
             ) : (
               <Welcome isModal={isModal} />

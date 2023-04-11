@@ -17,7 +17,7 @@ function FAQModal() {
         {
           0: (
             <ModalWindow>
-              <ModalHeader>CultureGallery</ModalHeader>
+              <ModalHeader>도움말</ModalHeader>
               <DescContainer></DescContainer>
             </ModalWindow>
           ),
