@@ -4,7 +4,7 @@
 
 임시 배포 : https://culture-gallery.firebaseapp.com/
 > * 전체적인 디자인이 개편되었고 거의 대부분의 기능이 모두 구현되었습니다. (4/12)
-> * 그러나 FAQ, 기록 삭제 등의 일부 기능은 미구현 상태입니다. 
+> * 그러나 FAQ, 삭제 등의 일부 기능은 미구현 상태입니다. 
 
 ### 스택
 <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white"> <img src="https://img.shields.io/badge/Redux-764ABC?style=for-the-badge&logo=Redux&logoColor=white"> <img src="https://img.shields.io/badge/typescript-3178C6?style=for-the-badge&logo=typescript&logoColor=white"> <img src="https://img.shields.io/badge/firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=white"> <img src="https://img.shields.io/badge/styled components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white">
@@ -17,8 +17,9 @@
 * 기록한 것들을 마치 갤러리처럼 시각적으로 즐길 수 있습니다! 
 * 나의 취향을 기록하고 다른 사람의 취향도 구경 해보세요!
 * 기록은 데이터베이스 연동을 위해 회원가입이 필수적이지만, 다른 사람들의 기록을 구경하는건 로그인 없이도 가능합니다!
-![image](https://user-images.githubusercontent.com/115640584/231358345-98223762-11e6-420f-8227-7695cb96878e.png)
 
+<img width="900" alt="image" src="https://user-images.githubusercontent.com/115640584/231358692-537df0b9-5a18-4a9f-bdda-1abdb60659bc.png">
+<br>
 <img width="900" alt="image" src="https://user-images.githubusercontent.com/115640584/231301578-91ba943e-5717-48dd-b33c-50bb12ad123e.png">
 <hr>
 
