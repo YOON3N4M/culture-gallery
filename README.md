@@ -17,6 +17,8 @@
 * 기록한 것들을 마치 갤러리처럼 시각적으로 즐길 수 있습니다! 
 * 나의 취향을 기록하고 다른 사람의 취향도 구경 해보세요!
 * 기록은 데이터베이스 연동을 위해 회원가입이 필수적이지만, 다른 사람들의 기록을 구경하는건 로그인 없이도 가능합니다!
+![image](https://user-images.githubusercontent.com/115640584/231358345-98223762-11e6-420f-8227-7695cb96878e.png)
+
 <img width="900" alt="image" src="https://user-images.githubusercontent.com/115640584/231301578-91ba943e-5717-48dd-b33c-50bb12ad123e.png">
 <hr>
 
