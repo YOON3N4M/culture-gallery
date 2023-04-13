@@ -15,6 +15,7 @@ import postingIcon from "../img/postingIcon.png";
 import { motion } from "framer-motion";
 import useDidMountEffect from "./useDidMountEffect";
 import { ContentsT } from "./Explore";
+import { useOutletContext } from "react-router-dom";
 
 const ContentsHeader = styled.div`
   height: 50px;
@@ -108,13 +109,14 @@ interface Props {
   selectedUser: any;
 }
 
-function Main({ tabContents, isMine, selectedUser }: Props) {
+function Main() {
   const dispatch = useDispatch();
   const [internationalMovie, setInternationMovie] = useState<any>([]);
   const [tv, setTv] = useState<any>([]);
   const [book, setBook] = useState<any>([]);
   const [all, setAll] = useState<any>([]);
   const [hideDelBtn, setHideDelBtn] = useState(true);
+  const { selectedUser, isMine, tabContents } = useOutletContext<Props>();
 
   const { isLogin, userData, userInfo } = useSelector((state: any) => ({
     userData: state.store.userData,

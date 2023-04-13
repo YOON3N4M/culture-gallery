@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import logoImg from "../img/1.png";
 import { setModalOn } from "../module/store";
@@ -110,7 +111,7 @@ function TopTab({
   const [nickname, setNickname] = useState("");
 
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   function callAuthModal() {
     dispatch(setModalOn("FAQ"));
   }
@@ -119,6 +120,9 @@ function TopTab({
     dispatch(setModalOn(e));
   }
 
+  function logoClick() {
+    navigate(`/`);
+  }
   useEffect(() => {
     if (userData !== undefined && selectedUser === undefined) {
       setMovie(userData.internationalMovie.length);
@@ -192,7 +196,7 @@ function TopTab({
   return (
     <>
       <Tab initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-        <Logo>CultureGallery</Logo>
+        <Logo onClick={logoClick}>CultureGallery</Logo>
         <MenuContainer>
           {nickname !== "" && selectedWindow !== 0 ? (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>

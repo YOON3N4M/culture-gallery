@@ -4,6 +4,7 @@ import App from "./components/App";
 import { Provider } from "react-redux";
 import rootReducer from "./module";
 import { legacy_createStore as createStore } from "redux";
+import Router from "./components/Router";
 
 const store = createStore(rootReducer);
 
@@ -13,7 +14,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <>
     <Provider store={store}>
-      <App></App>
+      <Router />
     </Provider>
   </>
 );

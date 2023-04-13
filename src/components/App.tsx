@@ -85,6 +85,9 @@ function App() {
     });
   }, [isLogin]);
 
+  useEffect(() => {
+    setSelectedWindow(0);
+  }, []);
   console.log(isMine);
   return (
     <>
@@ -119,24 +122,16 @@ function App() {
             transition={{ duration: 1 }}
             key="motionDiv"
           >
-            {
-              {
-                0: (
-                  <Explore
-                    setSelectedWindow={setSelectedWindow}
-                    setIsMine={setIsMine}
-                    setSelectedUser={setSelectedUser}
-                  />
-                ),
-                1: (
-                  <Main
-                    selectedUser={selectedUser}
-                    isMine={isMine}
-                    tabContents={tabContents}
-                  />
-                ),
-              }[selectedWindow]
-            }
+            <Outlet
+              context={{
+                selectedUser,
+                isMine,
+                tabContents,
+                setSelectedWindow,
+                setIsMine,
+                setSelectedUser,
+              }}
+            />
           </motion.div>
         </AnimatePresence>
       </AppContainer>

@@ -1,6 +1,7 @@
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 import { dbService } from "../fBase";
 
@@ -123,9 +124,11 @@ interface Props {
   setSelectedUser: any;
 }
 
-function Explore({ setIsMine, setSelectedWindow, setSelectedUser }: Props) {
+function Explore() {
   const [userArr, setUserArr] = useState<UserArrT>([]);
-
+  const { setIsMine, setSelectedWindow, setSelectedUser } =
+    useOutletContext<Props>();
+  const navigate = useNavigate();
   async function getUserFromDB() {
     let docTemp: any = [];
     const q = query(
@@ -142,6 +145,7 @@ function Explore({ setIsMine, setSelectedWindow, setSelectedUser }: Props) {
     setIsMine(false);
     setSelectedWindow(1);
     setSelectedUser(user);
+    navigate(`/${user.nickname}`);
   }
 
   useEffect(() => {

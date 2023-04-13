@@ -7,6 +7,7 @@ import { setModalOn } from "../module/store";
 import arrowIcon from "../img/arrowIcon.png";
 import { Props } from "./App";
 import { auth } from "../fBase";
+import { useNavigate } from "react-router-dom";
 
 const Nav = styled(motion.div)`
   margin-top: 100px;
@@ -124,6 +125,7 @@ function Navigation({
   const dispatch = useDispatch();
   const [on, setOn] = useState(true);
   const [name, setName] = useState("비회원");
+  const navigate = useNavigate();
   function navOnOff() {
     if (isModal === false) {
       setOn((prev) => !prev);
@@ -151,6 +153,7 @@ function Navigation({
       setSelectedWindow(1);
       setSelectedUser(undefined);
       setIsMine(true);
+      navigate(`/${userInfo.displayName}`);
     } else {
       alert("로그인 후 이용 가능합니다.");
     }
@@ -187,7 +190,14 @@ function Navigation({
             </Profile>
             <NickName onClick={() => callModal("Auth")}>{name}</NickName>
             <NavItem onClick={goToMy}>내 컬렉션</NavItem>
-            <NavItem onClick={() => setSelectedWindow(0)}>컬렉션 탐색</NavItem>
+            <NavItem
+              onClick={() => {
+                setSelectedWindow(0);
+                navigate(`/`);
+              }}
+            >
+              컬렉션 탐색
+            </NavItem>
             <NavItem>즐겨찾기</NavItem>
             <NavItem onClick={() => callModal("Setting")}>설정</NavItem>
             {isLogin ? <LogOut onClick={logOut}>로그아웃</LogOut> : null}
