@@ -122,7 +122,7 @@ function Navigation({
     isLogin: state.store.isLogin,
   }));
   const dispatch = useDispatch();
-  const [on, setOn] = useState(false);
+  const [on, setOn] = useState(true);
   const [name, setName] = useState("비회원");
   function navOnOff() {
     if (isModal === false) {

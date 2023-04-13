@@ -110,11 +110,12 @@ export interface UserT {
 
 type UserArrT = Array<UserT>;
 
-interface ContentsT {
+export interface ContentsT {
   id: string;
   poster: string;
   title: string;
   year: string;
+  comment?: string;
 }
 interface Props {
   setIsMine: any;

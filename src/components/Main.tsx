@@ -1,4 +1,10 @@
-import { doc, getDoc } from "firebase/firestore";
+import {
+  arrayRemove,
+  doc,
+  FieldValue,
+  getDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -8,16 +14,18 @@ import { setModalOn } from "../module/store";
 import postingIcon from "../img/postingIcon.png";
 import { motion } from "framer-motion";
 import useDidMountEffect from "./useDidMountEffect";
+import { ContentsT } from "./Explore";
 
 const ContentsHeader = styled.div`
   height: 50px;
+  width: 1060px;
   //background-color: blue;
   display: flex;
-
   align-items: center;
-
+  justify-content: right;
   z-index: 100;
-  margin-left: 100px;
+  margin: 0 auto;
+  padding: 0 20px;
 `;
 
 export const ContentsBody = styled(motion.div)`
@@ -78,6 +86,11 @@ export const Year = styled.p`
   color: #a5a5a5;
 `;
 
+const EditBtn = styled.button`
+  font-size: 17px;
+  cursor: pointer;
+`;
+
 const DelBtn = styled.button`
   width: 20px;
   height: 20px;
@@ -103,9 +116,10 @@ function Main({ tabContents, isMine, selectedUser }: Props) {
   const [all, setAll] = useState<any>([]);
   const [hideDelBtn, setHideDelBtn] = useState(true);
 
-  const { isLogin, userData } = useSelector((state: any) => ({
+  const { isLogin, userData, userInfo } = useSelector((state: any) => ({
     userData: state.store.userData,
     isLogin: state.store.isLogin,
+    userInfo: state.store.userInfo,
   }));
 
   function isMyCollection() {
@@ -113,7 +127,64 @@ function Main({ tabContents, isMine, selectedUser }: Props) {
       setHideDelBtn((prev) => !prev);
     }
   }
-  function delFromDB(i: string) {}
+  async function delFromDB(i: ContentsT) {
+    console.log("del");
+    const ref = doc(dbService, "user", userInfo.uid);
+    //데이터 베이스에서 삭제
+    if (tabContents === "movie") {
+      await updateDoc(ref, {
+        internationalMovie: arrayRemove({
+          id: i.id,
+          poster: i.poster,
+          title: i.title,
+          year: i.year,
+          comment: i.comment,
+        }),
+      });
+    }
+    if (tabContents === "tv") {
+      await updateDoc(ref, {
+        tv: arrayRemove({
+          id: i.id,
+          poster: i.poster,
+          title: i.title,
+          year: i.year,
+          comment: i.comment,
+        }),
+      });
+    }
+    if (tabContents === "book") {
+      console.log("book");
+      await updateDoc(ref, {
+        book: arrayRemove({
+          id: i.id,
+          poster: i.poster,
+          title: i.title,
+          year: i.year,
+          comment: i.comment,
+        }),
+      });
+    }
+    //현재 출력 배열에서 삭제 (실시간으로 보여지는 것)
+    let newArr;
+    if (tabContents === "movie") {
+      newArr = await internationalMovie.filter(
+        (item: ContentsT) => item.id !== i.id
+      );
+
+      setInternationMovie(newArr);
+    }
+    if (tabContents === "tv") {
+      newArr = await tv.filter((item: ContentsT) => item.id !== i.id);
+
+      setTv(newArr);
+    }
+    if (tabContents === "book") {
+      newArr = await book.filter((item: ContentsT) => item.id !== i.id);
+
+      setBook(newArr);
+    }
+  }
 
   useEffect(() => {
     if (isMine) {
@@ -178,14 +249,18 @@ function Main({ tabContents, isMine, selectedUser }: Props) {
   }, [selectedUser]);
   return (
     <>
-      <ContentsHeader></ContentsHeader>
+      <ContentsHeader>
+        {isMine && tabContents !== "all" ? (
+          <EditBtn onClick={isMyCollection}>편집</EditBtn>
+        ) : null}
+      </ContentsHeader>
       <ContentsBody>
         {
           {
             all: (
               <ContentsUl>
                 {all.length !== 0
-                  ? all.map((item: any) => (
+                  ? all.map((item: ContentsT) => (
                       <>
                         <Item
                           initial={{ opacity: 0 }}
@@ -209,14 +284,16 @@ function Main({ tabContents, isMine, selectedUser }: Props) {
             movie: (
               <ContentsUl>
                 {internationalMovie.length !== 0
-                  ? internationalMovie.map((item: any) => (
+                  ? internationalMovie.map((item: ContentsT) => (
                       <>
                         <Item
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                           transition={{ duration: 1.3 }}
                         >
-                          {hideDelBtn ? null : <DelBtn>X</DelBtn>}
+                          {hideDelBtn ? null : (
+                            <DelBtn onClick={() => delFromDB(item)}>X</DelBtn>
+                          )}
 
                           <CollectionImg
                             isBook={false}
@@ -236,12 +313,15 @@ function Main({ tabContents, isMine, selectedUser }: Props) {
               <>
                 <ContentsUl>
                   {book.length !== 0
-                    ? book.map((item: any) => (
+                    ? book.map((item: ContentsT) => (
                         <Item
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                           transition={{ duration: 1.3 }}
                         >
+                          {hideDelBtn ? null : (
+                            <DelBtn onClick={() => delFromDB(item)}>X</DelBtn>
+                          )}
                           <CollectionImg
                             isBook={true}
                             src={item.poster}
@@ -260,12 +340,15 @@ function Main({ tabContents, isMine, selectedUser }: Props) {
               <>
                 <ContentsUl>
                   {tv.length !== 0
-                    ? tv.map((item: any) => (
+                    ? tv.map((item: ContentsT) => (
                         <Item
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                           transition={{ duration: 1.3 }}
                         >
+                          {hideDelBtn ? null : (
+                            <DelBtn onClick={() => delFromDB(item)}>X</DelBtn>
+                          )}
                           <CollectionImg
                             isBook={false}
                             src={item.poster}
