@@ -44,5 +44,8 @@
 > 또한 이미지 크기 자체가 작기때문에 메인 화면에서 영화, TV 프로그램의 포스터보다 작게 보여집니다.
 > <img width="1087" alt="image" src="https://user-images.githubusercontent.com/115640584/231302178-c102e3a8-3123-4e69-9386-22fc5689bcb5.png">
 
+### 초기 디자인
 
+![image](https://user-images.githubusercontent.com/115640584/231991247-00a43e4d-3b54-42be-891c-5a4dce4b1e9c.png)
 
+![image](https://user-images.githubusercontent.com/115640584/231991338-b2f644d8-e479-427e-8246-58fed9dc6e70.png)
