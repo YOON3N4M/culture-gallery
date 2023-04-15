@@ -17,6 +17,7 @@ import bookIcon from "../../img/bookIcon.png";
 import { AnimatePresence, motion } from "framer-motion";
 import { useDispatch } from "react-redux";
 import { setUserData } from "../../module/store";
+import { isMobile } from "react-device-detect";
 
 const ModalBody = styled(motion.div)`
   display: flex;
@@ -26,42 +27,44 @@ const ModalBody = styled(motion.div)`
   padding: 0px 20px 0px 20px;
 `;
 const CultureBox = styled.div`
-  width: 115px;
-  height: 125px;
-  margin-top: 80px;
+  width: ${isMobile ? "70px" : "115px"};
+  height: ${isMobile ? "120px" : "125px"};
+  margin-top: ${isMobile ? "30px" : "80px"};
   border-radius: 30px;
   cursor: pointer;
 `;
 
 const SearchContainer = styled(motion.div)`
-  width: 800px;
-  height: 500px;
-  padding: 100px 0px 100px 0px;
+  width: ${isMobile ? "300px" : "800px"};
+  height: ${isMobile ? "300px" : "500px"};
+  padding: ${isMobile ? "30px 0px 30px 0px" : "100px 0px 100px 0px"};
+  margin: ${isMobile ? "0 auto" : ""};
   overflow: hidden;
 `;
 
 const SearchInput = styled.input`
-  font-size: 30px;
+  font-size: ${isMobile ? "15px" : "30px"};
 
   background-color: #ebeef1;
   color: black;
 `;
 const SearchResultContainer = styled.div`
-  margin-top: 50px;
-  height: 300px;
+  margin-top: ${isMobile ? "25px" : "50px"};
+  height: ${isMobile ? "150px" : "300px"};
   display: flex;
   background-color: #ebeef1;
   justify-items: center;
   overflow-x: scroll;
   overflow-y: hidden;
   align-items: center;
+
   ::-webkit-scrollbar {
-    width: 1px;
+    width: ${isMobile ? "" : "1px"};
   }
   ::-webkit-scrollbar-thumb {
-    width: 1px;
-    height: 10px;
-    background: #474747;
+    width: ${isMobile ? "" : "1px"};
+    height: ${isMobile ? "" : "1px"};
+    background: ${isMobile ? "" : "#474747"};
     border-radius: 30px;
   }
   ::-webkit-scrollbar-track {
@@ -70,26 +73,27 @@ const SearchResultContainer = styled.div`
 `;
 
 const SearchResult = styled.li`
-  width: 200px;
-  height: 250px;
+  width: ${isMobile ? "100px" : "200px"};
+  height: ${isMobile ? "150px" : "250px"};
   justify-content: center;
   text-align: center;
+  margin-right: ${isMobile ? "5px" : ""};
 `;
 const ThumnailSmall = styled(motion.img)`
-  width: 149px;
-  height: 220px;
+  width: ${isMobile ? "70px" : "149px"};
+  height: ${isMobile ? "105px" : "220px"};
   box-shadow: 2px 2px 2px 2px rgb(0 0 0 / 19%);
   margin-top: 15px;
 `;
 const ThumnailMedium = styled.img`
-  width: 200px;
+  width: ${isMobile ? "100px" : "200px"};
   box-shadow: 2px 2px 2px 2px rgb(0 0 0 / 19%);
 `;
 
 const Title = styled.span`
-  width: 200px;
+  width: ${isMobile ? "100px" : "200px"};
   white-space: nowrap;
-  font-size: 12px;
+  font-size: ${isMobile ? "8px" : "12px"};
   display: block;
   text-align: center;
   overflow: hidden;
@@ -101,7 +105,7 @@ const Title = styled.span`
 
 const PostingContainer = styled(motion.div)`
   align-items: center;
-  width: 800px;
+  width: ${isMobile ? "300px" : "800px"};
   display: flex;
   justify-content: space-between;
   padding: 50px 10px 30px 10px;
@@ -152,6 +156,7 @@ const CommentsInput = styled.input`
 const ContentsIcon = styled.img`
   filter: invert(76%) sepia(95%) saturate(3%) hue-rotate(314deg) brightness(98%)
     contrast(99%);
+  width: ${isMobile ? "70px" : ""}; ;
 `;
 
 interface MovieInfoT {

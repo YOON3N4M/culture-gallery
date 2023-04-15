@@ -16,6 +16,7 @@ import { motion } from "framer-motion";
 import useDidMountEffect from "./useDidMountEffect";
 import { ContentsT } from "./Explore";
 import { useOutletContext } from "react-router-dom";
+import { BrowserView, isMobile, MobileView } from "react-device-detect";
 
 const ContentsHeader = styled.div`
   height: 50px;
@@ -91,7 +92,10 @@ const EditBtn = styled.button`
   font-size: 17px;
   cursor: pointer;
 `;
-
+const MEditBtn = styled.button`
+  font-size: 1rem;
+  cursor: pointer;
+`;
 const DelBtn = styled.button`
   width: 20px;
   height: 20px;
@@ -103,6 +107,46 @@ const DelBtn = styled.button`
   border-radius: 50%;
   cursor: pointer;
 `;
+const MDelBtn = styled.button`
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  position: absolute;
+
+  margin-left: 80px;
+
+  opacity: 60%;
+  border-radius: 50%;
+  cursor: pointer;
+`;
+
+const MHeader = styled.div`
+  width: 100vw;
+  height: 1rem;
+  //  background-color: red;
+  display: flex;
+  justify-content: right;
+  margin-bottom: 10px;
+`;
+const MContentsBody = styled.div`
+  width: 99vw;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  justify-content: space-around;
+`;
+const MItem = styled.div`
+  width: 120px;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+`;
+const MPoster = styled.img`
+  width: 100px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+`;
+
 interface Props {
   tabContents: string;
   isMine: boolean;
@@ -251,123 +295,181 @@ function Main() {
   }, [selectedUser]);
   return (
     <>
-      <ContentsHeader>
-        {isMine && tabContents !== "all" ? (
-          <EditBtn onClick={isMyCollection}>편집</EditBtn>
-        ) : null}
-      </ContentsHeader>
-      <ContentsBody>
-        {
+      <BrowserView>
+        <ContentsHeader>
+          {isMine && tabContents !== "all" ? (
+            <EditBtn onClick={isMyCollection}>편집</EditBtn>
+          ) : null}
+        </ContentsHeader>
+        <ContentsBody>
           {
-            all: (
-              <ContentsUl>
-                {all.length !== 0
-                  ? all.map((item: ContentsT) => (
-                      <>
-                        <Item
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ duration: 1.3 }}
-                        >
-                          <CollectionImg
-                            isBook={false}
-                            src={item.poster}
-                          ></CollectionImg>
-                          <TitleBox>
-                            <Title isBook={false}>{item.title}</Title>
-                            <Year>{item.year}</Year>
-                          </TitleBox>
-                        </Item>
-                      </>
-                    ))
-                  : null}
-              </ContentsUl>
-            ),
-            movie: (
-              <ContentsUl>
-                {internationalMovie.length !== 0
-                  ? internationalMovie.map((item: ContentsT) => (
-                      <>
-                        <Item
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ duration: 1.3 }}
-                        >
-                          {hideDelBtn ? null : (
-                            <DelBtn onClick={() => delFromDB(item)}>X</DelBtn>
-                          )}
+            {
+              all: (
+                <ContentsUl>
+                  {all.length !== 0
+                    ? all.map((item: ContentsT) => (
+                        <>
+                          <Item
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 1.3 }}
+                          >
+                            <CollectionImg
+                              isBook={false}
+                              src={item.poster}
+                            ></CollectionImg>
+                            <TitleBox>
+                              <Title isBook={false}>{item.title}</Title>
+                              <Year>{item.year}</Year>
+                            </TitleBox>
+                          </Item>
+                        </>
+                      ))
+                    : null}
+                </ContentsUl>
+              ),
+              movie: (
+                <ContentsUl>
+                  {internationalMovie.length !== 0
+                    ? internationalMovie.map((item: ContentsT) => (
+                        <>
+                          <Item
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 1.3 }}
+                          >
+                            {hideDelBtn ? null : (
+                              <DelBtn onClick={() => delFromDB(item)}>X</DelBtn>
+                            )}
 
-                          <CollectionImg
-                            isBook={false}
-                            src={item.poster}
-                          ></CollectionImg>
-                          <TitleBox>
-                            <Title isBook={false}>{item.title}</Title>
-                            <Year>{item.year}</Year>
-                          </TitleBox>
-                        </Item>
-                      </>
-                    ))
-                  : null}
-              </ContentsUl>
-            ),
-            book: (
-              <>
-                <ContentsUl>
-                  {book.length !== 0
-                    ? book.map((item: ContentsT) => (
-                        <Item
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ duration: 1.3 }}
-                        >
-                          {hideDelBtn ? null : (
-                            <DelBtn onClick={() => delFromDB(item)}>X</DelBtn>
-                          )}
-                          <CollectionImg
-                            isBook={true}
-                            src={item.poster}
-                          ></CollectionImg>
-                          <TitleBox>
-                            <Title isBook={true}>{item.title}</Title>
-                            <Year>{item.year}</Year>
-                          </TitleBox>
-                        </Item>
+                            <CollectionImg
+                              isBook={false}
+                              src={item.poster}
+                            ></CollectionImg>
+                            <TitleBox>
+                              <Title isBook={false}>{item.title}</Title>
+                              <Year>{item.year}</Year>
+                            </TitleBox>
+                          </Item>
+                        </>
                       ))
                     : null}
                 </ContentsUl>
-              </>
-            ),
-            tv: (
-              <>
-                <ContentsUl>
-                  {tv.length !== 0
-                    ? tv.map((item: ContentsT) => (
-                        <Item
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ duration: 1.3 }}
-                        >
-                          {hideDelBtn ? null : (
-                            <DelBtn onClick={() => delFromDB(item)}>X</DelBtn>
-                          )}
-                          <CollectionImg
-                            isBook={false}
-                            src={item.poster}
-                          ></CollectionImg>
-                          <TitleBox>
-                            <Title isBook={false}>{item.title}</Title>
-                            <Year>{item.year}</Year>
-                          </TitleBox>
-                        </Item>
-                      ))
-                    : null}
-                </ContentsUl>
-              </>
-            ),
-          }[tabContents]
-        }
-      </ContentsBody>
+              ),
+              book: (
+                <>
+                  <ContentsUl>
+                    {book.length !== 0
+                      ? book.map((item: ContentsT) => (
+                          <Item
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 1.3 }}
+                          >
+                            {hideDelBtn ? null : (
+                              <DelBtn onClick={() => delFromDB(item)}>X</DelBtn>
+                            )}
+                            <CollectionImg
+                              isBook={true}
+                              src={item.poster}
+                            ></CollectionImg>
+                            <TitleBox>
+                              <Title isBook={true}>{item.title}</Title>
+                              <Year>{item.year}</Year>
+                            </TitleBox>
+                          </Item>
+                        ))
+                      : null}
+                  </ContentsUl>
+                </>
+              ),
+              tv: (
+                <>
+                  <ContentsUl>
+                    {tv.length !== 0
+                      ? tv.map((item: ContentsT) => (
+                          <Item
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 1.3 }}
+                          >
+                            {hideDelBtn ? null : (
+                              <DelBtn onClick={() => delFromDB(item)}>X</DelBtn>
+                            )}
+                            <CollectionImg
+                              isBook={false}
+                              src={item.poster}
+                            ></CollectionImg>
+                            <TitleBox>
+                              <Title isBook={false}>{item.title}</Title>
+                              <Year>{item.year}</Year>
+                            </TitleBox>
+                          </Item>
+                        ))
+                      : null}
+                  </ContentsUl>
+                </>
+              ),
+            }[tabContents]
+          }
+        </ContentsBody>
+      </BrowserView>
+      <MobileView>
+        <MHeader>
+          {isMine && tabContents !== "all" ? (
+            <MEditBtn onClick={isMyCollection}>편집</MEditBtn>
+          ) : null}
+        </MHeader>
+        <MContentsBody>
+          {
+            {
+              all: (
+                <>
+                  {all.map((all: ContentsT) => (
+                    <MItem>
+                      {hideDelBtn ? null : (
+                        <MDelBtn onClick={() => delFromDB(all)}>X</MDelBtn>
+                      )}
+                      <MPoster src={all.poster} />
+                    </MItem>
+                  ))}
+                </>
+              ),
+              movie: (
+                <>
+                  {" "}
+                  {internationalMovie.map((movie: ContentsT) => (
+                    <MItem>
+                      {hideDelBtn ? null : (
+                        <MDelBtn onClick={() => delFromDB(movie)}>X</MDelBtn>
+                      )}
+                      <MPoster src={movie.poster} />
+                    </MItem>
+                  ))}
+                </>
+              ),
+              tv: (
+                <>
+                  {tv.map((tv: ContentsT) => (
+                    <MItem>
+                      <MPoster src={tv.poster} />
+                    </MItem>
+                  ))}
+                </>
+              ),
+              book: (
+                <>
+                  {book.map((book: ContentsT) => (
+                    <MItem>
+                      <MPoster src={book.poster} />
+                    </MItem>
+                  ))}
+                </>
+              ),
+            }[tabContents]
+          }
+        </MContentsBody>
+      </MobileView>
     </>
   );
 }

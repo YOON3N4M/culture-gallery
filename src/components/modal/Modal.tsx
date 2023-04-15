@@ -1,4 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
+import { isMobile } from "react-device-detect";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { Props } from "../App";
@@ -38,8 +39,8 @@ const ModalBack = styled.div`
 `;
 
 export const ModalWindow = styled.div`
-  min-width: 300px;
-  min-height: 350px;
+  min-width: ${isMobile ? "150px" : "300px"};
+  min-height: ${isMobile ? "150px" : "350px"};
   text-align: center;
   text-decoration: none;
   background-color: white;
@@ -49,7 +50,7 @@ export const ModalWindow = styled.div`
   border-radius: 8px;
 `;
 export const ModalHeader = styled.div`
-  min-width: 500px;
+  min-width: ${isMobile ? "80vw" : "500px"};
   min-height: 40px;
   //border-top-right-radius: 29px;
   // border-top-left-radius: 29px;

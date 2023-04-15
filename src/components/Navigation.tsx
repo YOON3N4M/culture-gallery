@@ -8,6 +8,7 @@ import arrowIcon from "../img/arrowIcon.png";
 import { Props } from "./App";
 import { auth } from "../fBase";
 import { useNavigate } from "react-router-dom";
+import { isBrowser, isMobile } from "react-device-detect";
 
 const Nav = styled(motion.div)`
   margin-top: 100px;
@@ -123,7 +124,7 @@ function Navigation({
     isLogin: state.store.isLogin,
   }));
   const dispatch = useDispatch();
-  const [on, setOn] = useState(true);
+  const [on, setOn] = useState(false);
   const [name, setName] = useState("비회원");
   const navigate = useNavigate();
   function navOnOff() {

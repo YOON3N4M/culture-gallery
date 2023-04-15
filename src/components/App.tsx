@@ -22,11 +22,10 @@ import Main from "./Main";
 import { bodyColor } from "./globalStyle";
 import Welcome from "./Welcome";
 import { AnimatePresence, motion, MotionConfig } from "framer-motion";
-import Explore from "./Explore";
 
 const AppContainer = styled.div`
   background-color: ${bodyColor}; //#505074; // #29293d
-  width: 1200px;
+  width: 100vw;
   min-height: 800px;
   margin: 0 auto;
   padding-top: 60px;

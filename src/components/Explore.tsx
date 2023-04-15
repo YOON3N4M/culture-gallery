@@ -1,6 +1,7 @@
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { BrowserView, MobileView } from "react-device-detect";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 import { dbService } from "../fBase";
@@ -99,6 +100,66 @@ const Poster = styled.img`
   margin-left: 2px;
 `;
 
+const MContentsBody = styled.div`
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+`;
+const MUserContainer = styled.div`
+  width: 80vw;
+  height: 5rem;
+  // background-color: red;
+  border: 1px #e3e3e3 solid;
+  margin: 0 auto;
+  display: flex;
+  margin-top: 10px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+`;
+const UserleftBox = styled.div`
+  height: 100%;
+  width: 8rem;
+  // background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+const MUserIcon = styled.div`
+  width: 2.5em;
+  height: 2.5em;
+  background-color: #c0c0c0;
+  border-radius: 50%;
+  line-height: 2.5em;
+  font-size: 25px;
+  text-align: center;
+  cursor: pointer;
+`;
+const UserRightBox = styled.div`
+  height: 100%;
+  width: 100%;
+  // background-color: blue;
+  display: flex;
+  flex-direction: column;
+`;
+const NicknameBox = styled.div`
+  width: 100%;
+  height: 2.5rem;
+  // background-color: green;
+  display: flex;
+  align-items: center;
+  font-size: 1.2rem;
+  padding-top: 10px;
+`;
+const QtyBox = styled.div`
+  padding-top: 5px;
+  font-size: 0.9rem;
+  color: gray;
+  display: flex;
+`;
+const Qty = styled.div`
+  width: 29px;
+`;
 export interface UserT {
   internationalMovie: any;
   tv: any;
@@ -155,54 +216,83 @@ function Explore() {
   console.log(userArr);
   return (
     <>
-      <ContentsBody>
-        {userArr.length !== 0
-          ? userArr.map((user: UserT) => (
-              <>
-                <UserContainer
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.7 }}
-                >
-                  <UserHeader>
-                    <UserIcon onClick={() => goToMain(user)}>
-                      {user.nickname.slice(0, 1)}
-                    </UserIcon>{" "}
-                    <Nickname onClick={() => goToMain(user)}>
-                      {user.nickname}
-                    </Nickname>
-                  </UserHeader>
-                  <ContentsWrap>
-                    <ContentsBox>
-                      <ContentsHeader>MOVIE</ContentsHeader>
-                      <Contents>
-                        {user.internationalMovie.map((movie: ContentsT) => (
-                          <Poster src={movie.poster} />
-                        ))}
-                      </Contents>
-                    </ContentsBox>
-                    <ContentsBox>
-                      <ContentsHeader>TV</ContentsHeader>
-                      <Contents>
-                        {user.tv.map((tv: ContentsT) => (
-                          <Poster src={tv.poster} />
-                        ))}
-                      </Contents>
-                    </ContentsBox>
-                    <ContentsBox>
-                      <ContentsHeader>BOOK</ContentsHeader>
-                      <Contents>
-                        {user.book.map((book: ContentsT) => (
-                          <Poster src={book.poster} />
-                        ))}
-                      </Contents>
-                    </ContentsBox>
-                  </ContentsWrap>
-                </UserContainer>
-              </>
-            ))
-          : null}
-      </ContentsBody>
+      <BrowserView>
+        <ContentsBody>
+          {userArr.length !== 0
+            ? userArr.map((user: UserT) => (
+                <>
+                  <UserContainer
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.7 }}
+                  >
+                    <UserHeader>
+                      <UserIcon onClick={() => goToMain(user)}>
+                        {user.nickname.slice(0, 1)}
+                      </UserIcon>{" "}
+                      <Nickname onClick={() => goToMain(user)}>
+                        {user.nickname}
+                      </Nickname>
+                    </UserHeader>
+                    <ContentsWrap>
+                      <ContentsBox>
+                        <ContentsHeader>MOVIE</ContentsHeader>
+                        <Contents>
+                          {user.internationalMovie.map((movie: ContentsT) => (
+                            <Poster src={movie.poster} />
+                          ))}
+                        </Contents>
+                      </ContentsBox>
+                      <ContentsBox>
+                        <ContentsHeader>TV</ContentsHeader>
+                        <Contents>
+                          {user.tv.map((tv: ContentsT) => (
+                            <Poster src={tv.poster} />
+                          ))}
+                        </Contents>
+                      </ContentsBox>
+                      <ContentsBox>
+                        <ContentsHeader>BOOK</ContentsHeader>
+                        <Contents>
+                          {user.book.map((book: ContentsT) => (
+                            <Poster src={book.poster} />
+                          ))}
+                        </Contents>
+                      </ContentsBox>
+                    </ContentsWrap>
+                  </UserContainer>
+                </>
+              ))
+            : null}
+        </ContentsBody>
+      </BrowserView>
+      <MobileView>
+        <MContentsBody>
+          {userArr.length !== 0
+            ? userArr.map((user: UserT) => (
+                <MUserContainer onClick={() => goToMain(user)}>
+                  <UserleftBox>
+                    <MUserIcon> {user.nickname.slice(0, 1)}</MUserIcon>
+                  </UserleftBox>
+                  <UserRightBox>
+                    <NicknameBox>{user.nickname}</NicknameBox>
+                    <QtyBox>
+                      <Qty>
+                        {user.book.length +
+                          user.tv.length +
+                          user.internationalMovie.length}{" "}
+                      </Qty>
+                      <Qty>기록</Qty>
+                    </QtyBox>
+                  </UserRightBox>
+                </MUserContainer>
+              ))
+            : null}
+
+          <MUserContainer></MUserContainer>
+          <MUserContainer></MUserContainer>
+        </MContentsBody>
+      </MobileView>
     </>
   );
 }
