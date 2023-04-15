@@ -17,7 +17,7 @@ const Tab = styled(motion.div)`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0px 180px 0px 180px;
+
   //border-bottom-left-radius: 15px;
   //border-bottom-right-radius: 15px;
   z-index: 1000;
