@@ -58,3 +58,5 @@
 <br>
 <a target="_blank" href="https://icons8.com/icon/joNfPN7Mv1ip/%EC%9D%84-%EB%8D%94%ED%95%9C">을 더한</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
 <br>
+<a href="https://www.flaticon.com/free-icons/user" title="user icons">User icons created by Phoenix Group - Flaticon</a>
+<br><a target="_blank" href="https://icons8.com/icon/17950/%EA%B5%AC%EA%B8%80-%EB%A1%9C%EA%B3%A0">구글 로고</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
