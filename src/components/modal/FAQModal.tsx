@@ -20,8 +20,9 @@ function FAQModal() {
             <ModalWindow>
               <ModalHeader>도움말</ModalHeader>
               <DescContainer>
-                <p> 현재 기록 삭제 기능은 수정중에 있습니다.</p>
+                <p> 현재 모바일 지원 수정중</p>
                 <p> 설정에서 프로필 공개/비공개 설정이 가능합니다. </p>
+
                 <p> 도움말 수정중...</p>
               </DescContainer>
             </ModalWindow>

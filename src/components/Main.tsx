@@ -112,21 +112,20 @@ const MDelBtn = styled.button`
   height: 20px;
   background-color: white;
   position: absolute;
-
   margin-left: 80px;
-
   opacity: 60%;
   border-radius: 50%;
+  text-align: center;
   cursor: pointer;
 `;
 
 const MHeader = styled.div`
   width: 100vw;
-  height: 1rem;
+  height: 2rem;
   //  background-color: red;
   display: flex;
   justify-content: right;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 `;
 const MContentsBody = styled.div`
   width: 99vw;
@@ -134,6 +133,7 @@ const MContentsBody = styled.div`
   flex-wrap: wrap;
   margin: 0 auto;
   justify-content: space-around;
+  padding-bottom: 30px;
 `;
 const MItem = styled.div`
   width: 120px;

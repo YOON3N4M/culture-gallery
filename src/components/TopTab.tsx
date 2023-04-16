@@ -27,6 +27,8 @@ const Tab = styled(motion.div)`
 const TabItem = styled.div`
   flex-direction: 1;
   width: 30%;
+  display: flex;
+  align-items: center;
 `;
 const FAQ = styled.button`
   width: 25px;
@@ -68,9 +70,11 @@ const MenuBtn = styled.button`
 const MenuBox = styled(motion.div)`
   position: absolute;
   background-color: black;
+
   width: 100px;
   height: 180px;
-  margin-left: 15px;
+  margin-left: ${isMobile ? "" : "150px"};
+  margin-top: ${isMobile ? "" : "15px"};
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -80,10 +84,16 @@ const MenuBox = styled(motion.div)`
 
 const Add = styled.button`
   border-radius: 50%;
-  font-size: 30px;
+  font-size: 25px;
   color: white;
   cursor: pointer;
-  margin-right: 1rem;
+  margin-right: ${isMobile ? "" : "1rem"};
+
+  @media not all and (min-resolution: 0.001dpcm) {
+    @supports (-webkit-appearance: none) {
+      margin-top: -10px;
+    }
+  }
 `;
 const RightMenu = styled.div`
   //background-color: red;
@@ -96,6 +106,20 @@ const RightMenu = styled.div`
 const Explore = styled.span`
   color: white;
 `;
+
+const NavBtn = styled.button`
+  color: white;
+  font-size: 25px;
+  padding: 0 0;
+  box-sizing: border-box;
+  line-height: 20px;
+
+  @media not all and (min-resolution: 0.001dpcm) {
+    @supports (-webkit-appearance: none) {
+      margin-top: -8px;
+    }
+  }
+`;
 interface Props {
   setTabContents: any;
   userData: any;
@@ -103,6 +127,8 @@ interface Props {
   isLogin: boolean;
   selectedUser: any;
   selectedWindow: number;
+  on: boolean;
+  setOn: any;
 }
 
 function TopTab({
@@ -112,6 +138,7 @@ function TopTab({
   isLogin,
   selectedUser,
   selectedWindow,
+  setOn,
 }: Props) {
   const [book, setBook] = useState(0);
   const [movie, setMovie] = useState(0);
@@ -129,7 +156,9 @@ function TopTab({
   function callModal(e: string) {
     dispatch(setModalOn(e));
   }
-
+  function navOnOff() {
+    setOn((prev: any) => !prev);
+  }
   function logoClick() {
     navigate(`/`);
   }
@@ -206,9 +235,15 @@ function TopTab({
     <>
       <Tab initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
         <TabItem>
-          <Logo isMobile={isMobile} onClick={logoClick}>
-            CultureGallery
-          </Logo>
+          {isMobile ? (
+            <div>
+              <NavBtn onClick={navOnOff}>=</NavBtn>
+            </div>
+          ) : (
+            <Logo isMobile={isMobile} onClick={logoClick}>
+              CultureGallery
+            </Logo>
+          )}
         </TabItem>
         <TabItem>
           <MenuContainer>
@@ -279,7 +314,7 @@ function TopTab({
               </Add>
             )}
 
-            <FAQ onClick={callAuthModal}>?</FAQ>
+            {isMobile ? null : <FAQ onClick={callAuthModal}>?</FAQ>}
           </RightMenu>
         </TabItem>
       </Tab>

@@ -12,7 +12,7 @@ import { isBrowser, isMobile } from "react-device-detect";
 
 const Nav = styled(motion.div)`
   margin-top: 100px;
-  height: 600px;
+  height: ${isMobile ? "400px" : "600px"};
   background-color: ${bodyColor};
   width: 300px;
   display: flex;
@@ -22,6 +22,7 @@ const Nav = styled(motion.div)`
   box-shadow: 1px 1px 1px 1px rgb(0 0 0 / 19%);
   flex-direction: column;
   border-radius: 8px;
+  padding-bottom: ${isMobile ? "15px" : ""};
 `;
 const Profile = styled.div`
   width: 100%;
@@ -78,10 +79,10 @@ const LogOut = styled.div`
   font-size: 20px;
   border-bottom: 0.5px solid #848484;
   cursor: pointer;
-  margin-top: 150px;
-  border-top: 0.5px solid #848484;
+  margin-top: ${isMobile ? "" : "150px"};
+  border-top: ${isMobile ? "" : "0.5px solid #848484"};
   :hover {
-    background-color: rgb(26, 26, 26);
+    background-color: rgb(196, 196, 196);
   }
 `;
 const Collection = styled.div``;
@@ -118,18 +119,21 @@ function Navigation({
   setSelectedWindow,
   setSelectedUser,
   setIsMine,
+  on,
+  setOn,
 }: Props) {
   const { userInfo, isLogin } = useSelector((state: any) => ({
     userInfo: state.store.userInfo,
     isLogin: state.store.isLogin,
   }));
   const dispatch = useDispatch();
-  const [on, setOn] = useState(false);
+
   const [name, setName] = useState("비회원");
   const navigate = useNavigate();
+
   function navOnOff() {
-    if (isModal === false) {
-      setOn((prev) => !prev);
+    if (isModal === false && isMobile === false) {
+      setOn((prev: any) => !prev);
     }
   }
   function callModal(e: string) {
@@ -204,9 +208,13 @@ function Navigation({
             {isLogin ? <LogOut onClick={logOut}>로그아웃</LogOut> : null}
           </Nav>
         ) : (
-          <NavHover onMouseOver={navOnOff}>
-            <Icon style={{ opacity: "50%" }} src={arrowIcon} />
-          </NavHover>
+          <>
+            {isMobile ? null : (
+              <NavHover onMouseOver={navOnOff}>
+                <Icon style={{ opacity: "50%" }} src={arrowIcon} />
+              </NavHover>
+            )}
+          </>
         )}
       </AnimatePresence>
     </>

@@ -108,15 +108,16 @@ const PostingContainer = styled(motion.div)`
   width: ${isMobile ? "300px" : "800px"};
   display: flex;
   justify-content: space-between;
-  padding: 50px 10px 30px 10px;
+  padding: ${isMobile ? "15px 0px" : "50px 10px 30px 10px"};
+  margin: ${isMobile ? "0 auto" : ""};
 `;
 const ThumnailContainer = styled.div`
-  width: 300px;
-  // background-color: blue;
+  width: ${isMobile ? "150px" : "300px"};
+  //background-color: blue;
   padding-left: 30px;
 `;
 const InfoContainer = styled.div`
-  width: 500px;
+  width: ${isMobile ? "300px" : "500px"};
   height: 300px;
   // background-color: red;
 `;
@@ -125,6 +126,10 @@ const InfoBox = styled.div`
 
   // background-color: green;
   margin-bottom: 10px;
+`;
+
+const InfoTitle = styled.div`
+  font-size: ${isMobile ? "" : ""};
 `;
 
 const Desc = styled.div`
@@ -143,9 +148,9 @@ const SubmitBtn = styled.button`
   color: white;
 `;
 const CommentsInput = styled.input`
-  width: 400px;
+  width: ${isMobile ? "150px" : "400px"};
   height: 30px;
-  font-size: 20px;
+  font-size: ${isMobile ? "12px" : "20px"};
 
   // background-color: gray;
 
@@ -427,14 +432,17 @@ function PostingModal() {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                     >
-                      <ThumnailContainer>
-                        <ThumnailMedium
-                          src={posterBaseURL + chosenCulture.poster_path}
-                        />
-                      </ThumnailContainer>
+                      {isMobile ? null : (
+                        <ThumnailContainer>
+                          <ThumnailMedium
+                            src={posterBaseURL + chosenCulture.poster_path}
+                          />
+                        </ThumnailContainer>
+                      )}
+
                       <InfoContainer>
                         <InfoBox>
-                          <h1>{chosenCulture.title}</h1>{" "}
+                          <InfoTitle>{chosenCulture.title}</InfoTitle>{" "}
                           <small>({chosenCulture.release_date})</small>
                         </InfoBox>
                         <Desc>
@@ -498,11 +506,14 @@ function PostingModal() {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                     >
-                      <ThumnailContainer>
-                        <ThumnailMedium
-                          src={posterBaseURL + chosenCulture.poster_path}
-                        />
-                      </ThumnailContainer>
+                      {isMobile ? null : (
+                        <ThumnailContainer>
+                          <ThumnailMedium
+                            src={posterBaseURL + chosenCulture.poster_path}
+                          />
+                        </ThumnailContainer>
+                      )}
+
                       <InfoContainer>
                         <InfoBox>
                           <h1>{chosenCulture.name}</h1>{" "}
@@ -571,9 +582,12 @@ function PostingModal() {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                     >
-                      <ThumnailContainer>
-                        <ThumnailMedium src={chosenCulture.thumbnail} />
-                      </ThumnailContainer>
+                      {isMobile ? null : (
+                        <ThumnailContainer>
+                          <ThumnailMedium src={chosenCulture.thumbnail} />
+                        </ThumnailContainer>
+                      )}
+
                       <InfoContainer>
                         <InfoBox>
                           <h1>{chosenCulture.title}</h1>{" "}

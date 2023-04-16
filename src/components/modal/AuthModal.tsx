@@ -13,6 +13,7 @@ import { auth, dbService } from "../../fBase";
 import { doc, setDoc } from "firebase/firestore";
 import { useDispatch } from "react-redux";
 import { setModalOff, setSignIn, setUserData } from "../../module/store";
+import { isMobile } from "react-device-detect";
 
 const Contianer = styled(motion.div)`
   padding-top: 50px;
@@ -27,7 +28,7 @@ const Logo = styled(motion.span)`
 `;
 const InputContainer = styled(motion.div)`
   //background-color: red;
-  width: 400px;
+  width: ${isMobile ? "330px" : "400px"};
   //height: 400px;
   margin: 0 auto;
   display: flex;

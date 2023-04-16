@@ -30,6 +30,8 @@ const AppContainer = styled.div`
   margin: 0 auto;
   padding-top: 60px;
   // border: #6698be 3px solid;
+  //display: flex;
+  //justify-content: right;
 `;
 
 export interface Props {
@@ -40,6 +42,8 @@ export interface Props {
   setIsExplore?: (e: any) => void;
   setSelectedWindow?: any;
   setIsMine?: any;
+  on?: boolean;
+  setOn?: any;
 }
 
 function App() {
@@ -59,6 +63,8 @@ function App() {
   // 0 = 탐색 , 1 = 본인 메인,
   const [selectedWindow, setSelectedWindow] = useState(0);
   const [isMine, setIsMine] = useState(true);
+  //네비
+  const [on, setOn] = useState(false);
 
   function modalOff(e: any) {
     if (e.target === e.currentTarget) {
@@ -103,6 +109,8 @@ function App() {
         setSelectedWindow={setSelectedWindow}
         isModal={isModal}
         setIsMine={setIsMine}
+        on={on}
+        setOn={setOn}
       />
       <TopTab
         tabContents={tabContents}
@@ -111,6 +119,8 @@ function App() {
         isLogin={isLogin}
         selectedUser={selectedUser}
         selectedWindow={selectedWindow}
+        on={on}
+        setOn={setOn}
       />
       <AppContainer>
         <AnimatePresence>
