@@ -50,6 +50,7 @@
 
 ![image](https://user-images.githubusercontent.com/115640584/231991338-b2f644d8-e479-427e-8246-58fed9dc6e70.png)
 
+<hr>
 
 <a target="_blank" href="https://icons8.com/icon/cA5ed85TwX5U/delete">delete</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
 <br>
