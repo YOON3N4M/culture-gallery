@@ -211,6 +211,7 @@ function Explore() {
 
   useEffect(() => {
     getUserFromDB();
+    setSelectedWindow(0);
   }, []);
 
   console.log(userArr);

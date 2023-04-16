@@ -148,6 +148,7 @@ interface Props {
   tabContents: string;
   isMine: boolean;
   selectedUser: any;
+  setSelectedWindow: any;
 }
 
 function Main() {
@@ -157,7 +158,8 @@ function Main() {
   const [book, setBook] = useState<any>([]);
   const [all, setAll] = useState<any>([]);
   const [hideDelBtn, setHideDelBtn] = useState(true);
-  const { selectedUser, isMine, tabContents } = useOutletContext<Props>();
+  const { setSelectedWindow, selectedUser, isMine, tabContents } =
+    useOutletContext<Props>();
 
   const { isLogin, userData, userInfo } = useSelector((state: any) => ({
     userData: state.store.userData,
@@ -258,6 +260,7 @@ function Main() {
         setAll(allArrTemp);
       }
     }
+    setSelectedWindow(1);
   }, [userData]);
 
   useDidMountEffect(() => {
