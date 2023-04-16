@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useSelector, useDispatch } from "react-redux";
 import { setModalOn } from "../module/store";
 import arrowIcon from "../img/arrowIcon.png";
+import userIcon from "../img/user.png";
 import { Props } from "./App";
 import { auth } from "../fBase";
 import { useNavigate } from "react-router-dom";
@@ -40,8 +41,6 @@ const ProfileIcon = styled.div`
   background-color: #c0c0c0;
   cursor: pointer;
   text-align: center;
-  line-height: 80px;
-  font-size: 40px;
 `;
 const NickName = styled.div`
   width: 100%;
@@ -188,9 +187,9 @@ function Navigation({
           >
             <Profile>
               <ProfileIcon onClick={() => callModal("Auth")}>
-                {isLogin && userInfo.displayName !== null
-                  ? userInfo.displayName.slice(0, 1)
-                  : "?"}
+                {isLogin && userInfo.displayName !== null ? (
+                  <img src={userIcon} width={80} />
+                ) : null}
               </ProfileIcon>
             </Profile>
             <NickName onClick={() => callModal("Auth")}>{name}</NickName>

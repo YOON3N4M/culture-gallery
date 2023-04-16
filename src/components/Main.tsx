@@ -12,6 +12,7 @@ import styled from "styled-components";
 import { dbService } from "../fBase";
 import { setModalOn } from "../module/store";
 import postingIcon from "../img/postingIcon.png";
+import delIcon from "../img/delIcon.png";
 import { motion } from "framer-motion";
 import useDidMountEffect from "./useDidMountEffect";
 import { ContentsT } from "./Explore";
@@ -36,6 +37,7 @@ export const ContentsBody = styled(motion.div)`
   margin: 0 auto;
   z-index: 300;
   display: flex;
+  //padding-bottom: 30px;
 `;
 export const ContentsUl = styled(motion.ul)`
   margin: 0 auto;
@@ -97,24 +99,18 @@ const MEditBtn = styled.button`
   cursor: pointer;
 `;
 const DelBtn = styled.button`
-  width: 20px;
-  height: 20px;
-  background-color: white;
   position: absolute;
   margin-left: 150px;
-  margin-top: 10px;
+
   opacity: 60%;
   border-radius: 50%;
   cursor: pointer;
 `;
 const MDelBtn = styled.button`
-  width: 20px;
-  height: 20px;
-  background-color: white;
   position: absolute;
   margin-left: 80px;
   opacity: 60%;
-  border-radius: 50%;
+
   text-align: center;
   cursor: pointer;
 `;
@@ -133,6 +129,7 @@ const MContentsBody = styled.div`
   flex-wrap: wrap;
   margin: 0 auto;
   justify-content: space-around;
+  padding: 0px 5px;
   padding-bottom: 30px;
 `;
 const MItem = styled.div`
@@ -339,7 +336,9 @@ function Main() {
                             transition={{ duration: 1.3 }}
                           >
                             {hideDelBtn ? null : (
-                              <DelBtn onClick={() => delFromDB(item)}>X</DelBtn>
+                              <DelBtn onClick={() => delFromDB(item)}>
+                                <img width={"24px"} src={delIcon} />
+                              </DelBtn>
                             )}
 
                             <CollectionImg
@@ -367,7 +366,10 @@ function Main() {
                             transition={{ duration: 1.3 }}
                           >
                             {hideDelBtn ? null : (
-                              <DelBtn onClick={() => delFromDB(item)}>X</DelBtn>
+                              <DelBtn onClick={() => delFromDB(item)}>
+                                {" "}
+                                <img width={"24px"} src={delIcon} />
+                              </DelBtn>
                             )}
                             <CollectionImg
                               isBook={true}
@@ -394,7 +396,10 @@ function Main() {
                             transition={{ duration: 1.3 }}
                           >
                             {hideDelBtn ? null : (
-                              <DelBtn onClick={() => delFromDB(item)}>X</DelBtn>
+                              <DelBtn onClick={() => delFromDB(item)}>
+                                {" "}
+                                <img width={"24px"} src={delIcon} />
+                              </DelBtn>
                             )}
                             <CollectionImg
                               isBook={false}
@@ -441,7 +446,10 @@ function Main() {
                   {internationalMovie.map((movie: ContentsT) => (
                     <MItem>
                       {hideDelBtn ? null : (
-                        <MDelBtn onClick={() => delFromDB(movie)}>X</MDelBtn>
+                        <MDelBtn onClick={() => delFromDB(movie)}>
+                          {" "}
+                          <img width={"24px"} src={delIcon} />
+                        </MDelBtn>
                       )}
                       <MPoster src={movie.poster} />
                     </MItem>
@@ -452,6 +460,12 @@ function Main() {
                 <>
                   {tv.map((tv: ContentsT) => (
                     <MItem>
+                      {hideDelBtn ? null : (
+                        <MDelBtn onClick={() => delFromDB(tv)}>
+                          {" "}
+                          <img width={"24px"} src={delIcon} />
+                        </MDelBtn>
+                      )}
                       <MPoster src={tv.poster} />
                     </MItem>
                   ))}
@@ -461,6 +475,12 @@ function Main() {
                 <>
                   {book.map((book: ContentsT) => (
                     <MItem>
+                      {hideDelBtn ? null : (
+                        <MDelBtn onClick={() => delFromDB(book)}>
+                          {" "}
+                          <img width={"24px"} src={delIcon} />
+                        </MDelBtn>
+                      )}
                       <MPoster src={book.poster} />
                     </MItem>
                   ))}

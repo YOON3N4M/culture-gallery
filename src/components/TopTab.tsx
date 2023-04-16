@@ -5,6 +5,10 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import logoImg from "../img/1.png";
+import menuIcon from "../img/menuIcon.png";
+import plusIcon from "../img/plusIcon.png";
+import qnaIcon from "../img/qnaIcon.png";
+import moreIcon from "../img/moreIcon.png";
 import { setModalOn } from "../module/store";
 import { UserT } from "./Explore";
 import { tabColor } from "./globalStyle";
@@ -28,14 +32,10 @@ const TabItem = styled.div`
   flex-direction: 1;
   width: 30%;
   display: flex;
+  height: 100%;
   align-items: center;
 `;
 const FAQ = styled.button`
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  background-color: white;
-  opacity: 50%;
   cursor: pointer;
 `;
 
@@ -54,8 +54,10 @@ const LogoImg = styled.img`
 `;
 
 const MenuContainer = styled.div`
-  flex-grow: 2;
+  width: 100%;
   text-align: center;
+  position: relative;
+  display: inline-block;
 `;
 
 const MenuLabel = styled(motion.span)`
@@ -66,15 +68,19 @@ const MenuBtn = styled.button`
   color: white;
   font-size: ${isMobile ? "12px" : "14px"};
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  position: relative;
 `;
 const MenuBox = styled(motion.div)`
   position: absolute;
   background-color: black;
-
   width: 100px;
   height: 180px;
-  margin-left: ${isMobile ? "" : "150px"};
-  margin-top: ${isMobile ? "" : "15px"};
+  margin-left: ${isMobile ? "" : "25px"};
+  margin-top: ${isMobile ? "" : "5px"};
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -84,16 +90,10 @@ const MenuBox = styled(motion.div)`
 
 const Add = styled.button`
   border-radius: 50%;
-  font-size: 25px;
+
   color: white;
   cursor: pointer;
   margin-right: ${isMobile ? "" : "1rem"};
-
-  @media not all and (min-resolution: 0.001dpcm) {
-    @supports (-webkit-appearance: none) {
-      margin-top: -10px;
-    }
-  }
 `;
 const RightMenu = styled.div`
   //background-color: red;
@@ -113,12 +113,6 @@ const NavBtn = styled.button`
   padding: 0 0;
   box-sizing: border-box;
   line-height: 20px;
-
-  @media not all and (min-resolution: 0.001dpcm) {
-    @supports (-webkit-appearance: none) {
-      margin-top: -8px;
-    }
-  }
 `;
 interface Props {
   setTabContents: any;
@@ -237,7 +231,9 @@ function TopTab({
         <TabItem>
           {isMobile ? (
             <div>
-              <NavBtn onClick={navOnOff}>=</NavBtn>
+              <NavBtn onClick={navOnOff}>
+                <img style={{ width: "24px" }} src={menuIcon} />
+              </NavBtn>
             </div>
           ) : (
             <Logo isMobile={isMobile} onClick={logoClick}>
@@ -248,58 +244,66 @@ function TopTab({
         <TabItem>
           <MenuContainer>
             {nickname !== "" && selectedWindow !== 0 ? (
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+              <motion.div
+                style={{ position: "relative" }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+              >
                 <MenuLabel>{nickname}님의 </MenuLabel>
                 <MenuBtn onClick={menuOpen}>
                   {tabContents.toUpperCase()} ({qty})
+                  <img
+                    src={moreIcon}
+                    style={{ width: "12px", marginLeft: "7px" }}
+                  />
                 </MenuBtn>
+                <AnimatePresence>
+                  {isOpen ? (
+                    <MenuBox
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.4 }}
+                      key="menuBox"
+                    >
+                      <MenuBtn
+                        onClick={() => {
+                          onClick("all");
+                          menuOpen();
+                        }}
+                      >
+                        ALL ({movie + tv + book})
+                      </MenuBtn>
+                      <MenuBtn
+                        onClick={() => {
+                          onClick("movie");
+                          menuOpen();
+                        }}
+                      >
+                        MOVIE ({movie})
+                      </MenuBtn>
+                      <MenuBtn
+                        onClick={() => {
+                          onClick("tv");
+                          menuOpen();
+                        }}
+                      >
+                        TV ({tv})
+                      </MenuBtn>
+                      <MenuBtn
+                        onClick={() => {
+                          onClick("book");
+                          menuOpen();
+                        }}
+                      >
+                        BOOK ({book})
+                      </MenuBtn>
+                    </MenuBox>
+                  ) : null}
+                </AnimatePresence>
               </motion.div>
             ) : null}{" "}
             {selectedWindow === 0 ? <Explore>탐색</Explore> : null}
-            <AnimatePresence>
-              {isOpen ? (
-                <MenuBox
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.4 }}
-                  key="menuBox"
-                >
-                  <MenuBtn
-                    onClick={() => {
-                      onClick("all");
-                      menuOpen();
-                    }}
-                  >
-                    ALL ({movie + tv + book})
-                  </MenuBtn>
-                  <MenuBtn
-                    onClick={() => {
-                      onClick("movie");
-                      menuOpen();
-                    }}
-                  >
-                    MOVIE ({movie})
-                  </MenuBtn>
-                  <MenuBtn
-                    onClick={() => {
-                      onClick("tv");
-                      menuOpen();
-                    }}
-                  >
-                    TV ({tv})
-                  </MenuBtn>
-                  <MenuBtn
-                    onClick={() => {
-                      onClick("book");
-                      menuOpen();
-                    }}
-                  >
-                    BOOK ({book})
-                  </MenuBtn>
-                </MenuBox>
-              ) : null}
-            </AnimatePresence>
           </MenuContainer>
         </TabItem>
         <TabItem>
@@ -310,11 +314,14 @@ function TopTab({
                   callModal("Posting");
                 }}
               >
-                +
+                <img style={{ width: "22px" }} src={plusIcon} />
               </Add>
             )}
-
-            {isMobile ? null : <FAQ onClick={callAuthModal}>?</FAQ>}
+            {isMobile ? null : (
+              <FAQ onClick={callAuthModal}>
+                <img style={{ width: "22px" }} src={qnaIcon} />
+              </FAQ>
+            )}
           </RightMenu>
         </TabItem>
       </Tab>

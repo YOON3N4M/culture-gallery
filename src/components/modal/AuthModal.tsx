@@ -14,6 +14,7 @@ import { doc, setDoc } from "firebase/firestore";
 import { useDispatch } from "react-redux";
 import { setModalOff, setSignIn, setUserData } from "../../module/store";
 import { isMobile } from "react-device-detect";
+import googleIcon from "../../img/googleIcon.png";
 
 const Contianer = styled(motion.div)`
   padding-top: 50px;
@@ -107,6 +108,19 @@ const ErrorBox = styled.div`
   height: 18px;
   width: 100%;
 `;
+const GooogleBox = styled.div`
+  margin-top: 15px;
+  height: 18px;
+  width: 100%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ededed;
+  width: 150px;
+  height: 40px;
+  border-radius: 8px;
+`;
 interface Props {
   modalOff: any;
 }
@@ -195,7 +209,27 @@ function AuthModal({ modalOff }: Props) {
     dispatch(setSignIn());
     dispatch(setUserData(userDataTemp));
   }
+  async function onSocialLogin(e: any) {
+    const provider = new GoogleAuthProvider();
 
+    const data = await signInWithPopup(auth, provider);
+
+    const userDataTemp = {
+      nickname: data.user.displayName,
+      isPrivate: true,
+      isCustom: false,
+      customOption: {},
+      internationalMovie: [],
+      tv: [],
+      book: [],
+    };
+
+    await setDoc(doc(dbService, "user", data.user.uid), userDataTemp);
+
+    dispatch(setSignIn());
+    dispatch(setUserData(userDataTemp));
+    setPageIndex(3);
+  }
   return (
     <>
       <ModalWindow>
@@ -241,7 +275,13 @@ function AuthModal({ modalOff }: Props) {
                       <ErrorBox>
                         <Error>{errorMsg}</Error>
                       </ErrorBox>
-                      <ErrorBox></ErrorBox>
+                      <GooogleBox onClick={onSocialLogin}>
+                        <img
+                          src={googleIcon}
+                          style={{ width: "20px", marginRight: "7px" }}
+                        />{" "}
+                        구글 로그인
+                      </GooogleBox>
                       <ChangeBtn onClick={() => onClick(1)}>
                         회원가입 하러가기
                       </ChangeBtn>

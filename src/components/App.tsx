@@ -32,6 +32,7 @@ const AppContainer = styled.div`
   // border: #6698be 3px solid;
   //display: flex;
   //justify-content: right;
+  padding-bottom: 30px;
 `;
 
 export interface Props {

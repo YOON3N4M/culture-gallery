@@ -5,6 +5,7 @@ import { BrowserView, MobileView } from "react-device-detect";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 import { dbService } from "../fBase";
+import userIcon from "../img/user.png";
 
 const ContentsBody = styled.div`
   width: 1060px;
@@ -83,7 +84,7 @@ const UserIcon = styled.div`
   height: 50px;
   background-color: #c0c0c0;
   border-radius: 50%;
-  line-height: 50px;
+
   font-size: 25px;
   text-align: center;
   margin-right: 10px;
@@ -128,10 +129,9 @@ const UserleftBox = styled.div`
 const MUserIcon = styled.div`
   width: 2.5em;
   height: 2.5em;
-  background-color: #c0c0c0;
+
   border-radius: 50%;
-  line-height: 2.5em;
-  font-size: 25px;
+
   text-align: center;
   cursor: pointer;
 `;
@@ -228,7 +228,7 @@ function Explore() {
                   >
                     <UserHeader>
                       <UserIcon onClick={() => goToMain(user)}>
-                        {user.nickname.slice(0, 1)}
+                        <img src={userIcon} width={50} />
                       </UserIcon>{" "}
                       <Nickname onClick={() => goToMain(user)}>
                         {user.nickname}
@@ -272,7 +272,10 @@ function Explore() {
             ? userArr.map((user: UserT) => (
                 <MUserContainer onClick={() => goToMain(user)}>
                   <UserleftBox>
-                    <MUserIcon> {user.nickname.slice(0, 1)}</MUserIcon>
+                    <MUserIcon>
+                      {" "}
+                      <img src={userIcon} style={{ width: "2.5em" }} />
+                    </MUserIcon>
                   </UserleftBox>
                   <UserRightBox>
                     <NicknameBox>{user.nickname}</NicknameBox>
@@ -288,9 +291,6 @@ function Explore() {
                 </MUserContainer>
               ))
             : null}
-
-          <MUserContainer></MUserContainer>
-          <MUserContainer></MUserContainer>
         </MContentsBody>
       </MobileView>
     </>
