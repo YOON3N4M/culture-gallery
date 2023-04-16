@@ -49,3 +49,11 @@
 ![image](https://user-images.githubusercontent.com/115640584/231991247-00a43e4d-3b54-42be-891c-5a4dce4b1e9c.png)
 
 ![image](https://user-images.githubusercontent.com/115640584/231991338-b2f644d8-e479-427e-8246-58fed9dc6e70.png)
+
+
+<a target="_blank" href="https://icons8.com/icon/cA5ed85TwX5U/delete">delete</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+<br>
+<a target="_blank" href="https://icons8.com/icon/OTxpMqWbm71F/%EB%A9%94%EB%89%B4">메뉴</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+<br>
+<a target="_blank" href="https://icons8.com/icon/joNfPN7Mv1ip/%EC%9D%84-%EB%8D%94%ED%95%9C">을 더한</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+<br>
