@@ -57,7 +57,8 @@ const MenuContainer = styled.div`
   width: 100%;
   text-align: center;
   position: relative;
-  display: inline-block;
+  display: flex;
+  justify-content: center;
 `;
 
 const MenuLabel = styled(motion.span)`
@@ -79,8 +80,8 @@ const MenuBox = styled(motion.div)`
   background-color: black;
   width: 100px;
   height: 180px;
-  margin-left: ${isMobile ? "" : "25px"};
-  margin-top: ${isMobile ? "" : "5px"};
+  // margin-left: ${isMobile ? "" : "25px"};
+  //margin-top: ${isMobile ? "" : "5px"};
   display: flex;
   flex-direction: column;
   justify-content: space-between;
