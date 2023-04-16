@@ -4,7 +4,7 @@
 
 임시 배포 : https://culture-gallery.firebaseapp.com/
 > * 전체적인 디자인이 개편되었고 거의 대부분의 기능이 모두 구현되었습니다. (4/12)
-> * 현재 모바일 최적화 작업중에 있습니다 (4/15)
+> * 현재 모바일 최적화 작업중에 있습니다 (4/15~)
 
 ### 스택
 <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white"> <img src="https://img.shields.io/badge/Redux-764ABC?style=for-the-badge&logo=Redux&logoColor=white"> <img src="https://img.shields.io/badge/typescript-3178C6?style=for-the-badge&logo=typescript&logoColor=white"> <img src="https://img.shields.io/badge/firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=white"> <img src="https://img.shields.io/badge/styled components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white">
