@@ -4,7 +4,7 @@
 
 임시 배포 : https://culture-gallery.firebaseapp.com/
 > * 전체적인 디자인이 개편되었고 거의 대부분의 기능이 모두 구현되었습니다. (4/12)
-> * 현재 모바일 최적화 작업중에 있습니다 (4/15)
+> * 현재 모바일 최적화 작업중에 있습니다 (4/15~)
 
 ### 스택
 <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white"> <img src="https://img.shields.io/badge/Redux-764ABC?style=for-the-badge&logo=Redux&logoColor=white"> <img src="https://img.shields.io/badge/typescript-3178C6?style=for-the-badge&logo=typescript&logoColor=white"> <img src="https://img.shields.io/badge/firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=white"> <img src="https://img.shields.io/badge/styled components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white">
@@ -49,3 +49,14 @@
 ![image](https://user-images.githubusercontent.com/115640584/231991247-00a43e4d-3b54-42be-891c-5a4dce4b1e9c.png)
 
 ![image](https://user-images.githubusercontent.com/115640584/231991338-b2f644d8-e479-427e-8246-58fed9dc6e70.png)
+
+<hr>
+
+<a target="_blank" href="https://icons8.com/icon/cA5ed85TwX5U/delete">delete</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+<br>
+<a target="_blank" href="https://icons8.com/icon/OTxpMqWbm71F/%EB%A9%94%EB%89%B4">메뉴</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+<br>
+<a target="_blank" href="https://icons8.com/icon/joNfPN7Mv1ip/%EC%9D%84-%EB%8D%94%ED%95%9C">을 더한</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+<br>
+<a href="https://www.flaticon.com/free-icons/user" title="user icons">User icons created by Phoenix Group - Flaticon</a>
+<br><a target="_blank" href="https://icons8.com/icon/17950/%EA%B5%AC%EA%B8%80-%EB%A1%9C%EA%B3%A0">구글 로고</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
