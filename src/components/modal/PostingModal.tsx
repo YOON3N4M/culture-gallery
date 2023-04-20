@@ -84,6 +84,7 @@ const ThumnailSmall = styled(motion.img)`
   height: ${isMobile ? "105px" : "220px"};
   box-shadow: 2px 2px 2px 2px rgb(0 0 0 / 19%);
   margin-top: 15px;
+  cursor: pointer;
 `;
 const ThumnailMedium = styled.img`
   width: ${isMobile ? "100px" : "200px"};
@@ -128,13 +129,15 @@ const InfoBox = styled.div`
   margin-bottom: 10px;
 `;
 
-const InfoTitle = styled.div`
-  font-size: ${isMobile ? "" : ""};
+const InfoTitle = styled.h1`
+  font-size: ${isMobile ? "20px" : ""};
+  margin-top: ${isMobile ? "20px" : ""};
+  display: ${isMobile ? "block" : ""};
 `;
 
 const Desc = styled.div`
   color: gray;
-  margin-top: 90px;
+  margin-top: ${isMobile ? "40px" : "90px"};
   font-size: 13px;
 `;
 const SubmitBtn = styled.button`
@@ -146,6 +149,7 @@ const SubmitBtn = styled.button`
   background-color: #000000;
   border-radius: 8px;
   color: white;
+  cursor: pointer;
 `;
 const CommentsInput = styled.input`
   width: ${isMobile ? "150px" : "400px"};
@@ -516,7 +520,7 @@ function PostingModal() {
 
                       <InfoContainer>
                         <InfoBox>
-                          <h1>{chosenCulture.name}</h1>{" "}
+                          <InfoTitle>{chosenCulture.name}</InfoTitle>{" "}
                           <small>({chosenCulture.first_air_date})</small>
                         </InfoBox>
                         <Desc>
@@ -590,7 +594,7 @@ function PostingModal() {
 
                       <InfoContainer>
                         <InfoBox>
-                          <h1>{chosenCulture.title}</h1>{" "}
+                          <InfoTitle>{chosenCulture.title}</InfoTitle>{" "}
                           <small>({chosenCulture.authors})</small>
                         </InfoBox>
                         <Desc>

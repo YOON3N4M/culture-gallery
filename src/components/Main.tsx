@@ -57,6 +57,10 @@ export const Item = styled(motion.div)`
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   overflow: hidden;
+  :hover {
+    transition: transform 0.2s ease-in-out;
+    transform: scale(1.05) translateY(-10px);
+  }
 `;
 export const CollectionImg = styled.img<{ isBook: boolean }>`
   width: ${(props: any) => (props.isBook ? "120px" : "180px")};
