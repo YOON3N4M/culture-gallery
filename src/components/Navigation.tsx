@@ -87,13 +87,13 @@ const LogOut = styled.div`
 const Collection = styled.div``;
 
 const NavHover = styled.div`
-  margin-top: 50px;
-  height: 700px;
+  margin-top: 20vh;
+  height: 400px;
   width: 50px;
   display: inline-block;
   position: fixed;
   z-index: 300;
-
+  // background-color: #ffffff18;
   display: flex;
   align-items: center;
   justify-content: right;
@@ -109,10 +109,7 @@ const NavBtn = styled.button`
   color: black;
   animation: ${fadeIn} linear 0.3s;
 `;
-const Icon = styled.img`
-  filter: invert(76%) sepia(95%) saturate(3%) hue-rotate(314deg) brightness(98%)
-    contrast(99%);
-`;
+const Icon = styled.img``;
 function Navigation({
   isModal,
   setSelectedWindow,
@@ -179,9 +176,9 @@ function Navigation({
         {on ? (
           <Nav
             key="nav"
-            initial={{ opacity: 0, x: -400 }}
+            initial={{ opacity: 0, x: -100 }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -400 }}
+            exit={{ opacity: 0, x: -100 }}
             transition={{ ease: "easeInOut", duration: 0.2 }}
             onMouseLeave={navOnOff}
           >

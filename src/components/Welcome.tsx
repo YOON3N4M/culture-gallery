@@ -256,7 +256,8 @@ function Welcome() {
 
             <StyledBtn onClick={goExplore}>컬렉션 둘러보기</StyledBtn>
             <TextSpan fontSize="20px" marginTop="70px">
-              물론 혼자만의 기록으로 간직하고 싶다면 비공개 설정할 수 있습니다.
+              물론 혼자만의 기록으로 간직하고 싶다면 비공개 설정을 할 수
+              있습니다.
             </TextSpan>
             <ToggleBox>
               <span>컬렉션 비공개</span>
