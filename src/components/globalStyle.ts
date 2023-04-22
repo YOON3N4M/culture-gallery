@@ -6,7 +6,7 @@ const colorSample = {
 };
 export const tabColor = "white";
 export const bodyColor = "#EBEEF1";
-export const backColor = "#EBEEF1";
+export const backColor = "#121212";
 export const borderColor = "#2a2a2a";
 
 export const GlobalStyle = createGlobalStyle`
@@ -22,9 +22,16 @@ export const GlobalStyle = createGlobalStyle`
 
 @import url(//fonts.googleapis.com/earlyaccess/nanumgothic.css);
 
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
   body {  
 
-    font-family: 'Nanum Gothic','S-CoreDream-3Light', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    font-family: 'Pretendard-Regular', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
     Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     background-color: ${backColor};
     color:black;

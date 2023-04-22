@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Outlet, useParams } from "react-router-dom";
 import Navigation from "./Navigation";
-import { GlobalStyle } from "./globalStyle";
+import { backColor, GlobalStyle } from "./globalStyle";
 import styled from "styled-components";
 import TopTab from "./TopTab";
 import { useSelector } from "react-redux";
@@ -24,7 +24,7 @@ import Welcome from "./Welcome";
 import { AnimatePresence, motion, MotionConfig } from "framer-motion";
 
 const AppContainer = styled.div`
-  background-color: ${bodyColor}; //#505074; // #29293d
+  background-color: ${backColor}; //#505074; // #29293d
   width: 100vw;
   min-height: 800px;
   margin: 0 auto;

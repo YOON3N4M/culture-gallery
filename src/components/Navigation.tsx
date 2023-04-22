@@ -197,7 +197,7 @@ function Navigation({
             <NavItem
               onClick={() => {
                 setSelectedWindow(0);
-                navigate(`/`);
+                navigate(`/explore`);
               }}
             >
               컬렉션 탐색

@@ -33,7 +33,7 @@ const ContentsHeader = styled.div`
 
 export const ContentsBody = styled(motion.div)`
   //background-color: red;
-  width: 100vw;
+  width: 1060px;
   margin: 0 auto;
   z-index: 300;
   display: flex;
@@ -58,8 +58,6 @@ export const Item = styled(motion.div)`
   border-radius: 8px;
   overflow: hidden;
   :hover {
-    transition: transform 0.2s ease-in-out;
-    transform: scale(1.05) translateY(-10px);
   }
 `;
 export const CollectionImg = styled.img<{ isBook: boolean }>`
@@ -97,6 +95,11 @@ export const Year = styled.p`
 const EditBtn = styled.button`
   font-size: 17px;
   cursor: pointer;
+  color: white;
+  border: 0.5px solid rgba(73, 71, 71, 0.5);
+  border-radius: 8px;
+  width: 60px;
+  height: 30px;
 `;
 const MEditBtn = styled.button`
   font-size: 1rem;

@@ -16,7 +16,7 @@ const SettingItem = styled.div`
   margin-top: 15px;
 `;
 
-const ToggleBtn = styled.button<{ toggle: boolean }>`
+export const ToggleBtn = styled.button<{ toggle: boolean }>`
   width: 60px;
   height: 25px;
   border-radius: 30px;
@@ -30,7 +30,7 @@ const ToggleBtn = styled.button<{ toggle: boolean }>`
   align-items: center;
   transition: all 0.5s ease-in-out;
 `;
-const Circle = styled.div<{ toggle: boolean }>`
+export const Circle = styled.div<{ toggle: boolean }>`
   background-color: white;
   width: 20px;
   height: 20px;

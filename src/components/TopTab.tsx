@@ -145,7 +145,7 @@ function TopTab({
   const dispatch = useDispatch();
   const navigate = useNavigate();
   function callAuthModal() {
-    dispatch(setModalOn("FAQ"));
+    navigate(`/`);
   }
 
   function callModal(e: string) {
@@ -155,8 +155,9 @@ function TopTab({
     setOn((prev: any) => !prev);
   }
   function logoClick() {
-    navigate(`/`);
+    navigate(`/explore`);
   }
+
   useEffect(() => {
     if (userData !== undefined && selectedUser === undefined) {
       setMovie(userData.internationalMovie.length);
