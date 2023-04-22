@@ -84,6 +84,7 @@ const SubmitBtn = styled.button`
   background-color: rgb(13, 13, 13);
   color: white;
   margin-top: 15px;
+  cursor: pointer;
 `;
 const NickBox = styled(motion.div)`
   width: 280px;

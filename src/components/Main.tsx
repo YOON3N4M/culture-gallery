@@ -57,6 +57,8 @@ export const Item = styled(motion.div)`
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   overflow: hidden;
+  :hover {
+  }
 `;
 export const CollectionImg = styled.img<{ isBook: boolean }>`
   width: ${(props: any) => (props.isBook ? "120px" : "180px")};
@@ -93,6 +95,11 @@ export const Year = styled.p`
 const EditBtn = styled.button`
   font-size: 17px;
   cursor: pointer;
+  color: white;
+  border: 0.5px solid rgba(73, 71, 71, 0.5);
+  border-radius: 8px;
+  width: 60px;
+  height: 30px;
 `;
 const MEditBtn = styled.button`
   font-size: 1rem;
