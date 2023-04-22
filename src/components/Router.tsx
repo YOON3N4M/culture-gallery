@@ -7,6 +7,7 @@ import {
 import App from "./App";
 import Main from "../components/Main";
 import Explore from "./Explore";
+import Welcome from "./Welcome";
 
 function useRouter() {
   const newRouter = createBrowserRouter(
@@ -17,6 +18,10 @@ function useRouter() {
         children: [
           {
             path: `/`,
+            element: <Welcome />,
+          },
+          {
+            path: "/explore",
             element: <Explore />,
           },
           {

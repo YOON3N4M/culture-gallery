@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
 import Navigation from "./Navigation";
 import { GlobalStyle } from "./globalStyle";
 import styled from "styled-components";
@@ -61,11 +61,13 @@ function App() {
   const [tabContents, setTabContents] = useState("movie");
   const [isExplore, setIsExplore] = useState(false);
   const [selectedUser, setSelectedUser] = useState();
-  // 0 = 탐색 , 1 = 본인 메인,
-  const [selectedWindow, setSelectedWindow] = useState(0);
+  // -1 = welcom, 0 = 탐색 , 1 =  메인,
+  const [selectedWindow, setSelectedWindow] = useState(-1);
   const [isMine, setIsMine] = useState(true);
   //네비
   const [on, setOn] = useState(false);
+  const params = useParams();
+  console.log(params);
 
   function modalOff(e: any) {
     if (e.target === e.currentTarget) {
@@ -92,9 +94,9 @@ function App() {
   }, [isLogin]);
 
   useEffect(() => {
-    setSelectedWindow(0);
+    setSelectedWindow(-1);
   }, []);
-  console.log(isMine);
+  console.log(selectedWindow);
   return (
     <>
       <GlobalStyle />
@@ -105,31 +107,36 @@ function App() {
         modalType={modalType}
         modalOff={modalOff}
       />
-      <Navigation
-        setSelectedUser={setSelectedUser}
-        setSelectedWindow={setSelectedWindow}
-        isModal={isModal}
-        setIsMine={setIsMine}
-        on={on}
-        setOn={setOn}
-      />
-      <TopTab
-        tabContents={tabContents}
-        userData={userData}
-        setTabContents={setTabContents}
-        isLogin={isLogin}
-        selectedUser={selectedUser}
-        selectedWindow={selectedWindow}
-        on={on}
-        setOn={setOn}
-      />
+      {selectedWindow > -1 ? (
+        <>
+          <Navigation
+            setSelectedUser={setSelectedUser}
+            setSelectedWindow={setSelectedWindow}
+            isModal={isModal}
+            setIsMine={setIsMine}
+            on={on}
+            setOn={setOn}
+          />
+          <TopTab
+            tabContents={tabContents}
+            userData={userData}
+            setTabContents={setTabContents}
+            isLogin={isLogin}
+            selectedUser={selectedUser}
+            selectedWindow={selectedWindow}
+            on={on}
+            setOn={setOn}
+          />
+        </>
+      ) : null}
+
       <AppContainer>
         <AnimatePresence>
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 1 }}
+            transition={{ duration: 0.5 }}
             key="motionDiv"
           >
             <Outlet
@@ -140,6 +147,7 @@ function App() {
                 setSelectedWindow,
                 setIsMine,
                 setSelectedUser,
+                isModal,
               }}
             />
           </motion.div>

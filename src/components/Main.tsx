@@ -33,7 +33,7 @@ const ContentsHeader = styled.div`
 
 export const ContentsBody = styled(motion.div)`
   //background-color: red;
-  width: 1060px;
+  width: 100vw;
   margin: 0 auto;
   z-index: 300;
   display: flex;
