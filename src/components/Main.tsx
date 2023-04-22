@@ -11,13 +11,14 @@ import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { dbService } from "../fBase";
 import { setModalOn } from "../module/store";
-import postingIcon from "../img/postingIcon.png";
-import delIcon from "../img/delIcon.png";
+
 import { motion } from "framer-motion";
 import useDidMountEffect from "./useDidMountEffect";
 import { ContentsT } from "./Explore";
 import { useOutletContext } from "react-router-dom";
 import { BrowserView, isMobile, MobileView } from "react-device-detect";
+import postingIcon from "../img/postingIcon.png";
+import delIcon from "../img/delIcon.png";
 
 const ContentsHeader = styled.div`
   height: 50px;
@@ -302,43 +303,44 @@ function Main() {
   }, [selectedUser]);
   return (
     <>
-      <BrowserView>
-        <ContentsHeader>
-          {isMine && tabContents !== "all" ? (
-            <EditBtn onClick={isMyCollection}>편집</EditBtn>
-          ) : null}
-        </ContentsHeader>
-        <ContentsBody>
-          {
+      {userData || selectedUser ? (
+        <BrowserView>
+          <ContentsHeader>
+            {isMine && tabContents !== "all" ? (
+              <EditBtn onClick={isMyCollection}>편집</EditBtn>
+            ) : null}
+          </ContentsHeader>
+          <ContentsBody>
             {
-              all: (
-                <ContentsUl>
-                  {all.length !== 0
-                    ? all.map((item: ContentsT) => (
-                        <>
-                          <Item
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ duration: 1.3 }}
-                          >
-                            <CollectionImg
-                              isBook={false}
-                              src={item.poster}
-                            ></CollectionImg>
-                            <TitleBox>
-                              <Title isBook={false}>{item.title}</Title>
-                              <Year>{item.year}</Year>
-                            </TitleBox>
-                          </Item>
-                        </>
-                      ))
-                    : null}
-                </ContentsUl>
-              ),
-              movie: (
-                <ContentsUl>
-                  {internationalMovie.length !== 0
-                    ? internationalMovie.map((item: ContentsT) => (
+              {
+                all: (
+                  <ContentsUl>
+                    {all.length !== 0
+                      ? all.map((item: ContentsT) => (
+                          <>
+                            <Item
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              transition={{ duration: 1.3 }}
+                            >
+                              <CollectionImg
+                                isBook={false}
+                                src={item.poster}
+                              ></CollectionImg>
+                              <TitleBox>
+                                <Title isBook={false}>{item.title}</Title>
+                                <Year>{item.year}</Year>
+                              </TitleBox>
+                            </Item>
+                          </>
+                        ))
+                      : null}
+                  </ContentsUl>
+                ),
+                movie: (
+                  <ContentsUl>
+                    {internationalMovie.length !== 0 ? (
+                      internationalMovie.map((item: ContentsT) => (
                         <>
                           <Item
                             initial={{ opacity: 0 }}
@@ -362,14 +364,19 @@ function Main() {
                           </Item>
                         </>
                       ))
-                    : null}
-                </ContentsUl>
-              ),
-              book: (
-                <>
-                  <ContentsUl>
-                    {book.length !== 0
-                      ? book.map((item: ContentsT) => (
+                    ) : (
+                      <h1 style={{ color: "white" }}>
+                        우측 상단 <img width="23px" src={postingIcon} /> 을 눌러
+                        기록을 시작해보세요 !
+                      </h1>
+                    )}
+                  </ContentsUl>
+                ),
+                book: (
+                  <>
+                    <ContentsUl>
+                      {book.length !== 0 ? (
+                        book.map((item: ContentsT) => (
                           <Item
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
@@ -391,15 +398,20 @@ function Main() {
                             </TitleBox>
                           </Item>
                         ))
-                      : null}
-                  </ContentsUl>
-                </>
-              ),
-              tv: (
-                <>
-                  <ContentsUl>
-                    {tv.length !== 0
-                      ? tv.map((item: ContentsT) => (
+                      ) : (
+                        <h1 style={{ color: "white" }}>
+                          우측 상단 <img width="23px" src={postingIcon} /> 을
+                          눌러 기록을 시작해보세요 !
+                        </h1>
+                      )}
+                    </ContentsUl>
+                  </>
+                ),
+                tv: (
+                  <>
+                    <ContentsUl>
+                      {tv.length !== 0 ? (
+                        tv.map((item: ContentsT) => (
                           <Item
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
@@ -421,14 +433,21 @@ function Main() {
                             </TitleBox>
                           </Item>
                         ))
-                      : null}
-                  </ContentsUl>
-                </>
-              ),
-            }[tabContents]
-          }
-        </ContentsBody>
-      </BrowserView>
+                      ) : (
+                        <h1 style={{ color: "white" }}>
+                          우측 상단 <img width="23px" src={postingIcon} /> 을
+                          눌러 기록을 시작해보세요 !
+                        </h1>
+                      )}
+                    </ContentsUl>
+                  </>
+                ),
+              }[tabContents]
+            }
+          </ContentsBody>
+        </BrowserView>
+      ) : null}
+
       <MobileView>
         <MHeader>
           {isMine && tabContents !== "all" ? (

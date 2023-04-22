@@ -16,8 +16,10 @@ import { dbService } from "../fBase";
 import { CollectionImg, ContentsBody, ContentsUl, Item, Title } from "./Main";
 import arrowIcon from "../img/arrowIcon.png";
 import dummyImg from "../img/dummy.jpeg";
-import { useOutletContext } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import { Circle, ToggleBtn } from "./modal/SettingModal";
+import { useDispatch } from "react-redux";
+import { setModalOn } from "../module/store";
 
 const WelcomeModal = styled.div`
   top: 0;
@@ -50,12 +52,12 @@ const ArrowImage = styled.img`
 const ArrowImageBox = styled(motion.div)`
   margin: 0 auto;
 `;
-const StyledSection = styled(motion.section)`
+const StyledSection = styled(motion.section)<{ isLast: boolean }>`
   margin-bottom: 200px;
   position: relative;
   display: flex;
   flex-direction: column;
-  min-height: 80vh;
+  min-height: ${(props) => (props.isLast ? "40vh" : "70vh")};
 `;
 const StyledImg = styled.img`
   width: 1024px;
@@ -84,7 +86,7 @@ const TopContainer = styled.div`
 const StyledBtn = styled(motion.button)`
   width: 150px;
   height: 50px;
-  border: 0.5px solid rgba(46, 121, 220, 0.668);
+  border: 0.5px solid rgba(79, 79, 79, 0.668);
   border-radius: 8px;
   color: #a8a6a6;
   display: block;
@@ -92,7 +94,7 @@ const StyledBtn = styled(motion.button)`
   margin-top: 80px;
   cursor: pointer;
   background-color: #161616;
-  box-shadow: rgba(46, 121, 220, 0.668) 0px 0px 80px 8px;
+  box-shadow: rgba(91, 97, 90, 0.668) 0px 0px 75px 5px;
 `;
 
 const ToggleBox = styled.div`
@@ -128,6 +130,9 @@ function Welcome() {
   const [isBook, setIsBook] = useState(false);
   const { setSelectedWindow } = useOutletContext<Props>();
   const [toggle, setToggle] = useState(true);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   async function getDummyData() {
     const dummyRef = doc(dbService, "user", "a7RVkbswbtaCikSCdJL8gKi9kOr1");
     const docSnap = await getDoc(dummyRef);
@@ -140,6 +145,13 @@ function Welcome() {
     hidden: { opacity: 0, y: 50 },
     show: { opacity: 1, y: -300, transition: { duration: 0.7 } },
   };
+
+  function goExplore() {
+    navigate(`/explore`);
+  }
+  function goAuth() {
+    dispatch(setModalOn("Auth"));
+  }
 
   useEffect(() => {
     getDummyData();
@@ -177,7 +189,7 @@ function Welcome() {
               key="scrollMsg"
               initial={{ opacity: 0 }}
               animate={{ opacity: 0.5 }}
-              transition={{ duration: 1 }}
+              transition={{ delay: 1, duration: 1 }}
               fontSize="20px"
               marginTop="20px"
             >
@@ -200,6 +212,8 @@ function Welcome() {
             initial="hidden"
             whileInView="show"
             transition={{ duration: 3 }}
+            viewport={{ once: true }}
+            isLast={false}
           >
             <TextSpan fontSize="30px" marginTop="50px">
               <b>문화 생활을 기록해요.</b>
@@ -226,6 +240,8 @@ function Welcome() {
             initial="hidden"
             whileInView="show"
             transition={{ duration: 3 }}
+            viewport={{ once: true }}
+            isLast={false}
           >
             <TextSpan fontSize="30px" marginTop="50px">
               <b> 서로의 기록을 공유해요.</b>
@@ -238,7 +254,7 @@ function Welcome() {
               잊고 지냈던 작품들도 찾아보세요.
             </TextSpan>
 
-            <StyledBtn>컬렉션 둘러보기</StyledBtn>
+            <StyledBtn onClick={goExplore}>컬렉션 둘러보기</StyledBtn>
             <TextSpan fontSize="20px" marginTop="70px">
               물론 혼자만의 기록으로 간직하고 싶다면 비공개 설정할 수 있습니다.
             </TextSpan>
@@ -258,15 +274,16 @@ function Welcome() {
             initial="hidden"
             whileInView="show"
             transition={{ duration: 3 }}
+            viewport={{ once: true }}
+            isLast={false}
           >
             <TextSpan fontSize="30px" marginTop="35px">
-              variants test
+              <b>기록을 남기고 저장하려면 로그인을 해야해요 !</b>
             </TextSpan>
-            <TextSpan fontSize="15px" marginTop="20px">
-              아니면
-            </TextSpan>
-            <TextSpan fontSize="30px" marginTop="20px">
-              그냥 둘러보기
+
+            <StyledBtn onClick={goAuth}>로그인 하기</StyledBtn>
+            <TextSpan fontSize="20px" marginTop="70px">
+              아니면 . . .
             </TextSpan>
           </StyledSection>
 
@@ -275,48 +292,13 @@ function Welcome() {
             initial="hidden"
             whileInView="show"
             transition={{ duration: 3 }}
+            viewport={{ once: true }}
+            isLast={true}
           >
-            <TextSpan fontSize="30px" marginTop="35px">
-              variants test
-            </TextSpan>
-            <TextSpan fontSize="15px" marginTop="20px">
-              아니면
-            </TextSpan>
             <TextSpan fontSize="30px" marginTop="20px">
-              그냥 둘러보기
+              그냥 둘러보기 !
             </TextSpan>
-          </StyledSection>
-          <StyledSection
-            variants={variants}
-            initial="hidden"
-            whileInView="show"
-            transition={{ duration: 3 }}
-          >
-            <TextSpan fontSize="30px" marginTop="35px">
-              variants test
-            </TextSpan>
-            <TextSpan fontSize="15px" marginTop="20px">
-              아니면
-            </TextSpan>
-            <TextSpan fontSize="30px" marginTop="20px">
-              그냥 둘러보기
-            </TextSpan>
-          </StyledSection>
-          <StyledSection
-            variants={variants}
-            initial="hidden"
-            whileInView="show"
-            transition={{ duration: 3 }}
-          >
-            <TextSpan fontSize="30px" marginTop="35px">
-              variants test
-            </TextSpan>
-            <TextSpan fontSize="15px" marginTop="20px">
-              아니면
-            </TextSpan>
-            <TextSpan fontSize="30px" marginTop="20px">
-              그냥 둘러보기
-            </TextSpan>
+            <StyledBtn onClick={goExplore}>둘러보기</StyledBtn>
           </StyledSection>
         </AnimatePresence>
       </WelcomeModal>

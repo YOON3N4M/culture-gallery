@@ -1,7 +1,7 @@
 import { AnimatePresence, easeIn, motion } from "framer-motion";
 import { useState } from "react";
 import styled from "styled-components";
-import { ModalWindow, ModalHeader } from "./Modal";
+import { ModalWindow, ModalHeader, ExitContainer, ExitBtn } from "./Modal";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 import { setModalOff, setSignIn, setUserData } from "../../module/store";
 import { isMobile } from "react-device-detect";
 import googleIcon from "../../img/googleIcon.png";
+import { useNavigate } from "react-router-dom";
 
 const Contianer = styled(motion.div)`
   padding-top: 50px;
@@ -136,6 +137,7 @@ function AuthModal({ modalOff }: Props) {
   const [nickname, setNickname] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   function onChange(e: any) {
     const {
       target: { name, value },
@@ -167,6 +169,7 @@ function AuthModal({ modalOff }: Props) {
       } else {
         data = await signInWithEmailAndPassword(auth, email, password);
         dispatch(setModalOff());
+        navigate(`/explore`);
       }
     } catch (error: any) {
       switch (error.message) {
@@ -209,6 +212,7 @@ function AuthModal({ modalOff }: Props) {
 
     dispatch(setSignIn());
     dispatch(setUserData(userDataTemp));
+    navigate(`/explore`);
   }
   async function onSocialLogin(e: any) {
     const provider = new GoogleAuthProvider();
@@ -229,16 +233,28 @@ function AuthModal({ modalOff }: Props) {
 
     dispatch(setSignIn());
     dispatch(setUserData(userDataTemp));
-    setPageIndex(3);
+    dispatch(setModalOff());
+    navigate(`/explore`);
   }
   return (
     <>
       <ModalWindow>
         <ModalHeader>
           {" "}
-          <Logo initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-            CultureGallery
-          </Logo>
+          <div
+            style={{
+              display: "flex",
+              position: "relative",
+              justifyContent: "center",
+            }}
+          >
+            <ExitContainer onClick={() => dispatch(setModalOff())}>
+              <ExitBtn>X</ExitBtn>
+            </ExitContainer>
+            <Logo initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+              CultureGallery
+            </Logo>
+          </div>
         </ModalHeader>
 
         <AnimatePresence>

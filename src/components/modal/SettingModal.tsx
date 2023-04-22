@@ -4,7 +4,8 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { dbService } from "../../fBase";
-import { ModalHeader, ModalWindow } from "./Modal";
+import { setModalOff } from "../../module/store";
+import { ExitBtn, ExitContainer, ModalHeader, ModalWindow } from "./Modal";
 
 const SettingItem = styled.div`
   width: 100%;
@@ -77,7 +78,20 @@ function SettingModal() {
   return (
     <>
       <ModalWindow>
-        <ModalHeader></ModalHeader>
+        <ModalHeader>
+          <div
+            style={{
+              display: "flex",
+              position: "relative",
+              justifyContent: "center",
+            }}
+          >
+            <ExitContainer onClick={() => dispatch(setModalOff())}>
+              <ExitBtn>X</ExitBtn>
+            </ExitContainer>
+            설정
+          </div>
+        </ModalHeader>
         <SettingItem>
           <span>컬렉션 비공개</span>
           <ToggleBtn onClick={clickedToggle} toggle={toggle}>
