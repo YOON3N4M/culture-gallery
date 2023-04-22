@@ -35,7 +35,7 @@ const TabItem = styled.div`
   height: 100%;
   align-items: center;
 `;
-const FAQ = styled.button`
+const FAQ = styled(motion.button)`
   cursor: pointer;
 `;
 
@@ -89,7 +89,7 @@ const MenuBox = styled(motion.div)`
   z-index: 2000;
 `;
 
-const Add = styled.button`
+const Add = styled(motion.button)`
   border-radius: 50%;
 
   color: white;
@@ -245,7 +245,9 @@ function TopTab({
         </TabItem>
         <TabItem>
           <MenuContainer>
-            {nickname !== "" && selectedWindow !== 0 ? (
+            {nickname !== "" &&
+            selectedWindow !== 0 &&
+            selectedWindow !== -1 ? (
               <motion.div
                 style={{ position: "relative" }}
                 initial={{ opacity: 0 }}
@@ -309,22 +311,30 @@ function TopTab({
           </MenuContainer>
         </TabItem>
         <TabItem>
-          <RightMenu>
-            {isLogin && (
-              <Add
-                onClick={() => {
-                  callModal("Posting");
-                }}
-              >
-                <img style={{ width: "22px" }} src={plusIcon} />
-              </Add>
-            )}
-            {isMobile ? null : (
-              <FAQ onClick={callAuthModal}>
-                <img style={{ width: "22px" }} src={qnaIcon} />
-              </FAQ>
-            )}
-          </RightMenu>
+          {selectedWindow === -1 ? null : (
+            <RightMenu>
+              {isLogin && (
+                <Add
+                  onClick={() => {
+                    callModal("Posting");
+                  }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                >
+                  <img style={{ width: "22px" }} src={plusIcon} />
+                </Add>
+              )}
+              {isMobile ? null : (
+                <FAQ
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  onClick={callAuthModal}
+                >
+                  <img style={{ width: "22px" }} src={qnaIcon} />
+                </FAQ>
+              )}
+            </RightMenu>
+          )}
         </TabItem>
       </Tab>
     </>

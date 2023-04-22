@@ -202,9 +202,13 @@ function Navigation({
             >
               컬렉션 탐색
             </NavItem>
-            <NavItem>즐겨찾기</NavItem>
-            <NavItem onClick={() => callModal("Setting")}>설정</NavItem>
-            {isLogin ? <LogOut onClick={logOut}>로그아웃</LogOut> : null}
+
+            {isLogin ? (
+              <>
+                <NavItem onClick={() => callModal("Setting")}>설정</NavItem>
+                <LogOut onClick={logOut}>로그아웃</LogOut>
+              </>
+            ) : null}
           </Nav>
         ) : (
           <>

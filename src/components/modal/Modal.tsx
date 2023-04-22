@@ -45,7 +45,7 @@ export const ModalWindow = styled.div`
   text-decoration: none;
   background-color: white;
   //border-radius: 30px;
-  overflow: hidden;
+  //overflow: hidden;
   align-items: center;
   border-radius: 8px;
 `;
@@ -60,6 +60,22 @@ export const ModalHeader = styled.div`
   line-height: 40px;
   color: white;
   border-top-right-radius: 8px;
+`;
+export const ExitContainer = styled.div`
+  height: 30px;
+  width: 30px;
+  position: absolute;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+  top: -40px;
+`;
+export const ExitBtn = styled.button`
+  font-size: 20px;
+  cursor: pointer;
 `;
 
 function Modal({

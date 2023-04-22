@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { ModalHeader, ModalWindow } from "./Modal";
+import { ExitBtn, ExitContainer, ModalHeader, ModalWindow } from "./Modal";
 import {
   arrayUnion,
   collection,
@@ -16,7 +16,7 @@ import tvIcon from "../../img/tvIcon.png";
 import bookIcon from "../../img/bookIcon.png";
 import { AnimatePresence, motion } from "framer-motion";
 import { useDispatch } from "react-redux";
-import { setUserData } from "../../module/store";
+import { setModalOff, setUserData } from "../../module/store";
 import { isMobile } from "react-device-detect";
 
 const ModalBody = styled(motion.div)`
@@ -375,7 +375,20 @@ function PostingModal() {
   return (
     <>
       <ModalWindow>
-        <ModalHeader>새 기록</ModalHeader>
+        <ModalHeader>
+          <div
+            style={{
+              display: "flex",
+              position: "relative",
+              justifyContent: "center",
+            }}
+          >
+            <ExitContainer onClick={() => dispatch(setModalOff())}>
+              <ExitBtn>X</ExitBtn>
+            </ExitContainer>
+            새 기록
+          </div>
+        </ModalHeader>
         <AnimatePresence>
           {
             {

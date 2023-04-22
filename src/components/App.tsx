@@ -94,7 +94,7 @@ function App() {
   }, [isLogin]);
 
   useEffect(() => {
-    setSelectedWindow(-1);
+    //setSelectedWindow(-1);
   }, []);
   console.log(selectedWindow);
   return (
@@ -107,7 +107,7 @@ function App() {
         modalType={modalType}
         modalOff={modalOff}
       />
-      {selectedWindow > -1 ? (
+      {selectedWindow !== -1 ? (
         <>
           <Navigation
             setSelectedUser={setSelectedUser}
@@ -117,19 +117,18 @@ function App() {
             on={on}
             setOn={setOn}
           />
-          <TopTab
-            tabContents={tabContents}
-            userData={userData}
-            setTabContents={setTabContents}
-            isLogin={isLogin}
-            selectedUser={selectedUser}
-            selectedWindow={selectedWindow}
-            on={on}
-            setOn={setOn}
-          />
         </>
       ) : null}
-
+      <TopTab
+        tabContents={tabContents}
+        userData={userData}
+        setTabContents={setTabContents}
+        isLogin={isLogin}
+        selectedUser={selectedUser}
+        selectedWindow={selectedWindow}
+        on={on}
+        setOn={setOn}
+      />
       <AppContainer>
         <AnimatePresence>
           <motion.div
