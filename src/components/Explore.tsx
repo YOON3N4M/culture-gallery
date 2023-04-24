@@ -23,27 +23,28 @@ const UserContainer = styled(motion.div)`
   height: 500px;
   border-radius: 8px;
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
-  border: 1px #e3e3e3 solid;
+  border: 1px #434343 solid;
+  overflow: hidden;
 `;
 
 const UserHeader = styled.div`
   width: 100%;
   height: 70px;
-  background-color: white;
+  background-color: #9f9f9f;
   color: black;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-bottom: 1px #e3e3e3 solid;
+  border-bottom: 1px #7e7e7e solid;
 `;
 
 const ContentsWrap = styled.div`
   width: 900;
   height: 430px;
   display: flex;
-  background-color: #ebeef1;
+  background-color: rgb(185, 185, 185);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -52,7 +53,7 @@ const ContentsWrap = styled.div`
 const ContentsBox = styled.div`
   width: 289px;
 
-  background-color: white;
+  background-color: #9f9f9f;
   border-radius: 8px;
 `;
 const ContentsHeader = styled.div`
