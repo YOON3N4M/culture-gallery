@@ -37,7 +37,7 @@ const UserHeader = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border-bottom: 1px #7e7e7e solid;
+  //border-bottom: 1px #7e7e7e solid;
 `;
 
 const ContentsWrap = styled.div`

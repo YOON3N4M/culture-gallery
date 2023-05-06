@@ -44,6 +44,7 @@ export const ContentsUl = styled(motion.ul)`
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
+  width: ${isMobile ? "360px" : ""};
 `;
 
 const Buttonn = styled.button`

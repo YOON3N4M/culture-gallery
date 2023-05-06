@@ -1,25 +1,16 @@
-import { doc, getDoc, setDoc } from "firebase/firestore";
-import {
-  AnimatePresence,
-  motion,
-  MotionValue,
-  scroll,
-  useScroll,
-  useTransform,
-  useViewportScroll,
-  Variants,
-} from "framer-motion";
+import { doc, getDoc } from "firebase/firestore";
+import { AnimatePresence, motion, Variants } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { dbService } from "../fBase";
-import { CollectionImg, ContentsBody, ContentsUl, Item, Title } from "./Main";
+import { ContentsBody, ContentsUl, Item, Title } from "./Main";
 import arrowIcon from "../img/arrowIcon.png";
-import dummyImg from "../img/dummy.jpeg";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { Circle, ToggleBtn } from "./modal/SettingModal";
 import { useDispatch } from "react-redux";
 import { setModalOn } from "../module/store";
+import { isMobile } from "react-device-detect";
 
 const WelcomeModal = styled.div`
   top: 0;
@@ -68,8 +59,10 @@ const StyledImg = styled.img`
 
 const PosterBox = styled.div`
   margin: 0 auto;
-  width: 1060px;
+  max-width: 1060px;
   margin-top: 30px;
+  display: flex;
+  justify-content: center;
 `;
 
 const TopContainer = styled.div`
@@ -106,6 +99,17 @@ const ToggleBox = styled.div`
   justify-content: space-between;
   margin-top: 20px;
   margin-bottom: 10px;
+`;
+
+const CollectionImg = styled.img`
+  // width: ${(props: any) => (props.isBook ? "120px" : "180px")};
+  // height: ${(props: any) => (props.isBook ? "174px" : "273px")};
+  width: ${isMobile ? "90px" : "180px"};
+  height: ${isMobile ? "135px" : "273px"};
+
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  margin: 0 auto;
 `;
 
 interface ContentsT {
@@ -228,7 +232,7 @@ function Welcome() {
               <ContentsUl>
                 {dummy?.internationalMovie.map((movie: ContentsT) => (
                   <Item>
-                    <CollectionImg isBook={false} src={movie.poster} />
+                    <CollectionImg src={movie.poster} />
                   </Item>
                 ))}
               </ContentsUl>
